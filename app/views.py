@@ -87,7 +87,7 @@ def search_results_function():
     global search_value 
     global s_r
     print 'in search_results, get search_value:',search_value
-    return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":10})
+    return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":6,"total_result_len":13456})
 
 
 

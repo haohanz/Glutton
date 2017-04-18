@@ -1,20 +1,47 @@
 // search_results.js
-$(document).ready(function(){
-	search(0);
-});
 
-var search = function(page){
+var restaurant = "Restaurants";
+var dishes = "Dishes";
+var current_div = restaurant;
+var initialized = false;
+var page_num = 0;
+var search = function(page,current_div){
 	$("div#tofill").text('');
 	console.log("hello");
-	$.post("search_results_function",{"page":page},function(data){
+
+	$.post("search_results_function",{"page":page,"current_div":current_div},function(data){
 		console.log("getting json:"+data.search_results);
 		console.log("page_num:"+data.page_num);
-
-
-
-
-
-
+		console.log("total_result_len:"+data.total_result_len);
+		$("span#total_result_len").text(data.total_result_len);
+		$("span#current_div").text(current_div);
+		if (page_num != data.page_num) {
+			page_num = data.page_num;
+			if (page_num <= 8){
+				var str = '<span class="previous_page" onclick="previous_page()">Previous</span>';
+				for (var i = 1; i <= 8; i++) {
+					if ( i <= page_num ) {
+						if (i==0) {
+				 			str += '<a id="page_n" class="current">' + (i).toString() + '</a>'
+				 		} else {
+				 			str += '<a id="page_n" class="">' + (i).toString() + '</a>'	
+				 		}
+				 	} else {
+				 		break;
+			 		}
+			 	}
+			}
+			$("div.pagination").text('');
+			if (page_num < 8){
+			$("div.pagination").append(str+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
+			} else {
+				$("div.pagination").append(str+'<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
+			}
+			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
+			// alert("get:" + $("div.pagination").children("a#page_n").val());
+		} 
+			
+		
 
 
 		$("input#search_block_in_search_results").attr("value",data.search_value_in_search_results);
@@ -75,16 +102,122 @@ var search = function(page){
 // 	search(page);
 // });
 // });
-	$("a#page_n").click(function(){
-		console.log("console");
-		var page = $(this).html();
-		console.log("page:"+page);
-		search(page);
-		$("a.current").attr("class",'');
-		$("this").attr("class","current");
 
 
-	});
+var toPage = function(page, obj) {
+	console.log("console");
+	if (page!=1) {
+		$("span.previous_page").attr("class","previous_page");
+	} else {
+		$("span.previous_page").attr("class","previous_page disabled");
+	} 
+	if (page!=page_num) {
+		$("span.next_page").attr("class","next_page");
+	} else {
+		$("span.next_page").attr("class","next_page disabled");
+	}
+	console.log("page:"+page);
+	$("a.current").attr("class",'');
+	$(obj).attr("class","current");
+	search(parseInt(page), current_div);
+}
+
+
+var getDishes = function() {
+	$("a#getDishes").attr("class","underline-nav-item selected");
+	$("a#getRestaurants").attr("class","underline-nav-item");
+	current_div = dishes;
+	search(0, current_div);
+}
+
+var getRestaurants = function() {
+	$("a#getDishes").attr("class","underline-nav-item");
+	$("a#getRestaurants").attr("class","underline-nav-item selected");
+	current_div = restaurant;
+	search(0, current_div);
+}
+
+var next_page = function() {
+	if ($("span.next_page").hasClass("disabled")) {
+		return
+	} else {
+		var page = $("a#page_n.current").html();
+		obj = $("a#page_n.current").next();
+		if (obj.html() == '…') {
+			var start_page = parseInt(page)+1;
+			var str = '<span class="previous_page" onclick="previous_page()">Previous</span>'+'<span class="gap">…</span>';
+			for (var i = 0; i < 8; i++) {
+				if ( start_page + i <= page_num ) {
+					if (i==0) {
+			 			str += '<a id="page_n" class="current">' + (start_page + i).toString() + '</a>'
+			 		} else {
+			 			str += '<a id="page_n" class="">' + (start_page + i).toString() + '</a>'	
+			 		}
+			 	} else {
+			 		break;
+			 	}
+			}
+			$("div.pagination").text('');
+			$("div.pagination").append(str+'<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
+			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
+			// alert("get:" + $("div.pagination").children("a#page_n").val());
+			toPage(parseInt(page)+1, $("div.pagination").children("a#page_n:first"));
+		} else {
+			toPage(parseInt(page)+1, obj);
+		}
+	}
+}
+
+var previous_page = function() {
+	if ($("span.previous_page").hasClass("disabled")) {
+		return
+	} else {
+		var page = $("a#page_n.current").html();
+		obj = $("a#page_n.current").prev();
+		if (obj.html() == '…') {
+			var start_page = parseInt(page)-1;
+			var str = '';
+			for (var i = 0; i < 8; i++) {
+				if ( start_page - i > 0 ) {
+					if (i==0) {
+			 			str = '<a id="page_n" class="current">' + (start_page - i).toString() + '</a>' + str;
+			 		} else {
+			 			str = '<a id="page_n" class="">' + (start_page - i).toString() + '</a>'	+ str;
+			 		}
+			 	} else {
+			 		break;
+			 	}
+			}
+			$("div.pagination").text('');
+			$("div.pagination").append('<span class="previous_page" onclick="previous_page()">Previous</span>'+'<span class="gap">…</span>'+str + '<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>' );
+			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
+			toPage(parseInt(page)+1, $("div.pagination").children("a#page_n:last"));
+		} else {
+			toPage(parseInt(page) - 1, obj);
+		}
+	}
+}
+
+$(document).ready(function(){
+	search(0,"Restaurants");
+	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

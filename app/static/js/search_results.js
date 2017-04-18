@@ -17,20 +17,18 @@ var search = function(page,current_div){
 		$("span#current_div").text(current_div);
 		if (page_num != data.page_num) {
 			page_num = data.page_num;
-			if (page_num <= 8){
-				var str = '<span class="previous_page" onclick="previous_page()">Previous</span>';
-				for (var i = 1; i <= 8; i++) {
-					if ( i <= page_num ) {
-						if (i==0) {
-				 			str += '<a id="page_n" class="current">' + (i).toString() + '</a>'
-				 		} else {
-				 			str += '<a id="page_n" class="">' + (i).toString() + '</a>'	
-				 		}
-				 	} else {
-				 		break;
+			var str = '<span class="previous_page disabled" onclick="previous_page()">Previous</span>';
+			for (var i = 1; i <= 5; i++) {
+				if ( i <= page_num ) {
+					if (i==1) {
+			 			str += '<a id="page_n" class="current">' + (i).toString() + '</a>'
+			 		} else {
+			 			str += '<a id="page_n" class="">' + (i).toString() + '</a>'	
 			 		}
-			 	}
-			}
+			 	} else {
+			 		break;
+		 		}
+		 	}
 			$("div.pagination").text('');
 			if (page_num < 8){
 			$("div.pagination").append(str+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');

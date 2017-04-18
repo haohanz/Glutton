@@ -1,6 +1,6 @@
 // home_page and search.js
 
-var search_value = ""
+var search_value = "";
 $("#search_home_page").click(function(){
 	search_value = $("input[name='q']").val();
     // console.log("searched,the value is:"+search_value);
@@ -15,3 +15,12 @@ $("#search_home_page").click(function(){
 	console.log("search_value after post:"+search_value);
 });
 
+$(document).ready(function(){
+    $.getJSON("/initialize_homepage",{},function(data){
+        $("span#picture_nickname").html(data.nickname);
+    });
+});
+
+var jump_to_profile = function() {
+    window.location.href = "your_profile";
+}

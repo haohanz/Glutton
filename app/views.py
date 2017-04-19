@@ -66,11 +66,11 @@ def signup_submit():
     try:
         g.cursor.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL)" % (cno, nickname, password, mobile))
         print 'new user inserted into database!'
-        return jsonify({"status": 1, "cno": cno, "nickname": nickname, "mobile": mobile})
+        return jsonify({"status": 1, "USER_ID": cno, "nickname": nickname, "mobile": mobile})
     except Exception as e:
         print 'insert failed!'
         print traceback.format_exc()
-        return jsonify({"status": 0})
+        return jsonify({"ERROR": "Broken Pipe"})
 
 @app.route('/signin/_submit', methods = ['GET', 'POST'])
 def signin_submit():
@@ -98,11 +98,6 @@ def search_results_function():
     global s_r
     print 'in search_results, get search_value:',search_value
     return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":10,"total_result_len":13456})
-
-@app.route('/initialize_homepage', methods = ['GET','POST'])
-def initialize_homepage():
-    print '~~~'
-    return jsonify({"nickname":"this is a nickname"})
 
 @app.route('/upload_your_profile', methods = ['GET','POST'])
 def upload_your_profile():

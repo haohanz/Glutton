@@ -13,7 +13,7 @@ var signup = function() {
         } else {
             USER_ID = data.USER_ID;
             // window.open ('home_page.htm');
-            window.location.href = 'home_page?USER_ID='+USER_ID;
+            window.location.href = 'home_page?USER_ID='+USER_ID+'&nickname='+nickname;
             // window.location.replace("http://www.baidu.com");
         }
     });

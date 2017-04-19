@@ -98,8 +98,11 @@ def initialize_homepage():
     print '~~~'
     return jsonify({"nickname":"this is a nickname"})
 
-@app.route('/upload_profile', methods = ['GET','POST'])
-def upload_profile():
+@app.route('/upload_your_profile', methods = ['GET','POST'])
+def upload_your_profile():
+    NickName = request.args.get("NickName")
+    print 'get NickName:' , NickName
+    print "upload_profile";
     return ""
 
 @app.route('/change_password', methods = ['GET','POST'])

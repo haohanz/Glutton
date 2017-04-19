@@ -15,7 +15,7 @@ var search = function(page,current_div){
 		console.log("total_result_len:"+data.total_result_len);
 		$("span#total_result_len").text(data.total_result_len);
 		$("span#current_div").text(current_div);
-		if (page_num != data.page_num) {
+		if (page_num != data.page_num || page == 0) {
 			page_num = data.page_num;
 			var str = '<span class="previous_page disabled" onclick="previous_page()">Previous</span>';
 			for (var i = 1; i <= 5; i++) {

@@ -1,17 +1,14 @@
 // your_profile.js
 
-var upload_profile = function() {
+var upload_your_profile = function() {
 	var NickName = $("input#user_profile_name").val();
-	var gender = $("#user_profile_gender").find("option:selected");
+	// var gender = $("#user_profile_gender").find("option:selected");
 	var birthDay = $("input#user_profile_birthday").val();
 	var address = $("textarea#user_profile_add").val();
-	$.post("/upload_profile",{"NickName":NickName,"gender":gender,"birthDay":birthDay,"address":address},function(){
+	alert("to send:"+birthDay+address+NickName);
+	$.post("/upload_your_profile",{"NickName":NickName,"birthDay":birthDay,"address":address},function(){
 		alert("upload successfully!");
 	})
-}
-
-var change_div = function() {
-
 }
 
 $("a#menu-list").bind('click', function(){
@@ -53,7 +50,7 @@ var change_mobile_number = function() {
 	var new_mobile_number = $("input#new_mobile_number").val();
 	if (old_mobile_number && user_password && new_mobile_number) {
 		$.post("/change_mobile_number",{"old_mobile_number":old_mobile_number,"user_password":user_password,"new_mobile_number":new_mobile_number},function(){
-			alert("Update password succeed.");
+			alert("Update mobile number succeed.");
 		});
 	} else {
 		alert("Incomplete Inputs.");

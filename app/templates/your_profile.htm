@@ -185,7 +185,7 @@
 
       <div class="upload-state loading">
         <button type="button" class="btn mt-3 width-full text-center" disabled="">
-          <img alt="" class="v-align-text-bottom" height="16" src="../static/User_profile_files/octocat-spinner-32.gif" width="16"> Uploading...
+          <img alt="" class="v-align-text-bottom" height="16" width="16"> Uploading...
         </button>
       </div>
 
@@ -219,58 +219,52 @@
 <!-- BLOCK 1 : PROFILE START-->
 <div id="YourBasicProfile" name="display" style="display:;">
 
-  <div class="col-9 float-right">
-    
-  <!-- Public Profile -->
+  <div class="col-9 float-right">    
   <div class="Subhead mt-0 mb-0">
     <h2 class="Subhead-heading">Your basic profile</h2>
   </div>
-  <!-- '"` --><!-- </textarea></xmp> -->
 
+  <!-- <form accept-charset="UTF-8" class="columns js-uploadable-container js-upload-avatar-image is-default" data-alambic-owner-id="23527044" data-alambic-owner-type="User" novalidate="novalidate"> -->
 
-  <form accept-charset="UTF-8" class="columns js-uploadable-container js-upload-avatar-image is-default" data-alambic-owner-id="23527044" data-alambic-owner-type="User" data-upload-policy-authenticity-token="jYHEJ2Wha4hU5zpYYkY0zfHYgR5opn6v03JywFwpTIP4yYusCW60yLr4q2AcI24s8Ol+9efl5xai/KKCz3Y/cg==" data-upload-policy-url="/upload/policies/avatars" id="profile_23527044" method="post" novalidate="novalidate"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="put"><input name="authenticity_token" type="hidden" value="dX2FhCbGG56UwpT27zpvDQnwXMLAg6FuYX95StLIY0HA0SPpR5LME04F2kYFbTHWrYohjLo00jQfDk7Z26qCxw=="></div>
-
-
-      
+  <div style="margin:0;padding:0;display:inline">
+  </div>
       <div class="column two-thirds">
           <dl class="form-group">
-            <dt><label for="user_profile_name">Nickname</label></dt>
-            <dd><input class="form-control" id="user_profile_name" name="user[profile_name]" size="30" type="text" value=""></dd>
+            <dt><label>Nickname</label></dt>
+            <dd><input class="form-control" id="user_profile_name" size="30" type="text" value=""></dd>
           </dl>
         <dl class="form-group">
-          <dt><label for="user_profile_email">Gender</label></dt>
+          <dt><label>Gender</label></dt>
           <dd>
-              <select class="form-select" id="user_profile_gender" name="user[profile_email]">
+              <select class="form-select" id="user_profile_gender">
                 <option>Male</option>
                 <option>Female</option>
               </select>
           </dd>
         </dl>
         <dl class="form-group">
-            <dt><label for="user_profile_birthday">Birthday</label></dt>
-            <dd><input placeholder="MM/DD/YYYY" class="form-control" id="user_profile_birthday" name="user[profile_name]" size="30" type="text" value=""></dd>
+            <dt><label>Birthday</label></dt>
+            <dd><input placeholder="MM/DD/YYYY" class="form-control" id="user_profile_birthday" size="30" type="text" value=""></dd>
           </dl>
         <dl class="form-group">
-          <dt><label for="user_profile_bio">Address</label></dt>
+          <dt><label>Address</label></dt>
           <dd class="user-profile-bio-field-container js-suggester-container js-length-limited-input-container">
-            <textarea class="form-control user-profile-bio-field js-suggester-field js-length-limited-input" cols="40" data-input-max-length="160" data-warning-text="{{remaining}} remaining" id="user_profile_add" name="user[profile_bio]" placeholder="Tell a little about yourself" rows="20"></textarea>
+            <textarea class="form-control user-profile-bio-field js-suggester-field js-length-limited-input" cols="40" data-input-max-length="160" data-warning-text="{{remaining}} remaining" id="user_profile_add" placeholder="Tell a little about yourself" rows="20"></textarea>
             <p class="note">
               Please make sure we can reach you via this address.
             </p>
             <p class="js-length-limited-input-warning user-profile-bio-message d-none"></p>
             <div class="suggester-container">
-              <div class="suggester js-suggester js-navigation-container" data-url="/autocomplete/user-suggestions">
+              <div class="suggester js-suggester js-navigation-container" >
               </div>
             </div>
           </dd>
         </dl>
-
-
-       
-        <p><button type="submit" class="btn" onclick="upload_profile()">Update profile</button></p>
+        <p><button class="btn" onclick="upload_your_profile()">Update profile</button></p>
       </div>
-  </form>    
-  </div>
+  <!-- </form>   -->
+
+</div>
 </div>
 <!-- BLOCK 1 : PROFILE END-->
 
@@ -285,7 +279,7 @@
 
     <!-- Change Password -->
     <!-- '"` --><!-- </textarea></xmp> -->
-    <form accept-charset="UTF-8" class="edit_user" id="change_password">
+    <!-- <form accept-charset="UTF-8" class="edit_user" id="change_password"> -->
     <div style="margin:0;padding:0;display:inline">
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_old_password">Old password</label></dt>
@@ -304,11 +298,9 @@
         <span><a onclick="hhhhh()">I forgot my password</a></span>
       </p>
       <div id="hhhhh" style="display: none;">hahahahahahahahaha...</div>
-</form>      
-
-  </div>
 </div>
-</form>
+<!-- </form>       -->
+</div>
 </div>
 <!-- BLOCK 2 : CHANGE PASSWORD END-->
 <!-- BLOCK 3 : CHANGE MOBILE END-->
@@ -383,7 +375,12 @@
 
       <hr class="facebox-separator">
 
-      <!-- '"` --><!-- </textarea></xmp> --><form accept-charset="UTF-8" action="https://github.com/users/hh1680651" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="delete"><input name="authenticity_token" type="hidden" value="umbDWDxMZKyT7v0F83cHqD2YXtJsbukMjgaiO8a36vgMjQtawXbGjpL0pVzb8tgn2SrBBLSwpRVrxwfkteYrGA=="></div>
+      <!-- '"` --><!-- </textarea></xmp> -->
+
+      <form accept-charset="UTF-8" action="https://github.com/users/hh1680651">
+
+      <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓">
+      </div>
         <p>
           <label for="sudo_login">Your username or email:</label>
           <input type="text" id="sudo_login" name="sudo_login" class="form-control input-block" pattern="[hH][hH]1680651|591184145@[qQ][qQ]\.[cC][oO][mM]|14300240009@[fF][uU][dD][aA][nN]\.[eE][dD][uU]\.[cC][nN]" required="">
@@ -404,14 +401,15 @@
           </p>
 
           <button type="submit" class="btn btn-block btn-danger" data-disable-invalid="" disabled="">Cancel plan and delete this account</button>
-</form>    </div>
-  </div>
-</div>
+        </form>    
+      </div>
 </div>
 <!-- BLOCK 4 : DELETE ACCOUNT END-->
 
 
 
+</div>
+</div>
 
 
 

@@ -22,13 +22,6 @@ PRIMARY KEY(restaurant_id)
 );''')
 
 
-# In[99]:
-
-db.engine.execute("select * from restaurant").fetchall()
-
-
-# In[100]:
-
 db.engine.execute("""
 CREATE TABLE customer(
 customer_id CHAR(3) NOT NULL,

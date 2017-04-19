@@ -1,15 +1,27 @@
-
 import os,lp
-from flask import Flask, url_for,redirect,render_template,jsonify, request, send_from_directory
-from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
+import traceback
+from flask import Flask, url_for,redirect,render_template,jsonify, request, g, session, flash
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import SubmitField
-from app import app
+from app import app, db, lm
+from config import SQLALCHEMY_DATABASE_LOC
+import sqlite3
+
+@app.before_request
+def before_request():
+    g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)
+    g.cursor = g.conn.cursor()
+
+@app.teardown_request
+def teardown_request(exception):
+    if hasattr(g, 'cursor'):
+        g.cursor.close()
+    if hasattr(g, 'conn'):
+        g.conn.close()
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/front_page', methods = ['GET', 'POST'])
-# @login_required
 def index():
     return render_template('front_page.htm')
 
@@ -18,6 +30,7 @@ def signup():
     return render_template('signup.htm')
 
 @app.route('/home_page', methods = ['GET', 'POST'])
+# @login_required
 def home_page():
     return render_template('home_page.htm')
 
@@ -35,18 +48,9 @@ def search_results():
     return render_template('search_results.htm')
 
 
-# class RegexConverter(BaseConverter):
-#     def __init__(self, map, *args):
-#         self.map = map
-#         self.regex = args[0]
-
-# app = Flask(__name__)
-# app.url_map.converters['regex'] = RegexConverter
-
-# @app.route('/<regex(".*htm"):url>', methods = ['GET', 'POST'])
-# def signup(url):
-#     print url
-#     return render_template(url)
+def get_user_no():
+    total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
+    return '0' * (2 - total_user_num) + str(total_user_num)
 
 @app.route('/signup/_submit', methods = ['GET', 'POST'])
 def signup_submit():
@@ -55,16 +59,18 @@ def signup_submit():
     nickname = request.args.get("nickname")
     password = request.args.get("password")
     print request.values
-    print 'mobile : ',mobile
-    print 'password : ',password
-    print 'nickname : ',nickname
-    if nickname and password and mobile:
-        print 'success!'
-        return jsonify({"USER_ID":"11267890"})
-    else:
-        print 'fail'
-        return jsonify({"ERROR":'Invalid Input'})
-
+    print 'mobile : ', mobile
+    print 'password : ', password
+    print 'nickname : ', nickname
+    cno = get_user_no()
+    try:
+        g.cursor.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL)" % (cno, nickname, password, mobile))
+        print 'new user inserted into database!'
+        return jsonify({"status": 1, "cno": cno, "nickname": nickname, "mobile": mobile})
+    except Exception as e:
+        print 'insert failed!'
+        print traceback.format_exc()
+        return jsonify({"status": 0})
 
 @app.route('/signin/_submit', methods = ['GET', 'POST'])
 def signin_submit():
@@ -116,7 +122,6 @@ def change_mobile_number():
 @app.route('/delete_account', methods = ['GET','POST'])
 def delete_account():
     return ""
-
 
 
 

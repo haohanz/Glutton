@@ -60,7 +60,7 @@ def signup_submit():
     print 'nickname : ',nickname
     if nickname and password and mobile:
         print 'success!'
-        return "1"
+        return jsonify({"USER_ID":"11267890"})
     else:
         print 'fail'
         return jsonify({"ERROR":'Invalid Input'})

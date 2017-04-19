@@ -16,6 +16,14 @@ $("#search_home_page").click(function(){
 });
 
 $(document).ready(function(){
+    var url = location.search; //获取url中"?"符后的字串
+    alert("url is:"+url);
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        USER_ID = str.split("=")[1];
+
+    }
     $.getJSON("/initialize_homepage",{},function(data){
         $("span#picture_nickname").html(data.nickname);
     });

@@ -1,4 +1,5 @@
 // signup.js
+var USER_ID = "";
 var signup = function() {
 	nickname = $("input[name='user[login]']").val();
     password = $("input[name='user[password]']").val();
@@ -10,7 +11,9 @@ var signup = function() {
             alert("get unsuccess response!");
             alert(data.ERROR);
         } else {
-            window.location.href = 'home_page';
+            USER_ID = data.USER_ID;
+            // window.open ('home_page.htm');
+            window.location.href = 'home_page?USER_ID='+USER_ID;
             // window.location.replace("http://www.baidu.com");
         }
     });

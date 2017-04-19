@@ -20,11 +20,11 @@ $(document).ready(function(){
     alert("url is:"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
-        var USER_ID = str.split("=")[1];
+        var USER_ID = str.split("&")[0].split("=")[1];
+        var nickname = str.split("&")[1].split("=")[1];
+        $("span#picture_nickname").html(nickname);
+        $("span#USER_ID").html(USER_ID);
     }
-    $.getJSON("/initialize_homepage",{},function(data){
-        $("span#picture_nickname").html(data.nickname);
-    });
 });
 
 var jump_to_profile = function() {

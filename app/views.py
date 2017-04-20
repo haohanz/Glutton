@@ -47,6 +47,9 @@ def signin():
 def search_results():
     return render_template('search_results.htm')
 
+@app.route('/restaurant_home_page', methods = ['GET', 'POST'])
+def restaurant_home_page():
+    return render_template('restaurant_home_page.htm')
 
 def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
@@ -55,23 +58,19 @@ def get_user_no():
 @app.route('/signup/_submit', methods = ['GET', 'POST'])
 def signup_submit():
     print 'get request'
-    mobile = request.args.get("mobile")
-    nickname = request.args.get("nickname")
-    password = request.args.get("password")
-    print request.values
-    print 'mobile : ', mobile
-    print 'password : ', password
-    print 'nickname : ', nickname
-    cno = get_user_no()
+    customer_mobile_number = request.args.get("customer_mobile_number")
+    customer_nickname = request.args.get("customer_nickname")
+    customer_password = request.args.get("customer_password")
+    customer_id = get_user_no()
     try:
-        g.cursor.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL)" % (cno, nickname, password, mobile))
+        g.cursor.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL)" \
+                         % (customer_id,  customer_nickname, customer_password, customer_mobile_number))
         print 'new user inserted into database!'
-        return jsonify({"status": 1, "USER_ID": cno, "nickname": nickname, "mobile": mobile})
+        return jsonify({"status": 0, "customer_id": customer_id, "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number})
     except Exception as e:
         print 'insert failed!'
         print traceback.format_exc()
-        return jsonify({"ERROR": "Broken Pipe"})
-
+        return jsonify({"ERROR": "Registration failed! Please try again..."})
 @app.route('/signin/_submit', methods = ['GET', 'POST'])
 def signin_submit():
     mobile = request.args.get("mobile")
@@ -91,7 +90,7 @@ def search():
     print 'search_value',search_value
     return "1"
 
-s_r = [{'name':'name1','count':'count1'},{'name':'name2','count':'count2'}]
+s_r = [{'name':'name1','count':'count1',"restaurant_id":200},{'name':'name2','count':'count2',"restaurant_id":100}]
 @app.route('/search_results_function', methods = ['GET', 'POST'])
 def search_results_function():
     global search_value 

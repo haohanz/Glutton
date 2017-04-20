@@ -48,14 +48,16 @@ var search = function(page,current_div){
 			eval(eachData);
 			var name = eachData.name;
 			var count = eachData.count;
+			var restaurant_id = eachData.restaurant_id;
+			// alert("restaurant_id"+restaurant_id);
 			var str = '\
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
 					<h3>\
-					<a href="https://github.com/helmetjs/csp" class="v-align-middle">'+name+'</a>\
+					<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'" class="v-align-middle">'+name+'</a>\
 					</h3>\
 					<p class="col-9 d-inline-block text-gray mb-2 pr-4">\
-					'+name+'\
+					'+restaurant_id+'\
 					</p>\
 					<div class="topics-row-container col-9 d-inline-flex flex-wrap flex-items-center f6 my-1">\
 					<a href="https://github.com/search?q=topic%3Ajavascript+org%3Ahelmetjs&amp;type=Repositories" class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:javascript,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\

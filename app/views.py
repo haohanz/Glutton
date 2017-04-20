@@ -78,14 +78,14 @@ def signin_submit():
         if result:
             customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_discription, customer_gender, customer_appellation = result[0]
             if customer_password == db_password:
-                return jsonify{"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_discription": customer_discription, "customer_gender": customer_gender, "customer_appellation": customer_appellation}
+                return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_discription": customer_discription, "customer_gender": customer_gender, "customer_appellation": customer_appellation})
         else:
             print 'User not exist!'
-            return jsonify{"ERROR": "User not exist."}
+            return jsonify({"ERROR": "User not exist."})
     except Exception as e:
         print 'login failed!'
         print traceback.format_exc()
-        return jsonify{"ERROR": "Sign in failed, please try again later."}
+        return jsonify({"ERROR": "Sign in failed, please try again later."})
 
 search_value = ""
 @app.route('/search', methods = ['GET', 'POST'])

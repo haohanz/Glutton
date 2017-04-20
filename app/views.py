@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import os,lp
 import traceback
 from flask import Flask, url_for,redirect,render_template,jsonify, request, g, session, flash
@@ -58,9 +59,12 @@ def signup_submit():
     customer_mobile_number = request.args.get("customer_mobile_number")
     customer_nickname = request.args.get("customer_nickname")
     customer_password = request.args.get("customer_password")
+    print customer_mobile_number
+    print customer_nickname
+    print customer_password
     customer_id = get_user_no()
     try:
-        g.cursor.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL)" \
+        db.engine.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL)" \
                          % (customer_id,  customer_nickname, customer_password, customer_mobile_number))
         print 'new user inserted into database!'
         return jsonify({"status": 0, "customer_id": customer_id, "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number})
@@ -99,24 +103,31 @@ def jsonify_restaurant(restaurant):
                  "delivery_fee", "base_delivery_price", "time_span", "open_time", "total_month_sale", "restaurant_description")
     return dict(key_words, restaurant)
 
+def jsonify_customer(customer):
+    key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", "restaurant_addresss",\
+                 "delivery_fee", "base_delivery_price", "time_span", "open_time", "total_month_sale", "restaurant_description")
+    return dict(key_words, customer)
+
 @app.route('/search', methods = ['GET', 'POST'])
 def search():
     search_value = request.args.get("search_value")
-    try:
-        result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%'" % (search_value)).fetchall()
-        for res in result:
-            print jsonify_restaurant(res)
-    except:
-        pass
+
     # print 'search_value',search_value
     return "1"
 
 @app.route('/search_results_function', methods = ['GET', 'POST'])
 def search_results_function():
     search_value = request.args.get("search_value")
-
-    print 'in search_results, get search_value:',search_value
-    return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":10,"total_result_len":13456})
+    print search_value
+    try:
+        result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%'" % (search_value)).fetchall()
+        print result
+        restaurant_result = []
+        for res in result:
+            restaurant_result.append(jsonify_restaurant())
+        return jsonify({"restaurants":restaurant_result})
+    except:
+        pass
 
 @app.route('/initialize_homepage', methods = ['GET','POST'])
 def initialize_homepage():

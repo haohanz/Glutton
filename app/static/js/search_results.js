@@ -5,11 +5,12 @@ var dishes = "Dishes";
 var current_div = restaurant;
 var initialized = false;
 var page_num = 0;
-var search = function(page,current_div){
+var search_value = "";
+var search = function(page,current_div,search_content){
 	$("div#tofill").text('');
 	console.log("hello");
 
-	$.post("search_results_function",{"page":page,"current_div":current_div},function(data){
+	$.post("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div},function(data){
 		console.log("getting json:"+data.search_results);
 		console.log("page_num:"+data.page_num);
 		console.log("total_result_len:"+data.total_result_len);
@@ -94,14 +95,7 @@ var search = function(page,current_div){
 		});
 	});
 }
-// $("div.paginate-container").add(function(){
-// 	$(this).children("a").click(function(){
-// 	console.log("console");
-// 	var page = $(this).val();
-// 	console.log("page"+$(this).val());
-// 	search(page);
-// });
-// });
+
 
 
 var toPage = function(page, obj) {
@@ -119,7 +113,7 @@ var toPage = function(page, obj) {
 	console.log("page:"+page);
 	$("a.current").attr("class",'');
 	$(obj).attr("class","current");
-	search(parseInt(page), current_div);
+	search(parseInt(page), current_div, search_value);
 }
 
 
@@ -127,14 +121,14 @@ var getDishes = function() {
 	$("a#getDishes").attr("class","underline-nav-item selected");
 	$("a#getRestaurants").attr("class","underline-nav-item");
 	current_div = dishes;
-	search(0, current_div);
+	search(0, current_div, search_value);
 }
 
 var getRestaurants = function() {
 	$("a#getDishes").attr("class","underline-nav-item");
 	$("a#getRestaurants").attr("class","underline-nav-item selected");
 	current_div = restaurant;
-	search(0, current_div);
+	search(0, current_div, search_value);
 }
 
 var next_page = function() {
@@ -199,7 +193,19 @@ var previous_page = function() {
 }
 
 $(document).ready(function(){
-	search(0,"Restaurants");
+	var url = location.search;
+    alert("url is:"+url);
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var url_vars = {}
+        var str_split = str.split("&");
+        for (var i = 0; i < str_split.length; i++) {
+        	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
+        }
+        search_value = url_vars["search_value"];
+        alert("search_value" + search_value);
+    	search(0,"Restaurants", search_value);
+    }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
 });
 

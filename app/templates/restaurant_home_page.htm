@@ -4,11 +4,11 @@
     
 
 <!-- <meta content="origin-when-cross-origin" name="referrer"> -->
+  <meta http-equiv="pragma" content="no-cache"/>
 
   <link crossorigin="anonymous" href="../static/GitHub for Business - Git hosting software for businesses · GitHub_files/frameworks-223154a4264e621d49411c69fd71062cb152480ce2de3bde5ae285e801db7185.css" integrity="sha256-IjFUpCZOYh1JQRxp/XEGLLFSSAzi3jveWuKF6AHbcYU=" media="all" rel="stylesheet">
   <link crossorigin="anonymous" href="../static/GitHub for Business - Git hosting software for businesses · GitHub_files/github-11c46449861d69b02a101da2d9e4232e7213635a4d2839dde7e30604f59cf718.css" integrity="sha256-EcRkSYYdabAqEB2i2eQjLnITY1pNKDnd5+MGBPWc9xg=" media="all" rel="stylesheet">
   <link crossorigin="anonymous" href="../static/GitHub for Business - Git hosting software for businesses · GitHub_files/site-d826c765b656f31c7d808168e332aa14ccb724820f292ecd2dfb74b156e2ebde.css" integrity="sha256-2CbHZbZW8xx9gIFo4zKqFMy3JIIPKS7NLft0sVbi694=" media="all" rel="stylesheet">
-  
 
   <meta name="viewport" content="width=device-width">
   
@@ -127,14 +127,7 @@
   <div class="container collection-page">
     <div class="columns">
       <div class="column two-thirds">
-        <div class="subnav">
-            <a class="subnav-item selected" href="https://github.com/showcases/emoji?s=stars">
-              Stars
-            </a>
-            <a class="subnav-item " href="https://github.com/showcases/emoji?s=language">
-              Language
-            </a>
-        </div>
+
 
         <ul class="repo-list showcase-page-repo-list">
             <li class="repo-list-item repo-list-item-with-avatar">
@@ -151,25 +144,12 @@
 
                 <div class="col-3 float-right">
                   
-<span class="d-inline-block tooltipped tooltipped-s" aria-label="Past year of activity">
-  <svg width="155" height="30">
-    <defs>
-      <lineargradient id="gradient-26291683" x1="0" x2="0" y1="1" y2="0">
-          <stop offset="10%" stop-color="#c6e48b"></stop>
-          <stop offset="33%" stop-color="#7bc96f"></stop>
-          <stop offset="66%" stop-color="#239a3b"></stop>
-          <stop offset="90%" stop-color="#196127"></stop>
-      </lineargradient>
-      <mask id="sparkline-26291683" x="0" y="0" width="155" height="28">
-        <polyline transform="translate(0, 28) scale(1,-1)" points="0,1.0 3,3.0 6,1.0 9,1.0 12,1.0 15,1.0 18,1.0 21,3.0 24,1.0 27,1.0 30,3.0 33,1.0 36,6.0 39,3.0 42,1.0 45,1.0 48,1.0 51,1.0 54,4.0 57,6.0 60,1.0 63,1.0 66,3.0 69,2.0 72,4.0 75,1.0 78,1.0 81,1.0 84,1.0 87,1.0 90,2.0 93,1.0 96,1.0 99,3.0 102,1.0 105,6.0 108,2.0 111,1.0 114,1.0 117,1.0 120,1.0 123,1.0 126,6.0 129,1.0 132,1.0 135,1.0 138,1.0 141,1.0 144,1.0 147,3.0 150,3.0 153,1.0 " fill="transparent" stroke="#8cc665" stroke-width="2">
-      </polyline></mask>
-    </defs>
+<div width="155" height="30">
+<a class="btn btn-sm disabled" id="cut_dish">Cut</a>
+<a class="js-social-count" id="dish_count">0</a>
+<a class="btn btn-sm btn-primary" id="add_dish">Add</a>
+</div>
 
-    <g transform="translate(0, -9.5)">
-      <rect x="0" y="-2" width="155" height="30" style="stroke: none; fill: url(#gradient-26291683); mask: url(#sparkline-26291683)"></rect>
-    </g>
-  </svg>
-</span>
 
                 </div>
               </div>
@@ -206,25 +186,11 @@
 
                 <div class="col-3 float-right">
                   
-<span class="d-inline-block tooltipped tooltipped-s" aria-label="Past year of activity">
-  <svg width="155" height="30">
-    <defs>
-      <lineargradient id="gradient-2592600" x1="0" x2="0" y1="1" y2="0">
-          <stop offset="10%" stop-color="#c6e48b"></stop>
-          <stop offset="33%" stop-color="#7bc96f"></stop>
-          <stop offset="66%" stop-color="#239a3b"></stop>
-          <stop offset="90%" stop-color="#196127"></stop>
-      </lineargradient>
-      <mask id="sparkline-2592600" x="0" y="0" width="155" height="28">
-        <polyline transform="translate(0, 28) scale(1,-1)" points="0,2.0 3,1.0 6,1.0 9,2.0 12,1.0 15,1.0 18,2.0 21,13.0 24,5.0 27,1.0 30,3.0 33,1.0 36,1.0 39,1.0 42,1.0 45,1.0 48,1.0 51,1.0 54,1.0 57,1.0 60,1.0 63,1.0 66,1.0 69,1.0 72,1.0 75,1.0 78,1.0 81,1.0 84,1.0 87,1.0 90,1.0 93,1.0 96,1.0 99,1.0 102,1.0 105,1.0 108,1.0 111,1.0 114,1.0 117,1.0 120,1.0 123,1.0 126,1.0 129,1.0 132,1.0 135,1.0 138,1.0 141,1.0 144,1.0 147,1.0 150,1.0 153,1.0 " fill="transparent" stroke="#8cc665" stroke-width="2">
-      </polyline></mask>
-    </defs>
-
-    <g transform="translate(0, -6.0)">
-      <rect x="0" y="-2" width="155" height="30" style="stroke: none; fill: url(#gradient-2592600); mask: url(#sparkline-2592600)"></rect>
-    </g>
-  </svg>
-</span>
+<div width="155" height="30">
+<a class="btn btn-sm disabled" id="cut_dish">Cut</a>
+<a class="js-social-count" id="dish_count">0</a>
+<a class="btn btn-sm btn-primary" id="add_dish">Add</a>
+</div>
 
                 </div>
               </div>
@@ -250,12 +216,9 @@
 
 
         </ul>
-
-          <div class="flash flash-warn mt-3">
-            <a href="https://github.com/join" class="float-left btn btn-primary mr-3" rel="nofollow">Sign up for free</a>
-            <strong>Get involved with these projects and more.</strong>
-            <p class="m-0">Already have an account? <a href="https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2Fshowcases%2Femoji" rel="nofollow">Sign in now</a></p>
-          </div>
+        <div style="margin: 0 auto" align="center">
+            <a href="#" style="text-align: center; width: 95%;margin: 0 auto;" class="float-left btn btn-primary mr-3" rel="nofollow">Submit Order</a>
+        </div>
       </div>
 
       <div class="column one-third showcase-page-sidebar">
@@ -388,9 +351,6 @@
     </button>
   </div>
 </div>
-
-
-  
 
 </body></html>
 <script src="../static/js/jquery-3.1.1.min.js"></script>

@@ -30,3 +30,4 @@ $(document).ready(function(){
 var jump_to_profile = function() {
     window.location.href = "your_profile";
 }
+

@@ -8,7 +8,6 @@ var signup = function() {
     $.getJSON('/signup/_submit',{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname},function(data){
         console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
         if (data.ERROR) {
-            alert("get unsuccess response!");
             alert(data.ERROR);
         } else {
             customer_id = data.customer_id;
@@ -18,3 +17,20 @@ var signup = function() {
         }
     });
 }
+
+$(document).ready(function(){
+    var url = location.search;
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var who = str.split("&")[0].split("=")[1];
+        if (who=='business'){
+            var owner = true;
+            $("h1").html('Sign up as owner');
+            $("a#navi.selected").attr("class","js-selected-navigation-item nav-item");
+            $("a[name='Business']").attr("class",'js-selected-navigation-item nav-item selected');
+        } else {
+        }
+        $("span#picture_nickname").html(nickname);
+        $("span#USER_ID").html(customer_id);
+    }
+})

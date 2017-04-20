@@ -37,3 +37,9 @@ $("a#add_dish").bind("click",function(){
     }
     $(this).prev("a#dish_count:first").html((dish_num+1).toString());
 });
+
+var submit_order = function() {
+    $("a#submit_order").addClass("disabled");
+    $("")
+    // $.getJSON();
+}

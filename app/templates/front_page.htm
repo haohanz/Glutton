@@ -4,7 +4,8 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
 
-<meta content="origin-when-cross-origin" name="referrer">
+<!-- <meta content="origin-when-cross-origin" name="referrer"> -->
+  <meta http-equiv="pragma" content="no-cache"/>
 
   <link crossorigin="anonymous" href="../static/GitHub for Business - Git hosting software for businesses · GitHub_files/frameworks-223154a4264e621d49411c69fd71062cb152480ce2de3bde5ae285e801db7185.css" integrity="sha256-IjFUpCZOYh1JQRxp/XEGLLFSSAzi3jveWuKF6AHbcYU=" media="all" rel="stylesheet">
   <link crossorigin="anonymous" href="../static/GitHub for Business - Git hosting software for businesses · GitHub_files/github-11c46449861d69b02a101da2d9e4232e7213635a4d2839dde7e30604f59cf718.css" integrity="sha256-EcRkSYYdabAqEB2i2eQjLnITY1pNKDnd5+MGBPWc9xg=" media="all" rel="stylesheet">
@@ -53,15 +54,11 @@
     <div class="site-header-menu">
     
       <nav class="site-header-nav">
-        <a href="https://github.com/features" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:features" data-selected-links="/features /features">
-          Features
-</a>        <a href="https://github.com/business" class="js-selected-navigation-item selected nav-item" data-ga-click="Header, click, Nav menu - item:business" data-selected-links="/business /business/security /business/customers /business">
-          Business
-</a>        <a href="https://github.com/explore" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:explore" data-selected-links="/explore /trending /trending/developers /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship /showcases /explore">
-          Explore
-</a>        <a href="https://github.com/pricing" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:pricing" data-selected-links="/pricing /pricing">
-          Pricing
-</a>      </nav>
+        <a href="#" id="navi" class="js-selected-navigation-item selected nav-item" data-ga-click="Header, click, Nav menu - item:features" data-selected-links="/features /features">Customer</a>        
+        <a name="Business" href="#" id="navi" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:business" data-selected-links="/business /business/security /business/customers /business">Business</a>        
+        <a href="#" id="navi" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:explore" data-selected-links="/explore /trending /trending/developers /integrations /integrations/feature/code /integrations/feature/collaborate /integrations/feature/ship /showcases /explore">Explore</a>        
+        <a href="#" id="navi" class="js-selected-navigation-item nav-item" data-ga-click="Header, click, Nav menu - item:pricing" data-selected-links="/pricing /pricing">Pricing</a>
+      </nav>
 
       <div class="site-header-actions">
           <div class="header-search   js-site-search" role="search">
@@ -95,24 +92,26 @@
 
   <div role="main">
         
-<div class="jumbotron jumbotron-business">
+<div class="jumbotron" style="background-image: url(../static/img/front_page_bg_img.jpg);background-repeat: no-repeat;background-size: 100% 100%;">
   <div class="container-responsive text-center text-white pb-5">
-    <h1 class="alt-h1 lh-condensed mb-3">Welcome to Glutton!</h1>
-    <p class="alt-lead mb-6 col-md-8 mx-auto">
+    <h1 id="main_title" class="alt-h1 lh-condensed mb-3" style="color: #CC00CC"><strong>Welcome to Glutton!</strong></h1>
+    <p class="alt-lead mb-6 col-md-8 mx-auto" style="color: #FF3399">
       Glutton is a website designed for those who can't stop eating, you can search your favorite food in Zhangjiang.
     </p>
+
+    <!-- 4270cf -->
 
     <div class="d-sm-flex col-10 col-sm-12 col-lg-8 mx-auto">
       <div class="col-sm-6 pr-sm-2 pr-md-3 pl-md-5 mb-4 mb-sm-0">
 
           <div class="rounded-2 box-shadow-medium">
-            <a href="signin" class="btn btn-large btn-blurple btn-block f3 mx-auto border-0">Sign in</a>
+            <a id="jump_to_signin" href="signin" class="btn btn-large btn-blurple btn-block f3 mx-auto border-0">Sign in</a>
           </div>
 
 
       </div>
           <div class="rounded-2 box-shadow-medium">
-            <a href="signup" style="width: 279px" class="btn btn-large btn-block btn-purple f3 mx-auto border-0" class="btn btn-large btn-blurple btn-block f3 mx-auto border-0">Sign up</a>
+            <a id="jump_to_signup" href="signup" style="width: 279px" class="btn btn-large btn-block btn-purple f3 mx-auto border-0" class="btn btn-large btn-blurple btn-block f3 mx-auto border-0">Sign up</a>
           </div>
 
       </div>
@@ -230,3 +229,6 @@
 
 
 </body></html>
+<script src="../static/js/jquery-3.1.1.min.js"></script>
+<script src="../static/js/navi.js"></script>
+<script src="../static/js/front_page.js"></script>

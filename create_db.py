@@ -27,7 +27,7 @@ CREATE TABLE customer(
 customer_id CHAR(3) NOT NULL,
 customer_nickname CHAR(20) NOT NULL,
 customer_password CHAR(20) NOT NULL,
-customer_mobile_number CHAR(20) NOT NULL,
+customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
 customer_discription CHAR(100),
 customer_gender CHAR(20),

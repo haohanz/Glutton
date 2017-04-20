@@ -47,6 +47,9 @@ def signin():
 def search_results():
     return render_template('search_results.htm')
 
+@app.route('/restaurant_home_page', methods = ['GET', 'POST'])
+def restaurant_home_page():
+    return render_template('restaurant_home_page.htm')
 
 def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
@@ -68,6 +71,7 @@ def signup_submit():
         print 'insert failed!'
         print traceback.format_exc()
         return jsonify({"ERROR": "Registration failed! Please try again..."})
+
 
 @app.route('/signin/_submit', methods = ['GET', 'POST'])
 def signin_submit():
@@ -95,7 +99,7 @@ def search():
     print 'search_value',search_value
     return "1"
 
-s_r = [{'name':'name1','count':'count1'},{'name':'name2','count':'count2'}]
+s_r = [{'name':'name1','count':'count1',"restaurant_id":200},{'name':'name2','count':'count2',"restaurant_id":100}]
 @app.route('/search_results_function', methods = ['GET', 'POST'])
 def search_results_function():
     global search_value 

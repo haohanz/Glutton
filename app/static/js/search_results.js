@@ -8,9 +8,8 @@ var page_num = 0;
 var search_value = "";
 var search = function(page,current_div,search_content){
 	$("div#tofill").text('');
-	console.log("hello");
-
-	$.post("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div},function(data){
+	alert("search_value"+search_content);
+	$.getJSON("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div},function(data){
 		console.log("getting json:"+data.search_results);
 		console.log("page_num:"+data.page_num);
 		console.log("total_result_len:"+data.total_result_len);
@@ -203,7 +202,6 @@ $(document).ready(function(){
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
         search_value = url_vars["search_value"];
-        alert("search_value" + search_value);
     	search(0,"Restaurants", search_value);
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});

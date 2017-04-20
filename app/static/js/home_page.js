@@ -5,7 +5,7 @@ $("#search_home_page").click(function(){
 	search_value = $("input[name='q']").val();
     // console.log("searched,the value is:"+search_value);
     // console.log("searched,the page is:"+page);
-	window.location.href="search_results?search_vale="+search_value;
+	window.location.href="search_results?search_value="+search_value;
 });
 
 $(document).ready(function(){

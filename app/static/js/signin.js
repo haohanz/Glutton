@@ -13,6 +13,8 @@ var signin = function() {
     var password = $("input[name='password']").val();
     var mobile = $("input[name='login']").val();
     alert("who"+who);
+    alert("password"+password);
+    alert("mobile"+mobile);
     $.getJSON('/signin/_submit',{"customer_password":password,"customer_mobile_number":mobile,"who":who},function(data){
         if (data.ERROR) {
             alert(data.ERROR);

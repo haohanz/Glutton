@@ -1,10 +1,7 @@
 import os,lp
 import traceback
 from flask import Flask, url_for,redirect,render_template,jsonify, request, g, session, flash
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import SubmitField
-from app import app, db, lm
+from app import app, db
 from config import SQLALCHEMY_DATABASE_LOC
 import sqlite3
 
@@ -76,34 +73,48 @@ def signup_submit():
 @app.route('/signin/_submit', methods = ['GET', 'POST'])
 def signin_submit():
     customer_mobile_number = request.args.get("customer_mobile_number")
+    print customer_mobile_number
     customer_password = request.args.get("customer_password")
+    print customer_password
+
     try:
-        result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile = '%s'" % (customer_mobile_number)).fetchall()
+        result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
+        print result
         if result:
             customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_discription, customer_gender, customer_appellation = result[0]
             if customer_password == db_password:
                 return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_discription": customer_discription, "customer_gender": customer_gender, "customer_appellation": customer_appellation})
+            else:
+                return jsonify({"ERROR": "Wrong username or password."})
         else:
             print 'User not exist!'
             return jsonify({"ERROR": "User not exist."})
     except Exception as e:
         print 'login failed!'
-        print traceback.format_exc()
+        print traceback.format_exc(e)
         return jsonify({"ERROR": "Sign in failed, please try again later."})
 
-search_value = ""
+def jsonify_restaurant(restaurant):
+    key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", "restaurant_addresss",\
+                 "delivery_fee", "base_delivery_price", "time_span", "open_time", "total_month_sale", "restaurant_description")
+    return dict(key_words, restaurant)
+
 @app.route('/search', methods = ['GET', 'POST'])
 def search():
-    global search_value 
     search_value = request.args.get("search_value")
-    print 'search_value',search_value
+    try:
+        result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%'" % (search_value)).fetchall()
+        for res in result:
+            print jsonify_restaurant(res)
+    except:
+        pass
+    # print 'search_value',search_value
     return "1"
 
-s_r = [{'name':'name1','count':'count1',"restaurant_id":200},{'name':'name2','count':'count2',"restaurant_id":100}]
 @app.route('/search_results_function', methods = ['GET', 'POST'])
 def search_results_function():
-    global search_value 
-    global s_r
+    search_value = request.args.get("search_value")
+
     print 'in search_results, get search_value:',search_value
     return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":10,"total_result_len":13456})
 
@@ -130,12 +141,4 @@ def change_mobile_number():
 @app.route('/delete_account', methods = ['GET','POST'])
 def delete_account():
     return ""
-
-
-
-
-
-
-
-
 

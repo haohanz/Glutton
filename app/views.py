@@ -129,6 +129,10 @@ def search_results_function():
     except:
         pass
 
+    print 'in search_results, get search_value:',search_value
+    return ""
+    # return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":10,"total_result_len":13456})
+
 @app.route('/initialize_homepage', methods = ['GET','POST'])
 def initialize_homepage():
     print '~~~'

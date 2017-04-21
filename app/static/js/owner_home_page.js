@@ -17,8 +17,8 @@ $(document).ready(function(){
         for (var i = 0; i < url_var.length; i++) {
             url_vars[url_var[i].split("=")[0]] = url_var[i].split("=")[1];
         }
-        $("span#picture_nickname").html(url_vars["customer_nickname"]);
-        $("span#USER_ID").html(url_vars["customer_id"]);
+        $("span#picture_nickname").html(url_vars["restaurant_name"]);
+        $("span#USER_ID").html(url_vars["restaurant_id"]);
     }
 });
 

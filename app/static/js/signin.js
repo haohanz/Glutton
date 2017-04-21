@@ -22,8 +22,8 @@ var signin = function() {
             if (who == 'business') {
                 window.location.href="owner_home_page?restaurant_id="+data.restaurant_id+
                 "&owner_nickname="+data.owner_nickname+
+                "&restaurant_name="+data.restaurant_name+
                 // '&customer_mobile_number='+data.customer_mobile_number+
-                "&owner_nickname="+data.owner_nickname+
                 // "&customer_discription="+data.customer_discription+
                 "&restaurant_address="+data.restaurant_address+
                 "&restaurant_description="+data.restaurant_description;
@@ -50,6 +50,7 @@ $(document).ready(function(){
             who = "restaurant";
             $("h1").children("strong").html('Sign in as owner');
         } else {
+            
         }
         $("span#picture_nickname").html(nickname);
         $("span#USER_ID").html(customer_id);

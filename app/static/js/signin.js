@@ -19,6 +19,16 @@ var signin = function() {
         if (data.ERROR) {
             alert(data.ERROR);
         } else {
+            if (who == 'business') {
+                window.location.href="owner_home_page?restaurant_id="+data.restaurant_id+
+                "&owner_nickname="+data.owner_nickname+
+                // '&customer_mobile_number='+data.customer_mobile_number+
+                "&owner_nickname="+data.owner_nickname+
+                // "&customer_discription="+data.customer_discription+
+                "&restaurant_address="+data.restaurant_address+
+                "&restaurant_description="+data.restaurant_description;
+                "$who"+who;
+            } else {
             window.location.href="home_page?customer_id="+data.customer_id+
                 "&customer_nickname="+data.customer_nickname+
                 '&customer_mobile_number='+data.customer_mobile_number+
@@ -26,6 +36,7 @@ var signin = function() {
                 "&customer_discription="+data.customer_discription+
                 "&customer_address="+data.customer_address;
                 "$who"+who;
+            }
         }
     });
 }

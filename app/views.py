@@ -182,6 +182,10 @@ def jsonify_customer(customer):
                  "customer_address", "customer_description", "customer_appellation")
     return dict(zip(key_words, customer))
 
+def jsonify_dish(dish):
+    key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale")
+    return dict(zip(key_words, dish))
+
 def jsonify_dish_with_restaurant_name(dish):
     key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale", "restaurant_name")
     return dict(zip(key_words, dish))
@@ -324,18 +328,36 @@ def get_restaurant_detail():
 
 @app.route('/get_user_history', methods= ['GET', 'POST'])
 def get_user_history():
-    # TODO
     pass
 
 @app.route('/get_restaurant_history', methods=['GET', 'POST'])
 def get_restaurant_history():
-    # TODO
     pass
 
 @app.route('/submit_order', methods=['GET', 'POST'])
 def submit_order():
+    # TODO
     dish_counts = eval(request.args.get("dish_counts"))
     customer_id = request.args.get("customer_id")
     restaurant_id = request.args.get("restaurant_id")
 
+@app.route('/change_restaurant_password', methods=['GET', 'POST'])
+def change_restaurant_password():
+    pass
+
+@app.route('/upload_restaurant_profile', methods=['GET', 'POST'])
+def upload_restaurant_profile():
+    pass
+
+@app.route('/change_dish', methods=['GET', 'POST'])
+def change_dish():
+    pass
+
+@app.route('/receive_order', methods=['GET', 'POST'])
+def receive_order():
+    pass
+
+@app.route('/change_restaurant_password', methods=['GET', 'POST'])
+def change_restaurant_password():
+    pass
 

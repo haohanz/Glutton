@@ -22,8 +22,9 @@ var signup = function() {
         alert("who"+who);
         customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
+        customer_mobile_number = $("input[name='user[email]']").val();
         alert("get from html:"+customer_nickname + customer_password);
-        $.getJSON('/restaurant_signin_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname},function(data){
+        $.getJSON('/restaurant_signup_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname,"restaurant_name":customer_mobile_number},function(data){
             console.log('sent:'+customer_password+customer_nickname);
             alert("getdata"+data);
             if (data.ERROR) {
@@ -43,8 +44,7 @@ $(document).ready(function(){
         var str = url.substr(1);
         who = str.split("&")[0].split("=")[1];
         if (who=='business'){
-            $("dl#mobile_input").html("");
-            $("input[name='user[email]']").addClass("disabled");
+            $("input[name='user[email]']").attr("placeholder","Input your restaurant name");
             var owner = true;
             $("h1").html('Sign up as owner');
             $("a#navi.selected").attr("class","js-selected-navigation-item nav-item");

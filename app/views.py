@@ -59,6 +59,19 @@ def restaurant_profile():
 def restaurant_home_page():
     return render_template('restaurant_home_page.htm')
 
+@app.route('/owner_home_page', methods = ['GET', 'POST'])
+def owner_home_page():
+    return render_template('owner_home_page.htm')
+
+@app.route('/restaurant_dish_management', methods = ['GET', 'POST'])
+def restaurant_dish_management():
+    return render_template('restaurant_dish_management.htm')
+
+@app.route('/restaurant_order_history', methods = ['GET', 'POST'])
+def restaurant_order_history():
+    return render_template('restaurant_order_history.htm')
+
+
 def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
     return '0' * (3 - len(str(total_user_num))) + str(total_user_num)

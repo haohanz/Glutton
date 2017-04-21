@@ -6,6 +6,7 @@ var current_div = restaurant;
 var initialized = false;
 var page_num = 0;
 var search_value = "";
+var who = '';
 var customer_id = "";
 var search = function(page,current_div,search_content){
 	alert("search_value"+search_content);
@@ -271,6 +272,9 @@ $(document).ready(function(){
         }
         search_value = url_vars["search_value"];
         customer_id = url_vars["customer_id"];
+        if (who=='business') {
+        	customer_id = url_vars["restaurant_id"];
+        }
     	search(0,"Restaurants", search_value);
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});

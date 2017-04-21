@@ -51,6 +51,10 @@ def signin():
 def search_results():
     return render_template('search_results.htm')
 
+@app.route('/restaurant_profile', methods = ['GET', 'POST'])
+def restaurant_profile():
+    return render_template('restaurant_profile.htm')
+
 @app.route('/restaurant_home_page', methods = ['GET', 'POST'])
 def restaurant_home_page():
     return render_template('restaurant_home_page.htm')

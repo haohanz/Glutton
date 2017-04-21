@@ -1,16 +1,5 @@
 // restaurant_home_page.js
 
-    // {“restaurant_name”:restaurant_name,
-    // “dishes”:
-    //     [
-    //         {“dish_name”:dish_name,”dish_price”:dish_price,”month_sale”:month_sale,”dish_id”:dish_id},
-    //         {“dish_name”:dish_name,”dish_price”:dish_price,”month_sale”:month_sale,”dish_id”:dish_id},
-    //         {“dish_name”:dish_name,”dish_price”:dish_price,”month_sale”:month_sale,”dish_id”:dish_id},
-    //         …
-    //     ]
-    // },
-    
-
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;

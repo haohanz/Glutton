@@ -1,6 +1,5 @@
 // restaurant_home_page.js
 
-
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;
@@ -13,20 +12,30 @@ $(document).ready(function(){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
         var restaurant_id = route['restaurant_id'];
-        var restaurant_name = route['restaurant_name'];
+        var restaurant_name = decodeURIComponent(route['restaurant_name']);
         var customer_id = route['customer_id'];
         $("span#restaurant_name").html(restaurant_name);
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
-        $.post("/get_restaurant_detail",{"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-            alert("get data!!!"+data);
+        $.getJSON("/get_restaurant_detail",{"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
+            alert("get data!!!~~~~~"+data);
             $("ul#dish_info").html('');
             var str = '';
-            var restaurant_name = restaurant_name;
-            var dishes = data.dishes;
+            var restaurant_info = data.restaurant;
+            var restaurant_description = restaurant_info.restaurant_description;
+            var delivery_price = restaurant_info.delivery_price;
+            var base_deliver_price = restaurant_info.base_deliver_price;
+            var open_time = restaurant_info.open_time;
+            var total_month_sale = restaurant.total_month_sale;
+            var restaurant_address = restaurant.restaurant_address;
+            var dishes = data.dish;
+            var dish_num = dishes.length;
+            $("relative-time#open_time").html(open_time);
             $.each(dishes, function(i,item){
+                alert(i+item);
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.month_sale;
+                var dish_price = item.dish_price;
                 dish_counts[dish_id] = 0;
                 str += '\
             <li class="repo-list-item repo-list-item-with-avatar">\

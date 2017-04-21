@@ -51,9 +51,26 @@ def signin():
 def search_results():
     return render_template('search_results.htm')
 
+@app.route('/restaurant_profile', methods = ['GET', 'POST'])
+def restaurant_profile():
+    return render_template('restaurant_profile.htm')
+
 @app.route('/restaurant_home_page', methods = ['GET', 'POST'])
 def restaurant_home_page():
     return render_template('restaurant_home_page.htm')
+
+@app.route('/owner_home_page', methods = ['GET', 'POST'])
+def owner_home_page():
+    return render_template('owner_home_page.htm')
+
+@app.route('/restaurant_dish_management', methods = ['GET', 'POST'])
+def restaurant_dish_management():
+    return render_template('restaurant_dish_management.htm')
+
+@app.route('/restaurant_order_history', methods = ['GET', 'POST'])
+def restaurant_order_history():
+    return render_template('restaurant_order_history.htm')
+
 
 def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
@@ -166,7 +183,7 @@ def search_dish_results():
         selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
         for res in selected_result:
             dish_result.append(jsonify_dish_with_restaurant_name(res))
-        print dish_result
+        print "dish_result",dish_result
         return jsonify({"customer_id": customer_id, "result_list":dish_result, "total_result": total_result, "total_page": total_page})
     except Exception as e:
         print 'search failed!'

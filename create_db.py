@@ -54,7 +54,6 @@ db.engine.execute("""CREATE TABLE dish_order(
 dish_order_id CHAR(4) NOT NULL,
 order_id CHAR(4) NOT NULL,
 dish_id CHAR(6) NOT NULL,
-
 PRIMARY KEY(dish_order_id),
 FOREIGN KEY(order_id)REFERENCES customer_order(order_id),
 FOREIGN KEY(dish_id)REFERENCES dish(dish_id)

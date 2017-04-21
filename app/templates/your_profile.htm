@@ -26,11 +26,6 @@
   <div class="position-relative js-header-wrapper ">
     <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress" style="transition: width 0.4s ease 0s; width: 100%;"></div></div>
 
-    
-    
-    
-
-
 
         
 <div class="header" role="banner">
@@ -231,29 +226,25 @@
   </div>
       <div class="column two-thirds">
           <dl class="form-group">
-            <dt><label>Nickname</label></dt>
-            <dd><input class="form-control" id="user_profile_name" size="30" type="text" value=""></dd>
+            <dt><label>Change your Nickname</label></dt>
+            <dd><input class="form-control" id="user_profile_name" size="30" placeholder="Input a new Nickname" type="text" value=""></dd>
           </dl>
         <dl class="form-group">
-          <dt><label>Gender</label></dt>
-          <dd>
-              <select class="form-select" id="user_profile_gender">
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-          </dd>
-        </dl>
+          
         <dl class="form-group">
-            <dt><label>Birthday</label></dt>
-            <dd><input placeholder="MM/DD/YYYY" class="form-control" id="user_profile_birthday" size="30" type="text" value=""></dd>
+            <dt><label>Chage your address</label></dt>
+            <dd><input placeholder="Input your address" class="form-control" id="user_profile_birthday" size="30" type="text" value=""></dd>
+          </dl>
+          <dt><label>Change your appellation</label></dt>
+            <dd><input placeholder="What's your appellation?" class="form-control" id="customer_appellation" size="30" type="text" value=""></dd>
           </dl>
         <dl class="form-group">
-          <dt><label>Address</label></dt>
+          <dt><label>Change your personal statement</label></dt>
           <dd class="user-profile-bio-field-container js-suggester-container js-length-limited-input-container">
             <textarea class="form-control user-profile-bio-field js-suggester-field js-length-limited-input" cols="40" data-input-max-length="160" data-warning-text="{{remaining}} remaining" id="user_profile_add" placeholder="Tell a little about yourself" rows="20"></textarea>
-            <p class="note">
+            <!-- <p class="note">
               Please make sure we can reach you via this address.
-            </p>
+            </p> -->
             <p class="js-length-limited-input-warning user-profile-bio-message d-none"></p>
             <div class="suggester-container">
               <div class="suggester js-suggester js-navigation-container" >
@@ -357,11 +348,11 @@
 <!-- BLOCK 4 : DELETE ACCOUNT START-->
 <div id="DeleteAccount" style="display:none;">
     <div class="Subhead Subhead--spacious">
-      <h2 class="Subhead-heading Subhead-heading--danger">Delete account</h2>
+      <h2 class="Subhead-heading Subhead-heading--danger">Sign out</h2>
     </div>
-      <p>Once you delete your account, there is no going back. Please be certain.</p>
+      <p>Before you signout, please remember your mobile and password, you'll need it next time.</p>
 
-      <p><a class="btn btn-danger" tabindex="4" onclick="delete_account()">Delete your account</a></p>
+      <p><a href="front_page" class="btn btn-danger" tabindex="4">Sign out</a></p>
 
     <div id="delete_account_confirmation" style="display:none">
       <h2 class="facebox-header" data-facebox-id="facebox-header">Are you sure you want to do this?</h2>

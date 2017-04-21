@@ -41,8 +41,8 @@ var search = function(page,current_div,search_content){
 			
 		
 
-
-		$("input#search_block_in_search_results").attr("value",data.search_value_in_search_results);
+		// $("input#search_block_in_search_results").html(search_value);
+		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$.each(data.search_results, function(i,eachData){
 			console.log('eachData:'+eachData);
 			eval(eachData);

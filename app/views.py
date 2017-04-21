@@ -39,6 +39,9 @@ def home_page():
 def your_profile():
     return render_template('your_profile.htm')
 
+@app.route('/view_history', methods = ['GET', 'POST'])
+def view_history():
+    return render_template('view_history.htm')
 
 @app.route('/signin', methods = ['GET', 'POST'])
 def signin():

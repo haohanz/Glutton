@@ -236,3 +236,22 @@ def add_dish():
         print 'dish insert failed!'
         print traceback.format_exc(e)
         return jsonify({"ERROR": "New dish created failed, please try again later"})
+
+@app.route('/get_restaurant_detail', methd = ['GET', 'POST'])
+def get_restaurant_detail():
+    customer_id = request.args.get("custmer_id")
+    restaurant_id = request.args.get("restaurant_id")
+    try:
+        restaurant = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'" % (restaurant_id))
+        if restaurant:
+            dish_list = []
+            dish_result = g.cursor.execute("SELECT dish FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant_id = '%s'" % (restaurant_id)).fetchall()
+            for dish in dish_result:
+                dish_list.append(jsonify_dish(dish))
+            return jsonify({"restaurant": jsonify_restaurant(restaurant), "dish": dish_list})
+        else:
+            return jsonify({"ERROR": "restaurant doesn't exist!"})
+    except Exception as e:
+        print 'search restaurant failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Can't get restaurant details, please try again later..."})

@@ -19,7 +19,7 @@ MAIL_PASSWORD = None
 ADMINS = ['hutianxiao_fdu@126.com']
 
 # pagination
-POSTS_PER_PAGE = 5
+PAGINATION_PER_PAGE = 5
 
 # search
 MAX_SEARCH_RESULTS = 50

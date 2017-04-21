@@ -12,17 +12,7 @@ var upload_your_profile = function() {
 	})
 }
     
-    
-    
-<!-- 
-// return jsonify({"status": 0, 
- "customer_id": customer_id,  
- "customer_nickname": customer_nickname, 
- "customer_mobile_number": customer_mobile_number, 
- "customer_address": customer_address, 
- "customer_discription": customer_discription, 
-// "customer_appellation": customer_appellation})
- -->
+   
 
 
 $("a#menu-list").bind('click', function(){

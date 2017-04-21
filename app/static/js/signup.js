@@ -34,3 +34,15 @@ $(document).ready(function(){
         }
     }
 })
+
+$("a#navi").bind("click",function(){
+    if ($(this).html() == 'Business'){
+        window.location.href = 'front_page?who=business';
+    }
+    if ($(this).html() == 'Customer') {
+        window.location.href = 'front_page';
+    }
+    if ($(this).html() == 'My Order' || $(this).html() == 'Home Page') {
+        alert("sign in first!");
+    }
+})

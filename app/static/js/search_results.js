@@ -10,6 +10,8 @@ var search = function(page,current_div,search_content){
 	$("div#tofill").text('');
 	alert("search_value"+search_content);
 	$.getJSON("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div},function(data){
+		alert("get data!!!!!!"+data);
+		console.log("get_data!!!!"+data);
 		console.log("getting json:"+data.search_results);
 		console.log("page_num:"+data.page_num);
 		console.log("total_result_len:"+data.total_result_len);

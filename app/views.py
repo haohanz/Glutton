@@ -357,7 +357,3 @@ def change_dish():
 def receive_order():
     pass
 
-@app.route('/change_restaurant_password', methods=['GET', 'POST'])
-def change_restaurant_password():
-    pass
-

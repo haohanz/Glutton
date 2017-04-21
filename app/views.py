@@ -76,8 +76,8 @@ def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
     return '0' * (3 - len(str(total_user_num))) + str(total_user_num)
 
-@app.route('/signup/_submit', methods = ['GET', 'POST'])
-def signup_submit():
+@app.route('/user_signup_submit', methods = ['GET', 'POST'])
+def user_signup_submit():
     print 'get request'
     customer_mobile_number = request.args.get("customer_mobile_number")
     customer_nickname = request.args.get("customer_nickname")
@@ -99,8 +99,36 @@ def signup_submit():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Registration failed! Please try again..."})
 
-@app.route('/signin/_submit', methods = ['GET', 'POST'])
-def signin_submit():
+def get_restaurant_no():
+    total_restaurant_num = len(db.engine.execute("SELECT * FROM restaurant").fetchall())
+    return '0' * (3 - len(str(total_restaurant_num))) + str(total_restaurant_num)
+
+@app.route('/restaurant_signup_submit', methods = ['GET', 'POST'])
+def restaurant_signup_submit():
+    print 'get request'
+    owner_nickname = request.args.get("owner_nickname")
+    restaurant_name = request.args.get("restaurant_name")
+    owner_password = request.args.get("customer_password")
+    print owner_nickname
+    print restaurant_name
+    print owner_password
+    restaurant_id = get_restaurant_no()
+    try:
+        user_exist = g.cursor.execute("SELECT * FROM restaurant WHERE owner_nickname = '%s'" % (owner_nickname)).fetchall()
+        if user_exist:
+            return jsonify({"ERROR": "This nickname has been registered, you can sign in now."})
+        db.engine.execute("INSERT INTO restaurant VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL, NULL, NULL)" \
+                         % (restaurant_id, owner_nickname, owner_password, restaurant_name))
+        print 'new restaurant inserted into database!'
+        return jsonify({"status": 0, "restaurant_id": restaurant_id, "owner_nickname": owner_nickname, "restaurant_name": restaurant_name})
+    except Exception as e:
+        print 'insert failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Registration failed! Please try again..."})
+
+
+@app.route('/user_signin_submit', methods = ['GET', 'POST'])
+def user_signin_submit():
     customer_mobile_number = request.args.get("customer_mobile_number")
     print customer_mobile_number
     customer_password = request.args.get("customer_password")
@@ -111,12 +139,34 @@ def signin_submit():
         if result:
             customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_description, customer_appellation = result[0]
             if customer_password == db_password:
-                return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_description": customer_description, "customer_appellation": customer_appellation})
+                return jsonify(jsonify_customer(result[0]))
             else:
                 return jsonify({"ERROR": "Wrong username or password."})
         else:
             print 'User not exist!'
             return jsonify({"ERROR": "User not exist."})
+    except Exception as e:
+        print 'login failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Sign in failed, please try again later."})
+
+
+@app.route('/restaurant_signin_submit', methods = ['GET', 'POST'])
+def restaurant_signin_submit():
+    owner_nickname = request.args.get("owner_nickname")
+    owner_password = request.args.get("owner_password")
+    try:
+        result = g.cursor.execute("SELECT * FROM restaurant WHERE owner_nickname = '%s'" % (owner_nickname)).fetchall()
+        print result
+        if result:
+            db_password = result[0][2]
+            if owner_password == db_password:
+                return jsonify(jsonify_restaurant(result[0]))
+            else:
+                return jsonify({"ERROR": "Wrong owner_nickname or password."})
+        else:
+            print 'Restaurant not exist!'
+            return jsonify({"ERROR": "Restaurant not exist."})
     except Exception as e:
         print 'login failed!'
         print traceback.format_exc(e)

@@ -115,8 +115,8 @@ def jsonify_customer(customer):
                  "customer_address", "customer_description", "customer_appellation")
     return dict(zip(key_words, customer))
 
-def jsonify_dish(dish):
-    key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale")
+def jsonify_dish_with_restaurant_name(dish):
+    key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale", "restaurant_name")
     return dict(zip(key_words, dish))
 
 @app.route('/search', methods = ['GET', 'POST'])
@@ -128,7 +128,7 @@ def search():
 @app.route('/search_restaurant_results', methods = ['GET', 'POST'])
 def search_restaurant_results():
     customer_id = request.args.get("customer_id")
-    page = int(request.args.get("page"))
+    page = int(request.args.get("page")) -1
     search_value = request.args.get("search_value")
     print "get_search_value:",search_value
     search_value = urllib.unquote(str(search_value))
@@ -149,24 +149,23 @@ def search_restaurant_results():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Search failed, please try again later..."})
 
-
 @app.route('/search_dish_results', methods = ['GET', 'POST'])
 def search_dish_results():
     customer_id = request.args.get("customer_id")
-    page = int(request.args.get("page"))
+    page = int(request.args.get("page")) - 1
     search_value = request.args.get("search_value")
     print "get_search_value:",search_value
     search_value = urllib.unquote(str(search_value))
     print search_value
     try:
-        result = g.cursor.execute("SELECT * FROM dish WHERE dish_name LIKE '%%%s%%'" % (search_value)).fetchall()
+        result = g.cursor.execute("SELECT dish_id, dish_name, dish.restaurant_id, dish_price, dish_month_sale, restaurant_name FROM dish, restaurant WHERE dish_name LIKE '%%%s%%' AND dish.restaurant_id = restaurant.restaurant_id" % (search_value)).fetchall()
         print result
         total_result = len(result)
         total_page = total_result / PAGINATION_PER_PAGE + 1
         dish_result = []
         selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
         for res in selected_result:
-            dish_result.append(jsonify_dish(res))
+            dish_result.append(jsonify_dish_with_restaurant_name(res))
         print dish_result
         return jsonify({"customer_id": customer_id, "result_list":dish_result, "total_result": total_result, "total_page": total_page})
     except Exception as e:
@@ -271,4 +270,5 @@ def submit_order():
     dish_counts = eval(request.args.get("dish_counts"))
     customer_id = request.args.get("customer_id")
     restaurant_id = request.args.get("restaurant_id")
+
 

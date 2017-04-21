@@ -1,10 +1,13 @@
 # -*- coding:utf-8 -*-
-import os,lp
+import sqlite3
 import traceback
-from flask import Flask, url_for,redirect,render_template,jsonify, request, g, session, flash
+import urllib
+
+from flask import render_template, jsonify, request, g
+
 from app import app, db
 from config import SQLALCHEMY_DATABASE_LOC
-import sqlite3
+
 
 @app.before_request
 def before_request():
@@ -64,15 +67,17 @@ def signup_submit():
     print customer_password
     customer_id = get_user_no()
     try:
-        db.engine.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL)" \
+        user_exist = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
+        if user_exist:
+            return jsonify({"ERROR": "This mobile has been registered, you can sign in now."})
+        db.engine.execute("INSERT INTO customer VALUES ('%s', '%s', '%s', '%s', NULL, NULL, NULL)" \
                          % (customer_id,  customer_nickname, customer_password, customer_mobile_number))
         print 'new user inserted into database!'
         return jsonify({"status": 0, "customer_id": customer_id, "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number})
     except Exception as e:
         print 'insert failed!'
-        print traceback.format_exc()
+        print traceback.format_exc(e)
         return jsonify({"ERROR": "Registration failed! Please try again..."})
-
 
 @app.route('/signin/_submit', methods = ['GET', 'POST'])
 def signin_submit():
@@ -80,7 +85,6 @@ def signin_submit():
     print customer_mobile_number
     customer_password = request.args.get("customer_password")
     print customer_password
-
     try:
         result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
         print result
@@ -101,59 +105,75 @@ def signin_submit():
 def jsonify_restaurant(restaurant):
     key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", "restaurant_addresss",\
                  "delivery_fee", "base_delivery_price", "time_span", "open_time", "total_month_sale", "restaurant_description")
-    return dict(key_words, restaurant)
+    return dict(zip(key_words, restaurant))
 
 def jsonify_customer(customer):
-    key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", "restaurant_addresss",\
-                 "delivery_fee", "base_delivery_price", "time_span", "open_time", "total_month_sale", "restaurant_description")
-    return dict(key_words, customer)
+    key_words = ("customer_id", "customer_nickname", "customer_password", "customer_mobile_number", \
+                 "customer_address", "customer_discription", "customer_appellation")
+    return dict(zip(key_words, customer))
 
 @app.route('/search', methods = ['GET', 'POST'])
 def search():
     search_value = request.args.get("search_value")
-
-    # print 'search_value',search_value
+    # TODO
     return "1"
 
 @app.route('/search_results_function', methods = ['GET', 'POST'])
 def search_results_function():
     search_value = request.args.get("search_value")
     print "get_search_value:",search_value
+    search_value = urllib.unquote(str(search_value))
+    print search_value
     try:
         result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%'" % (search_value)).fetchall()
         print result
         restaurant_result = []
         for res in result:
-            restaurant_result.append(jsonify_restaurant())
+            restaurant_result.append(jsonify_restaurant(res))
+        print restaurant_result
         return jsonify({"restaurants":restaurant_result})
-    except:
-        pass
-
-    print 'in search_results, get search_value:',search_value
-    return ""
-    # return jsonify({"search_value_in_search_results":search_value,"search_results":s_r,"page_num":10,"total_result_len":13456})
+    except Exception as e:
+        print 'search failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Search failed, please try again later..."})
 
 @app.route('/initialize_homepage', methods = ['GET','POST'])
 def initialize_homepage():
-    print '~~~'
-    return jsonify({"nickname":"this is a nickname"})
+    customer_id = request.args.get("customer_id")
+    try:
+        res = g.cursor.execute("SELECT * FROM customer WHERE customer_id = '%s'" % (customer_id)).fetchall()
+        if res:
+            return jsonify(jsonify_customer(res[0]))
+    except Exception as e:
+        print 'db search failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Initialized failed, please try again later.."})
 
 @app.route('/upload_your_profile', methods = ['GET','POST'])
 def upload_your_profile():
-    NickName = request.args.get("NickName")
-    print 'get NickName:' , NickName
-    print "upload_profile";
-    return ""
+    customer_id = request.args.get("customer_id")
+    customer_nickname = request.args.get("customer_nickname")
+    customer_address = request.args.get("cutomer_address")
+    customer_discription = request.args.get("customer_discription")
+    customer_appellation = request.args.get("customer_apppellation")
+    try:
+        db.engine.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', customer_discription = '%s', customer_apppellation = '%s' WHERE customer_id = '%s'" %(customer_nickname, customer_address, customer_discription, customer_appellation, customer_id))
+        print 'successfully updated profile!'
+        updated_profile = g.cursor.execute("SELECT * FROM customer WHERE customer_id = '%s'" % (customer_id)).fetchall()
+        return jsonify(jsonify_customer(updated_profile[0]))
+    except Exception as e:
+        print 'update profile failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Update profile failed, please try again later.."})
 
 @app.route('/change_password', methods = ['GET','POST'])
 def change_password():
-    return ""
-
-@app.route('/change_mobile_number', methods = ['GET','POST'])
-def change_mobile_number():
-    return ""
-
-@app.route('/delete_account', methods = ['GET','POST'])
-def delete_account():
-    return ""
-
+    customer_id = request.args.get("customer_id")
+    customer_password = request.args.get("customer_password")
+    try:
+        db.engine.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'" % (customer_password, customer_id))
+        print 'successfully changed password!'
+    except Exception as e:
+        print 'Change password failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Change password failed, please try again later.."})

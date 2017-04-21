@@ -3,12 +3,12 @@ var customer_id = "";
 var who = "";
 var signup = function() {
     alert("who"+who);
-    if(who=='customer'){
+    if(who==''){
     	customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
         alert("get from html:"+customer_nickname + customer_password + customer_mobile_number);
-        $.getJSON('/signup/_submit',{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
+        $.getJSON("/user_signup_submit",{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
             console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
             alert("getdata"+data);
             if (data.ERROR) {
@@ -23,7 +23,7 @@ var signup = function() {
         customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
-        alert("get from html:"+customer_nickname + customer_password);
+        alert("get from html:"+customer_nickname + customer_password+customer_mobile_number);
         $.getJSON('/restaurant_signup_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname,"restaurant_name":customer_mobile_number},function(data){
             console.log('sent:'+customer_password+customer_nickname);
             alert("getdata"+data);
@@ -43,7 +43,7 @@ $(document).ready(function(){
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
         who = str.split("&")[0].split("=")[1];
-        if (who=='business'){
+        if (who == 'business'){
             $("input[name='user[email]']").attr("placeholder","Input your restaurant name");
             var owner = true;
             $("h1").html('Sign up as owner');

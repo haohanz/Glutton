@@ -1,2 +1,2 @@
-# Glutton-2
-The sql project by myself, not merged to our team(Glutton).
+# Glutton
+SQL project, and web application for lazy gluttons.

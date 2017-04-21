@@ -57,7 +57,7 @@ def restaurant_home_page():
 
 def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
-    return '0' * (3 - len(total_user_num)) + str(total_user_num)
+    return '0' * (3 - len(str(total_user_num))) + str(total_user_num)
 
 @app.route('/signup/_submit', methods = ['GET', 'POST'])
 def signup_submit():
@@ -220,7 +220,7 @@ def get_dish_no(restaurant_name):
     total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % prefix))
     return prefix + '-' + '0' * (2 - len(total_dish_num)) + str(total_dish_num)
 
-@app.route('/add_dish', methd = ['GET', 'POST'])
+@app.route('/add_dish', methods = ['GET', 'POST'])
 def add_dish():
     dish_name = request.args.get("dish_name")
     restaurant_name = request.args.get("restaurant_name")
@@ -237,7 +237,7 @@ def add_dish():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "New dish created failed, please try again later"})
 
-@app.route('/get_restaurant_detail', methd = ['GET', 'POST'])
+@app.route('/get_restaurant_detail', methods = ['GET', 'POST'])
 def get_restaurant_detail():
     customer_id = request.args.get("custmer_id")
     restaurant_id = request.args.get("restaurant_id")
@@ -255,3 +255,20 @@ def get_restaurant_detail():
         print 'search restaurant failed!'
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Can't get restaurant details, please try again later..."})
+
+@app.route('/get_user_history', methods= ['GET', 'POST'])
+def get_user_history():
+    # TODO
+    pass
+
+@app.route('/get_restaurant_history', methods=['GET', 'POST'])
+def get_restaurant_history():
+    # TODO
+    pass
+
+@app.route('/submit_order', methods=['GET', 'POST'])
+def submit_order():
+    dish_counts = eval(request.args.get("dish_counts"))
+    customer_id = request.args.get("customer_id")
+    restaurant_id = request.args.get("restaurant_id")
+    pass

@@ -60,8 +60,6 @@ FOREIGN KEY(order_id)REFERENCES customer_order(order_id),
 FOREIGN KEY(dish_id)REFERENCES dish(dish_id)
 );""")
 
-db.engine.execute("select * from restaurant").fetchall()
-
 f = open('insert.sql')
 
 line = f.readline()

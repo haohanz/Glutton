@@ -214,3 +214,16 @@ def change_password():
         print 'Change password failed!'
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Change password failed, please try again later.."})
+
+def get_dish_no():
+    total_dish_num = len(db.engine.execute("SELECT * FROM dish").fetchall())
+    return '0' * (5 - total_dish_num) + str(total_dish_num)
+
+"""@app.route('/add_dish', methd = ['GET', 'POST'])
+def add_dish():
+    dish_name = request.args.get("dish_name")
+    restaurant_name = request.args.get("restaurant_name")
+    dish_price = request.args.get("dish_price")
+    # dish_month_sale = request.args.get("dish_month_sale")
+    dish_id = get_dish_no()
+    db.engine.execute("INSERT INTO dish VALUES('002-11','圣代','002',9.5,86);")"""

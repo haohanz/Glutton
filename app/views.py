@@ -92,9 +92,9 @@ def signin_submit():
         result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
         print result
         if result:
-            customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_discription, customer_appellation = result[0]
+            customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_description, customer_appellation = result[0]
             if customer_password == db_password:
-                return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_discription": customer_discription, "customer_appellation": customer_appellation})
+                return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_description": customer_description, "customer_appellation": customer_appellation})
             else:
                 return jsonify({"ERROR": "Wrong username or password."})
         else:
@@ -106,13 +106,13 @@ def signin_submit():
         return jsonify({"ERROR": "Sign in failed, please try again later."})
 
 def jsonify_restaurant(restaurant):
-    key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", "restaurant_addresss",\
+    key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", "restaurant_address",\
                  "delivery_fee", "base_delivery_price", "time_span", "open_time", "total_month_sale", "restaurant_description")
     return dict(zip(key_words, restaurant))
 
 def jsonify_customer(customer):
     key_words = ("customer_id", "customer_nickname", "customer_password", "customer_mobile_number", \
-                 "customer_address", "customer_discription", "customer_appellation")
+                 "customer_address", "customer_description", "customer_appellation")
     return dict(zip(key_words, customer))
 
 def jsonify_dish(dish):
@@ -191,10 +191,10 @@ def upload_your_profile():
     customer_id = request.args.get("customer_id")
     customer_nickname = request.args.get("customer_nickname")
     customer_address = request.args.get("cutomer_address")
-    customer_discription = request.args.get("customer_discription")
+    customer_description = request.args.get("customer_description")
     customer_appellation = request.args.get("customer_apppellation")
     try:
-        db.engine.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', customer_discription = '%s', customer_apppellation = '%s' WHERE customer_id = '%s'" %(customer_nickname, customer_address, customer_discription, customer_appellation, customer_id))
+        db.engine.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', customer_description = '%s', customer_apppellation = '%s' WHERE customer_id = '%s'" %(customer_nickname, customer_address, customer_description, customer_appellation, customer_id))
         print 'successfully updated profile!'
         updated_profile = g.cursor.execute("SELECT * FROM customer WHERE customer_id = '%s'" % (customer_id)).fetchall()
         return jsonify(jsonify_customer(updated_profile[0]))
@@ -271,4 +271,4 @@ def submit_order():
     dish_counts = eval(request.args.get("dish_counts"))
     customer_id = request.args.get("customer_id")
     restaurant_id = request.args.get("restaurant_id")
-    pass
+

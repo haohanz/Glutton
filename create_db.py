@@ -24,7 +24,6 @@ customer_password CHAR(20) NOT NULL,
 customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
 customer_discription CHAR(100),
-customer_gender CHAR(20),
 customer_appellation CHAR(20),
 PRIMARY KEY(customer_id)
 );

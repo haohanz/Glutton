@@ -61,11 +61,6 @@ var change_mobile_number = function() {
 	} 
 }
 
-var delete_account = function() {
-	$.post("/delete_account",{},function(){
-		alert("succeed");
-	})
-}
 
 
 

@@ -92,9 +92,9 @@ def signin_submit():
         result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
         print result
         if result:
-            customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_discription, customer_gender, customer_appellation = result[0]
+            customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_discription, customer_appellation = result[0]
             if customer_password == db_password:
-                return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_discription": customer_discription, "customer_gender": customer_gender, "customer_appellation": customer_appellation})
+                return jsonify({"status": 0, "customer_id": customer_id,  "customer_nickname": customer_nickname, "customer_mobile_number": customer_mobile_number, "customer_address": customer_address, "customer_discription": customer_discription, "customer_appellation": customer_appellation})
             else:
                 return jsonify({"ERROR": "Wrong username or password."})
         else:
@@ -121,7 +121,7 @@ def search():
     # TODO
     return "1"
 
-@app.route('/search_results_function', methods = ['GET', 'POST'])
+@app.route('/search_results_function_restaurant', methods = ['GET', 'POST'])
 def search_results_function():
     search_value = request.args.get("search_value")
     print "get_search_value:",search_value

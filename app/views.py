@@ -139,11 +139,11 @@ def search_restaurant_results():
         total_result = len(result)
         total_page = total_result / PAGINATION_PER_PAGE + 1
         restaurant_result = []
-        selected_result = result[page * PAGINATION_PER_PAGE, (page+1) * PAGINATION_PER_PAGE]
+        selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
         for res in selected_result:
             restaurant_result.append(jsonify_restaurant(res))
         print restaurant_result
-        return jsonify({"customer_id": customer_id, "restaurants":restaurant_result, "total_result": total_result, "total_page": total_page})
+        return jsonify({"customer_id": customer_id, "result_list":restaurant_result, "total_result": total_result, "total_page": total_page})
     except Exception as e:
         print 'search failed!'
         print traceback.format_exc(e)
@@ -164,11 +164,11 @@ def search_dish_results():
         total_result = len(result)
         total_page = total_result / PAGINATION_PER_PAGE + 1
         dish_result = []
-        selected_result = result[page * PAGINATION_PER_PAGE, (page+1) * PAGINATION_PER_PAGE]
+        selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
         for res in selected_result:
             dish_result.append(jsonify_dish(res))
         print dish_result
-        return jsonify({"customer_id": customer_id, "dishes":dish_result, "total_result": total_result, "total_page": total_page})
+        return jsonify({"customer_id": customer_id, "result_list":dish_result, "total_result": total_result, "total_page": total_page})
     except Exception as e:
         print 'search failed!'
         print traceback.format_exc(e)

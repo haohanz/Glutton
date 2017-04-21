@@ -19,7 +19,7 @@ $(document.ready(function(){
         	url_vals[str_splits[i].split("=")[0]] = str_splits[i].split("=")[1];
         }
         var customer_id = url_vals["customer_id"];
-        $.get("/get_history",{"customer_id":customer_id},function(data){
+        $.get("/get_user_history",{"customer_id":customer_id},function(data){
         	alert("get data!"+data);
         	var str= '';
         	$.each(data,function(i,item){

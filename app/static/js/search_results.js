@@ -8,18 +8,25 @@ var page_num = 0;
 var search_value = "";
 var customer_id = "";
 var search = function(page,current_div,search_content){
-	$("div#tofill").text('');
 	alert("search_value"+search_content);
-	$.getJSON("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div,"customer_id":customer_id},function(data){
+	var route_to_search = '';
+	if (current_div == restaurant){
+		route_to_search = "search_restaurant_results"
+	} else {
+		route_to_search = "search_dish_results";
+	}
+	$.getJSON(route_to_search,{"search_value":search_content,"page":page,"customer_id":customer_id},function(data){
+		if (data.ERROR) {
+			alert("data.ERROR");
+		}
 		alert("get data!!!!!!"+data);
-		console.log("get_data!!!!"+data);
-		console.log("getting json:"+data.search_results);
-		console.log("page_num:"+data.page_num);
-		console.log("total_result_len:"+data.total_result_len);
-		$("span#total_result_len").text(data.total_result_len);
+		alert("getting json:"+data.result_list);
+		alert("page_num:"+data.total_page);
+		alert("total_result_len:"+data.total_result);
+		$("span#total_result_len").text(data.total_result);
 		$("span#current_div").text(current_div);
-		if (page_num != data.page_num || page == 0) {
-			page_num = data.page_num;
+		if (page_num != data.total_page || page == 0) {
+			page_num = data.total_page;
 			var str = '<span class="previous_page disabled" onclick="previous_page()">Previous</span>';
 			for (var i = 1; i <= 5; i++) {
 				if ( i <= page_num ) {
@@ -46,12 +53,17 @@ var search = function(page,current_div,search_content){
 
 		// $("input#search_block_in_search_results").html(search_value);
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
-		$.each(data.search_results, function(i,eachData){
-			console.log('eachData:'+eachData);
+		$("div#tofill").text('');
+		$.each(data.result_list, function(i,eachData){
 			eval(eachData);
-			var name = eachData.name;
+			var name = eachData.restaurant_name;
 			var count = eachData.count;
+			var address = eachData.restaurant_address;
 			var restaurant_id = eachData.restaurant_id;
+			var discription = eachData.restaurant_discription;
+			
+			alert("discription"+discription);
+			alert("address"+address);
 			// alert("restaurant_id"+restaurant_id);
 			var str = '\
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
@@ -59,7 +71,7 @@ var search = function(page,current_div,search_content){
 					<h3>\
 					<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
 					</h3>\
-					<p class="col-9 d-inline-block text-gray mb-2 pr-4">\
+					<p class="col-9 d-inline-block text-gray mb-2 pr-4">restaurant_id: \
 					'+restaurant_id+'\
 					</p>\
 					<div class="topics-row-container col-9 d-inline-flex flex-wrap flex-items-center f6 my-1">\
@@ -76,8 +88,7 @@ var search = function(page,current_div,search_content){
 					headers\
 					</a>\
 					</div>\
-					<p class="f6 text-gray mb-0 mt-2">\
-					Updated <relative-time datetime="2017-03-06T15:33:26Z" title="2017年3月6日 GMT+8 下午11:33">on 6 Mar</relative-time>\
+					<p class="f6 text-gray mb-0 mt-2">'+discription+'\
 					</p>\
 					</div>\
 					<div class="d-table-cell col-2 text-gray pt-2">\

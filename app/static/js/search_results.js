@@ -54,25 +54,79 @@ var search = function(page,current_div,search_content){
 		// $("input#search_block_in_search_results").html(search_value);
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
-		$.each(data.result_list, function(i,eachData){
+		if(current_div == restaurant){
+			$.each(data.result_list, function(i,eachData){
+				eval(eachData);
+				var name = eachData.restaurant_name;
+				var count = eachData.count;
+				var address = eachData.restaurant_address;
+				var restaurant_id = eachData.restaurant_id;
+				var description = eachData.restaurant_description;
+				
+				alert("discription"+description);
+				alert("address"+address);
+				// alert("restaurant_id"+restaurant_id);
+				var str = '\
+						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
+						<div class="col-8 pr-3">\
+						<h3>\
+						<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
+						</h3>\
+						<p class="col-9 d-inline-block text-gray mb-2 pr-4">restaurant_id: \
+						'+restaurant_id+'\
+						</p>\
+						<div class="topics-row-container col-9 d-inline-flex flex-wrap flex-items-center f6 my-1">\
+						<a href="https://github.com/search?q=topic%3Ajavascript+org%3Ahelmetjs&amp;type=Repositories" class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:javascript,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
+						javascript\
+						</a>\
+						<a href="https://github.com/search?q=topic%3Acsp+org%3Ahelmetjs&amp;type=Repositories" class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:csp,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
+						csp\
+						</a>\
+						<a href="https://github.com/search?q=topic%3Asecurity+org%3Ahelmetjs&amp;type=Repositories" class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:security,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
+						security\
+						</a>\
+						<a href="https://github.com/search?q=topic%3Aheaders+org%3Ahelmetjs&amp;type=Repositories" class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
+						headers\
+						</a>\
+						</div>\
+						<p class="f6 text-gray mb-0 mt-2">'+description+'\
+						</p>\
+						</div>\
+						<div class="d-table-cell col-2 text-gray pt-2">\
+						<span class="repo-language-color ml-0" style="background-color:#f1e05a;"></span>\
+						JavaScript\
+						</div>\
+						<div class="col-2 text-right pt-1 pr-3 pt-2">\
+						<a class="muted-link" href="https://github.com/helmetjs/csp/stargazers">\
+						<svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"></path></svg>\
+						</a>\
+						</div>\
+						</div>\
+						';
+				console.log("name:"+name);
+				$("div#tofill").append(str);
+			});
+		} else {
+			alert("this");
+			$.each(data.result_list, function(i,eachData){
 			eval(eachData);
-			var name = eachData.restaurant_name;
-			var count = eachData.count;
-			var address = eachData.restaurant_address;
+			var dish_name = eachData.dish_name;
+			var dish_price = eachData.dish_price;
+			var dish_month_sale = eachData.dish_month_sale;
+			var dish_id = eachData.dish_id;
 			var restaurant_id = eachData.restaurant_id;
-			var discription = eachData.restaurant_discription;
 			
-			alert("discription"+discription);
+			alert("discription"+description);
 			alert("address"+address);
 			// alert("restaurant_id"+restaurant_id);
 			var str = '\
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
 					<h3>\
-					<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
+					<a href="restaurant_home_page?restaurant_name='+dish_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
 					</h3>\
-					<p class="col-9 d-inline-block text-gray mb-2 pr-4">restaurant_id: \
-					'+restaurant_id+'\
+					<p class="col-9 d-inline-block text-gray mb-2 pr-4">Price: ¥\
+					'+dish_price+'\
 					</p>\
 					<div class="topics-row-container col-9 d-inline-flex flex-wrap flex-items-center f6 my-1">\
 					<a href="https://github.com/search?q=topic%3Ajavascript+org%3Ahelmetjs&amp;type=Repositories" class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:javascript,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
@@ -88,7 +142,7 @@ var search = function(page,current_div,search_content){
 					headers\
 					</a>\
 					</div>\
-					<p class="f6 text-gray mb-0 mt-2">'+discription+'\
+					<p class="f6 text-gray mb-0 mt-2">'+dish_month_sale+'\
 					</p>\
 					</div>\
 					<div class="d-table-cell col-2 text-gray pt-2">\
@@ -98,7 +152,6 @@ var search = function(page,current_div,search_content){
 					<div class="col-2 text-right pt-1 pr-3 pt-2">\
 					<a class="muted-link" href="https://github.com/helmetjs/csp/stargazers">\
 					<svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"></path></svg>\
-					'+count+'\
 					</a>\
 					</div>\
 					</div>\
@@ -106,6 +159,7 @@ var search = function(page,current_div,search_content){
 			console.log("name:"+name);
 			$("div#tofill").append(str);
 		});
+		}
 	});
 }
 

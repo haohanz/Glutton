@@ -166,7 +166,7 @@ def search_dish_results():
         selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
         for res in selected_result:
             dish_result.append(jsonify_dish_with_restaurant_name(res))
-        print dish_result
+        print "dish_result",dish_result
         return jsonify({"customer_id": customer_id, "result_list":dish_result, "total_result": total_result, "total_page": total_page})
     except Exception as e:
         print 'search failed!'

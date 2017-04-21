@@ -1,15 +1,29 @@
 // your_profile.js
 
 var upload_your_profile = function() {
-	var NickName = $("input#user_profile_name").val();
+	var customer_nickname = $("input#user_profile_name").val();
 	// var gender = $("#user_profile_gender").find("option:selected");
-	var birthDay = $("input#user_profile_birthday").val();
-	var address = $("textarea#user_profile_add").val();
-	alert("to send:"+birthDay+address+NickName);
-	$.post("/upload_your_profile",{"NickName":NickName,"birthDay":birthDay,"address":address},function(){
+	var customer_address = $("input#user_profile_birthday").val();
+	var customer_address = $("input#user_profile_birthday").val();
+	var customer_appellation = $("input#customer_appellation").val();
+	alert("to send:"+customer_nickname+customer_address+customer_appellation+customer_discription);
+	$.post("/upload_your_profile",{"customer_nickname":customer_nickname,"customer_discription":customer_discription,"customer_appellation":customer_appellation,"customer_address":customer_address},function(){
 		alert("upload successfully!");
 	})
 }
+    
+    
+    
+<!-- 
+// return jsonify({"status": 0, 
+ "customer_id": customer_id,  
+ "customer_nickname": customer_nickname, 
+ "customer_mobile_number": customer_mobile_number, 
+ "customer_address": customer_address, 
+ "customer_discription": customer_discription, 
+// "customer_appellation": customer_appellation})
+ -->
+
 
 $("a#menu-list").bind('click', function(){
 	$("a#menu-list.selected").attr("class","js-selected-navigation-item menu-item");

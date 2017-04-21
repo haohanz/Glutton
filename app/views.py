@@ -118,7 +118,7 @@ def search():
 @app.route('/search_results_function', methods = ['GET', 'POST'])
 def search_results_function():
     search_value = request.args.get("search_value")
-    print search_value
+    print "get_search_value:",search_value
     try:
         result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%'" % (search_value)).fetchall()
         print result

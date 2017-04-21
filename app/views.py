@@ -57,7 +57,7 @@ def restaurant_home_page():
 
 def get_user_no():
     total_user_num = len(db.engine.execute("SELECT * FROM customer").fetchall())
-    return '0' * (2 - total_user_num) + str(total_user_num)
+    return '0' * (3 - len(total_user_num)) + str(total_user_num)
 
 @app.route('/signup/_submit', methods = ['GET', 'POST'])
 def signup_submit():
@@ -215,15 +215,43 @@ def change_password():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Change password failed, please try again later.."})
 
-def get_dish_no():
-    total_dish_num = len(db.engine.execute("SELECT * FROM dish").fetchall())
-    return '0' * (5 - total_dish_num) + str(total_dish_num)
+def get_dish_no(restaurant_name):
+    prefix = g.cursor.execute("SELECT restaurant_id FROM restaurant WHERE restaurant_name = '%s'" % (restaurant_name)).fetchall()[0]
+    total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % prefix))
+    return prefix + '-' + '0' * (2 - len(total_dish_num)) + str(total_dish_num)
 
-"""@app.route('/add_dish', methd = ['GET', 'POST'])
+@app.route('/add_dish', methd = ['GET', 'POST'])
 def add_dish():
     dish_name = request.args.get("dish_name")
     restaurant_name = request.args.get("restaurant_name")
     dish_price = request.args.get("dish_price")
     # dish_month_sale = request.args.get("dish_month_sale")
-    dish_id = get_dish_no()
-    db.engine.execute("INSERT INTO dish VALUES('002-11','圣代','002',9.5,86);")"""
+    try:
+        dish_id = get_dish_no()
+        db.engine.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d');" % (dish_id, dish_name, dish_id[:3], float(dish_price), 0 ))
+        print 'new dish inserted into database!'
+        # TODO
+        return "1"
+    except Exception as e:
+        print 'dish insert failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "New dish created failed, please try again later"})
+
+@app.route('/get_restaurant_detail', methd = ['GET', 'POST'])
+def get_restaurant_detail():
+    customer_id = request.args.get("custmer_id")
+    restaurant_id = request.args.get("restaurant_id")
+    try:
+        restaurant = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'" % (restaurant_id))
+        if restaurant:
+            dish_list = []
+            dish_result = g.cursor.execute("SELECT dish FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant_id = '%s'" % (restaurant_id)).fetchall()
+            for dish in dish_result:
+                dish_list.append(jsonify_dish(dish))
+            return jsonify({"restaurant": jsonify_restaurant(restaurant), "dish": dish_list})
+        else:
+            return jsonify({"ERROR": "restaurant doesn't exist!"})
+    except Exception as e:
+        print 'search restaurant failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Can't get restaurant details, please try again later..."})

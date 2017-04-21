@@ -6,10 +6,11 @@ var current_div = restaurant;
 var initialized = false;
 var page_num = 0;
 var search_value = "";
+var customer_id = "";
 var search = function(page,current_div,search_content){
 	$("div#tofill").text('');
 	alert("search_value"+search_content);
-	$.getJSON("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div},function(data){
+	$.getJSON("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div,"customer_id":customer_id},function(data){
 		alert("get data!!!!!!"+data);
 		console.log("get_data!!!!"+data);
 		console.log("getting json:"+data.search_results);
@@ -56,7 +57,7 @@ var search = function(page,current_div,search_content){
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
 					<h3>\
-					<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'" class="v-align-middle">'+name+'</a>\
+					<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
 					</h3>\
 					<p class="col-9 d-inline-block text-gray mb-2 pr-4">\
 					'+restaurant_id+'\
@@ -204,6 +205,7 @@ $(document).ready(function(){
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
         search_value = url_vars["search_value"];
+        customer_id = url_vars["customer_id"];
     	search(0,"Restaurants", search_value);
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});

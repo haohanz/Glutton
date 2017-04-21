@@ -13,8 +13,13 @@ $(document).ready(function(){
         }
         var restaurant_id = route['restaurant_id'];
         var restaurant_name = route['restaurant_name'];
+        var customer_id = route['customer_id'];
         $("span#restaurant_name").html(restaurant_name);
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
+        $.post("/get_restaurant_detail",{"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
+            alert("get data!!!"+data);
+            $.
+        })
     }
 }); 
 

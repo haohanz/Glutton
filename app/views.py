@@ -220,7 +220,7 @@ def get_dish_no(restaurant_name):
     total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % prefix))
     return prefix + '-' + '0' * (2 - len(total_dish_num)) + str(total_dish_num)
 
-@app.route('/add_dish', methd = ['GET', 'POST'])
+@app.route('/add_dish', methods = ['GET', 'POST'])
 def add_dish():
     dish_name = request.args.get("dish_name")
     restaurant_name = request.args.get("restaurant_name")
@@ -237,7 +237,7 @@ def add_dish():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "New dish created failed, please try again later"})
 
-@app.route('/get_restaurant_detail', methd = ['GET', 'POST'])
+@app.route('/get_restaurant_detail', methods = ['GET', 'POST'])
 def get_restaurant_detail():
     customer_id = request.args.get("custmer_id")
     restaurant_id = request.args.get("restaurant_id")

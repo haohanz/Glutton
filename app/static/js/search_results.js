@@ -10,16 +10,22 @@ var customer_id = "";
 var search = function(page,current_div,search_content){
 	$("div#tofill").text('');
 	alert("search_value"+search_content);
-	$.getJSON("search_results_function",{"search_value":search_content,"page":page,"current_div":current_div,"customer_id":customer_id},function(data){
+	var route_to_search = '';
+	if (current_div == restaurant){
+		route_to_search = "search_restaurant_results"
+	} else {
+		route_to_search = "search_dish_results";
+	}
+	$.getJSON(route_to_search,{"search_value":search_content,"page":page,"customer_id":customer_id},function(data){
 		alert("get data!!!!!!"+data);
 		console.log("get_data!!!!"+data);
 		console.log("getting json:"+data.search_results);
-		console.log("page_num:"+data.page_num);
-		console.log("total_result_len:"+data.total_result_len);
-		$("span#total_result_len").text(data.total_result_len);
+		console.log("page_num:"+data.total_page);
+		console.log("total_result_len:"+data.total_result);
+		$("span#total_result_len").text(data.total_result);
 		$("span#current_div").text(current_div);
-		if (page_num != data.page_num || page == 0) {
-			page_num = data.page_num;
+		if (page_num != data.total_page || page == 0) {
+			page_num = data.total_page;
 			var str = '<span class="previous_page disabled" onclick="previous_page()">Previous</span>';
 			for (var i = 1; i <= 5; i++) {
 				if ( i <= page_num ) {

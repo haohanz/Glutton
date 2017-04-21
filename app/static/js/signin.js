@@ -15,7 +15,11 @@ var signin = function() {
     alert("who"+who);
     alert("password"+password);
     alert("mobile"+mobile);
-    $.getJSON('/signin/_submit',{"customer_password":password,"customer_mobile_number":mobile,"who":who},function(data){
+    var route = "user_signin_submit";
+    if (who == 'business'){
+        route = "restaurant_signin_submit";
+    }
+    $.getJSON(route,{"customer_password":password,"customer_mobile_number":mobile,"who":who},function(data){
         if (data.ERROR) {
             alert(data.ERROR);
         } else {
@@ -47,7 +51,6 @@ $(document).ready(function(){
         var str = url.substr(1);
         who = str.split("&")[0].split("=")[1];
         if (who=='business'){
-            who = "restaurant";
             $("h1").children("strong").html('Sign in as owner');
         } else {
             

@@ -19,7 +19,7 @@ $(document).ready(function(){
             alert("get data"+data);
             var str = ''
             $.each(data, function(i,item){
-                str += '<a class="exploregrid-item exploregrid-item-mini px-3 py-4">*\
+                str += '<a href="restaurant_dish_management?restaurant_id='+item.restaurant_id+'&dish_id='+item.dish_id+'"class="exploregrid-item exploregrid-item-mini px-3 py-4">*\
       <h4 class="exploregrid-item-title">\
         <span class="text-bold">'+item.dish_name+'</span>\
       </h4>\

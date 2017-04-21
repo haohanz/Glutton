@@ -12,7 +12,7 @@ base_deliver_price DECIMAL(5,2),
 time_span SMALLINT,
 open_time  CHAR(20),
 total_month_sale INTEGER,
-restaurant_discription CHAR(200),
+restaurant_description CHAR(200),
 PRIMARY KEY(restaurant_id)
 );''')
 
@@ -23,7 +23,7 @@ customer_nickname CHAR(20) NOT NULL,
 customer_password CHAR(20) NOT NULL,
 customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
-customer_discription CHAR(100),
+customer_description CHAR(100),
 customer_appellation CHAR(20),
 PRIMARY KEY(customer_id)
 );

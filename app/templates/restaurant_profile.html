@@ -194,6 +194,9 @@
 
     <a id="menu-list" class="js-selected-navigation-item selected menu-item" data-selected-links="avatar_settings /settings/profile">YourBasicProfile</a>
     <a id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">ChangePassword</a>
+    <a id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">UploadNewDish</a>
+    <a href="restaurant_dish_management" id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">DishManagement</a>
+    <a href="restaurant_order_history" id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">MyOrders</a>
     <a id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/emails">SignOut</a>
   </nav> 
   </dd>
@@ -344,6 +347,40 @@
         </div>
 </div>
 <!-- BLOCK 3 : CHANGE MOBILE END-->
+
+<!-- BLOCK 1 : PROFILE START-->
+<div id="YourBasicProfile" name="display" style="display:;">
+
+  <div class="col-9 float-right">    
+  <div class="Subhead mt-0 mb-0">
+    <h2 class="Subhead-heading">Your basic profile</h2>
+  </div>
+
+  <!-- <form accept-charset="UTF-8" class="columns js-uploadable-container js-upload-avatar-image is-default" data-alambic-owner-id="23527044" data-alambic-owner-type="User" novalidate="novalidate"> -->
+
+  <div id="UploadNewDish" style="margin:0;padding:0;display:none">
+  </div>
+      <div class="column two-thirds">
+          <dl class="form-group">
+            <dt><label>Upload a new dish</label></dt>
+            <dd><input class="form-control" id="new_dish_name" size="30" placeholder="Input a new dish name" type="text" value=""></dd>
+          </dl>
+        <dl class="form-group">
+          
+        <dl class="form-group">
+            <dt><label>Input the dish price</label></dt>
+            <dd><input placeholder="Input your address" class="form-control" id="new_dish_price" size="30" type="text" value=""></dd>
+          </dl>
+          <dt><label>Input the month sale previously</label></dt>
+            <dd><input placeholder="What's your appellation?" class="form-control" id="new_month_sale" size="30" type="text" value=""></dd>
+          </dl>
+        <p><button class="btn" onclick="upload_new_dish()">Upload new dish</button></p>
+      </div>
+  <!-- </form>   -->
+
+</div>
+</div>
+<!-- BLOCK 1 : PROFILE END-->
 <!-- BLOCK 4 : DELETE ACCOUNT START-->
 <div id="SignOut" style="display:none;">
     <div class="Subhead Subhead--spacious">

@@ -9,7 +9,7 @@
 // },
 
 
-$(document.ready(function(){
+$(document).ready(function(){
 	var url = location.search;
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
@@ -19,6 +19,7 @@ $(document.ready(function(){
         	url_vals[str_splits[i].split("=")[0]] = str_splits[i].split("=")[1];
         }
         var customer_id = url_vals["customer_id"];
+        alert("customer_id"+customer_id);
         $.get("/get_user_history",{"customer_id":customer_id},function(data){
         	alert("get data!"+data);
         	var str= '';
@@ -33,7 +34,7 @@ $(document.ready(function(){
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
         			order_total_price += dish_price;
-					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">¥'+dish_price+'</span></li>'+;
+					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">¥'+dish_price+'</span></li>';
         		});
         		dish_list += '</ul>';
         		if (i%3 == 0) {
@@ -80,8 +81,6 @@ $(document.ready(function(){
 			});
         });
     }
-
-
 });
 
 

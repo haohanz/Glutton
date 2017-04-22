@@ -21,13 +21,9 @@ var search = function(page,current_div,search_content){
 		if (data.ERROR) {
 			alert("data.ERROR");
 		}
-		alert("get data!!!!!!"+data);
-		alert("getting json:"+data.result_list);
-		alert("page_num:"+data.total_page);
 		if (data.total_page == 0 || data.total_page == 1){
 			$("span.next_page").attr("class","next_page disabled");
 		}
-		alert("total_result_len:"+data.total_result);
 		$("span#total_result_len").text(data.total_result);
 		$("span#current_div").text(current_div);
 		if (page_num != data.total_page || page == 0) {
@@ -125,6 +121,7 @@ var search = function(page,current_div,search_content){
 			eval(eachData);
 			var dish_name = eachData.dish_name;
 			var dish_price = eachData.dish_price;
+			var restaurant_name = eachData.restaurant_name;
 			var dish_month_sale = eachData.dish_month_sale;
 			var dish_id = eachData.dish_id;
 			var restaurant_id = eachData.restaurant_id;
@@ -133,7 +130,8 @@ var search = function(page,current_div,search_content){
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
 					<h3>\
-					<a href="restaurant_home_page?restaurant_name='+dish_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+dish_name+'</a>\
+					<a class="v-align-middle" href="restaurant_home_page?restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'">'+restaurant_name+'</a>/\
+					<a href="restaurant_home_page?restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+dish_name+'</a>\
 					</h3>\
 					<p class="col-9 d-inline-block text-gray mb-2 pr-4">Price: ¥\
 					'+dish_price+'¥\

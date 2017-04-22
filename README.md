@@ -1,2 +1,3 @@
 # Glutton
-SQL project, and web application for lazy gluttons.
+SQL project, an web application for lazy gluttons.
+Built with Flask, Jquery, Html, Css.

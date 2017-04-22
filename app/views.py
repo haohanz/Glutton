@@ -389,7 +389,7 @@ def upload_restaurant_profile():
     restaurant_description = request.args.get("restaurant_description")
     try:
         db.engine.execute(
-            "UPDATE customer SET restaurant_name = '%s', restaurant_address = '%s', delivery_price = '%s', base_deliver_price = '%s', open_time = '%s', restaurant_description = '%s' WHERE restaurant_id = '%s'" % \
+            "UPDATE restaurant SET restaurant_name = '%s', restaurant_address = '%s', delivery_price = '%s', base_deliver_price = '%s', open_time = '%s', restaurant_description = '%s' WHERE restaurant_id = '%s'" % \
             (restaurant_name, restaurant_address,delivery_price, base_deliver_price, open_time, restaurant_description, restaurant_id))
         print 'successfully updated profile!'
         updated_profile = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'" % (restaurant_id)).fetchall()

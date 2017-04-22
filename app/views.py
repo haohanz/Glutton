@@ -321,7 +321,7 @@ def get_restaurant_detail():
             print dish_result
             for dish in dish_result:
                 dish_list.append(jsonify_dish(dish))
-            print "result_restaurant:",rrestaurant
+            print "result_restaurant:",restaurant
             print "result_dish_list:",dish_list
             return jsonify({"restaurant": jsonify_restaurant(restaurant), "dish": dish_list})
         else:
@@ -342,9 +342,10 @@ def get_restaurant_history():
 @app.route('/submit_order', methods=['GET', 'POST'])
 def submit_order():
     # TODO
-    dish_counts = eval(request.args.get("dish_counts"))
+    dish_counts = request.args.get("dish_counts")
     customer_id = request.args.get("customer_id")
     restaurant_id = request.args.get("restaurant_id")
+    return jsonify({"succeed!":"succeed!"})
 
 @app.route('/change_restaurant_password', methods=['GET', 'POST'])
 def change_restaurant_password():

@@ -133,12 +133,12 @@ var search = function(page,current_div,search_content){
 					<a class="v-align-middle" href="restaurant_home_page?restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'">'+restaurant_name+'</a>/\
 					<a href="restaurant_home_page?restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+dish_name+'</a>\
 					</h3>\
-					<p class="col-9 d-inline-block text-gray mb-2 pr-4">Price: ¥\
-					'+dish_price+'¥\
+					<p class="col-9 d-inline-block text-gray mb-2 pr-4">Dish id: \
+					'+dish_id+'\
 					</p>\
 					</div>\
 					<div class="d-table-cell col-2 text-gray pt-2">\
-					<span class="repo-language-color ml-0" style="background-color:#f1e05a;"></span>价格: '+dish_price+'\
+					<span class="repo-language-color ml-0" style="background-color:#f1e05a;"></span>价格: '+dish_price+'¥\
 					</div>\
 					<div class="col-2 text-right pt-1 pr-3 pt-2">\
 					<a class="muted-link" href="https://github.com/helmetjs/csp/stargazers">\

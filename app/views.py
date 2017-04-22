@@ -326,8 +326,11 @@ def get_restaurant_detail():
 
 @app.route('/get_user_history', methods= ['GET', 'POST'])
 def get_user_history():
-    # TODO
-    pass
+    customer_id = request.args.get("customer_id")
+    # try:
+    #     pass
+        # g.cursor.execute("SELECT order")
+    # pass
 
 @app.route('/get_restaurant_history', methods=['GET', 'POST'])
 def get_restaurant_history():
@@ -355,7 +358,7 @@ def submit_order():
     print "restaurant_id",restaurant_id
     customer_order_id = get_customer_order_no()
     try:
-        db.engine.execute("INSERT INTO customer_order VALUES('%s', '%s', '%s', '%s', NULL);" % (restaurant_id, customer_id, customer_order_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        db.engine.execute("INSERT INTO customer_order VALUES('%s', '%s', '%s', '%s', NULL, NULL);" % (restaurant_id, customer_id, customer_order_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
         for order, count in dish_counts.items():
             dish_order_id = get_dish_order_no()
             db.engine.execute("INSERT INTO dish_order VALUES('%s', '%s', '%s', '%d');" % (dish_order_id, customer_order_id, order, int(count)))
@@ -415,6 +418,30 @@ def change_dish():
 
 @app.route('/receive_order', methods=['GET', 'POST'])
 def receive_order():
+    order_id = request.args.get("order_id")
+    try:
+        db.engine.execute("UPDATE order SET receive_time = '%s' WHERE order_id = '%s'" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S", order_id)))
+        print 'successfully received order!'
+        return jsonify({"succeed!": "succeed!"})
+    except Exception as e:
+        print 'receive order failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Receive order failed, please try again later.."})
+
+@app.route('/delete_dish', methods=['GET', 'POST'])
+def delete_dish():
     # TODO
     pass
 
+@app.route('/comment_order', methods=['GET', 'POST'])
+def comment_order():
+    order_id = request.args.get("order_id")
+    comment = request.args.get("comment")
+    try:
+        db.engine.execute("UPDATE order SET comment = '%s' WHERE order_id = '%s'" % (comment, order_id))
+        print 'successfully comment order!'
+        return jsonify({"succeed!": "succeed!"})
+    except Exception as e:
+        print 'comment order failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Comment order failed, please try again later.."})

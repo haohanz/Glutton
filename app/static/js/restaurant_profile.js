@@ -94,7 +94,8 @@ $(document).ready(function(){
 			alert("dish_price"+dish_price+"dish_name"+dish_name);
 			$.getJSON("/add_dish",
 				{"dish_name":dish_name,
-				1"dish_price":dish_price},function(data){
+				"restaurant_id":restaurant_id,
+				"dish_price":dish_price},function(data){
 				if (data.ERROR){
 					alert(data.ERROR);
 				} else {

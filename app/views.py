@@ -2,9 +2,7 @@
 import sqlite3
 import traceback
 import urllib
-
 from flask import render_template, jsonify, request, g
-
 from app import app, db
 from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
 from datetime import datetime
@@ -192,12 +190,6 @@ def jsonify_dish_with_restaurant_name(dish):
     key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale", "restaurant_name")
     return dict(zip(key_words, dish))
 
-@app.route('/search', methods = ['GET', 'POST'])
-def search():
-    search_value = request.args.get("search_value")
-    # TODO
-    return "1"
-
 @app.route('/search_restaurant_results', methods = ['GET', 'POST'])
 def search_restaurant_results():
     customer_id = request.args.get("customer_id")
@@ -334,10 +326,12 @@ def get_restaurant_detail():
 
 @app.route('/get_user_history', methods= ['GET', 'POST'])
 def get_user_history():
+    # TODO
     pass
 
 @app.route('/get_restaurant_history', methods=['GET', 'POST'])
 def get_restaurant_history():
+    # TODO
     pass
 
 def get_customer_order_no():
@@ -350,7 +344,6 @@ def get_dish_order_no():
 
 @app.route('/submit_order', methods=['GET', 'POST'])
 def submit_order():
-    # TODO
     dish_counts = request.args.get("dish_counts")
     print "dish_counts",dish_counts
     print type(dish_counts)
@@ -374,17 +367,54 @@ def submit_order():
 
 @app.route('/change_restaurant_password', methods=['GET', 'POST'])
 def change_restaurant_password():
-    pass
+    restaurant_id = request.args.get("restaurant_id")
+    owner_password = request.args.get("owner_password")
+    try:
+        db.engine.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'" % (owner_password, restaurant_id))
+        print 'successfully changed password!'
+        return jsonify({"succeed!": "succeed!"})
+    except Exception as e:
+        print 'Change password failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Change password failed, please try again later.."})
 
 @app.route('/upload_restaurant_profile', methods=['GET', 'POST'])
 def upload_restaurant_profile():
-    pass
+    restaurant_id = request.args.get("restaurant_id")
+    restaurant_name = request.args.get("restaurant_name")
+    restaurant_address = request.args.get("restaurant_address")
+    delivery_price = request.args.get("delivery_price")
+    base_deliver_price = request.args.get("base_deliver_price")
+    open_time = request.args.get("open_time")
+    restaurant_description = request.args.get("restaurant_description")
+    try:
+        db.engine.execute(
+            "UPDATE customer SET restaurant_name = '%s', restaurant_address = '%s', delivery_price = '%s', base_delivery_price = '%s', open_time = '%s', restaurant_description = '%s' WHERE restaurant_id = '%s'" % \
+            (restaurant_name, restaurant_address,delivery_price, base_deliver_price, open_time, restaurant_description, restaurant_id))
+        print 'successfully updated profile!'
+        updated_profile = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'" % (restaurant_id)).fetchall()
+        return jsonify(jsonify_restaurant(updated_profile[0]))
+    except Exception as e:
+        print 'update profile failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Update profile failed, please try again later.."})
 
 @app.route('/change_dish', methods=['GET', 'POST'])
 def change_dish():
-    pass
+    dish_id = request.args.get("dish_id")
+    dish_price = request.args.get("dish_price")
+    try:
+        db.engine.execute("UPDATE dish SET dish_price = '%f' WHERE dish_id = '%s'" % (float(dish_price), dish_id))
+        print 'successfully updated dish!'
+        updated_dish = g.cursor.execute("SELECT * FROM dish WHERE dish_id = '%s'" % (dish_id)).fetchall()
+        return jsonify(jsonify_dish(updated_dish[0]))
+    except Exception as e:
+        print 'update dish failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Update dish failed, please try again later.."})
 
 @app.route('/receive_order', methods=['GET', 'POST'])
 def receive_order():
+    # TODO
     pass
 

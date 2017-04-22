@@ -7,7 +7,7 @@ from flask import render_template, jsonify, request, g
 
 from app import app, db
 from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
-
+from datetime import datetime
 
 @app.before_request
 def before_request():
@@ -339,16 +339,37 @@ def get_user_history():
 def get_restaurant_history():
     pass
 
+def get_customer_order_no():
+    total_customer_order_num = len(db.engine.execute("SELECT * FROM customer_order").fetchall())
+    return '0' * (3 - len(str(total_customer_order_num))) + str(total_customer_order_num)
+
+def get_dish_order_no():
+    total_dish_order_num = len(db.engine.execute("SELECT * FROM dish_order").fetchall())
+    return '0' * (4 - len(str(total_dish_order_num))) + str(total_dish_order_num)
+
 @app.route('/submit_order', methods=['GET', 'POST'])
 def submit_order():
     # TODO
     dish_counts = request.args.get("dish_counts")
     print "dish_counts",dish_counts
+    print type(dish_counts)
+    dish_counts = dict(eval(dish_counts))
+    dish_counts = {dish: count for dish, count in dish_counts.items() if count}
     customer_id = request.args.get("customer_id")
     print "customer_id",customer_id
     restaurant_id = request.args.get("restaurant_id")
     print "restaurant_id",restaurant_id
-    return jsonify({"succeed!":"succeed!"})
+    customer_order_id = get_customer_order_no()
+    try:
+        db.engine.execute("INSERT INTO customer_order VALUES('%s', '%s', '%s', '%s', NULL);" % (restaurant_id, customer_id, customer_order_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        for order, count in dish_counts.items():
+            dish_order_id = get_dish_order_no()
+            db.engine.execute("INSERT INTO dish_order VALUES('%s', '%s', '%s', '%d');" % (dish_order_id, customer_order_id, order, int(count)))
+        return jsonify({"succeed!": "succeed!"})
+    except Exception as e:
+        print 'order insert failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR":"Submit order failed, please try again later.."})
 
 @app.route('/change_restaurant_password', methods=['GET', 'POST'])
 def change_restaurant_password():

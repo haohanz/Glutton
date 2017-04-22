@@ -21,6 +21,7 @@ $(document).ready(function(){
             $("ul#dish_info").html('');
             var str = '';
             var restaurant_info = eval(data.restaurant);
+            eval(restaurant_info);
             var restaurant_description = restaurant_info.restaurant_description;
             var delivery_price = restaurant_info.delivery_fee;
             var base_deliver_price = restaurant_info.base_deliver_price;
@@ -37,7 +38,7 @@ $(document).ready(function(){
             $.each(dishes, function(i,item){
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
-                var month_sale = item.month_sale;
+                var month_sale = item.dish_month_sale;
                 var dish_price = item.dish_price;
                 dish_counts[dish_id] = 0;
                 str += '\
@@ -51,7 +52,7 @@ $(document).ready(function(){
                       <div class="f6 text-gray mt-2">\
                             <span class="repo-language-color ml-0" style="background-color:#e34c26;"></span>\
                           <span class="mr-3" itemprop="programmingLanguage">\
-                            价格: '+dish_price+'\
+                            价格: '+dish_price+'¥<span id="dish_id">dish id:'+dish_id+'</span>\
                           </span>\
                           <a class="muted-link mr-3" href="https://github.com/WebpageFX/emoji-cheat-sheet.com/stargazers">\
                             <svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"></path></svg>\
@@ -91,10 +92,11 @@ $(document).ready(function(){
                 $(this).prev("a#dish_count:first").html((dish_num+1).toString());
                     dish_counts[$(this).next("span#dish_id:first").html()] = dish_num + 1;
             });
+
             $("a#submit_order").bind("click",function(){
-                console.log("sending:"+dish_counts);
-                console.log("customer_id:"+customer_id);
-                console.log("restaurant_id:"+restaurant_id);
+                alert("dish_counts:"+dish_counts);
+                alert("customer_id:"+customer_id);
+                alert("restaurant_id:"+restaurant_id);
                 $.getJSON("/submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
                     alert("get data!!!"+data);
                 });

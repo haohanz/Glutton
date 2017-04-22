@@ -286,6 +286,9 @@ def add_dish():
     dish_name = request.args.get("dish_name")
     restaurant_id = request.args.get("restaurant_id")
     dish_price = request.args.get("dish_price")
+    print dish_name
+    print restaurant_id
+    print dish_price
     try:
         dish_id = get_dish_no(restaurant_id)
         db.engine.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d');" % (dish_id, dish_name, dish_id[:3], float(dish_price), 0 ))

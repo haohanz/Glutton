@@ -278,8 +278,8 @@ def change_password():
         return jsonify({"ERROR": "Change password failed, please try again later.."})
 
 def get_dish_no(restaurant_id):
-    total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % restaurant_id))
-    return restaurant_id + '-' + '0' * (2 - len(total_dish_num)) + str(total_dish_num)
+    total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % restaurant_id).fetchall())
+    return restaurant_id + '-' + '0' * (2 - len(str(total_dish_num))) + str(total_dish_num)
 
 @app.route('/add_dish', methods = ['GET', 'POST'])
 def add_dish():
@@ -333,8 +333,8 @@ def get_user_history():
                 print order
                 keywords = ["restaurant_id", "order_id", "create_time", "receive_time"]
                 order_dict = dict(zip(keywords, order))
-                restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant WHERE restaurant_id = '%s'" % (order[0])).fetchall()[0]
-                order_dict["restaurant_name"] = restaurant_name
+                restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant WHERE restaurant_id = '%s'" % (order[0])).fetchall()
+                order_dict["restaurant_name"] = restaurant_name[0][0]
                 dish_details = g.cursor.execute("SELECT dish.dish_name, dish.dish_price, dish_order.count FROM dish, dish_order, customer_order WHERE customer_order.order_id = dish_order.order_id AND dish_order.dish_id = dish.dish_id AND customer_order.order_id = '%s'" % (order_dict["order_id"])).fetchall()
                 order_total_price = sum(map(lambda x: x[1] * x[2], dish_details))
                 order_dict["order_total_price"] = order_total_price

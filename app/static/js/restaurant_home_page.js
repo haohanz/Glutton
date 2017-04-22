@@ -93,14 +93,10 @@ $(document).ready(function(){
                 }
                 $(this).prev("a#dish_count:first").html((dish_num+1).toString());
                 var input_id = $(this).prev().prev().prev().html();
-                alert(dish_num+1);
                 dish_counts[input_id] = dish_num + 1;
             });
 
             $("a#submit_order").bind("click",function(){
-                alert("dish_counts:"+dish_counts);
-                alert("customer_id:"+customer_id);
-                alert("restaurant_id:"+restaurant_id);
                 console.log(dish_counts);
                 dish_counts = JSON.stringify(dish_counts);
                 $.getJSON("/submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

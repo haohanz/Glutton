@@ -19,7 +19,15 @@ var signin = function() {
     if (who == 'business'){
         route = "restaurant_signin_submit";
     }
-    $.getJSON(route,{"customer_password":password,"customer_mobile_number":mobile,"who":who},function(data){
+    var input_dict = {}
+    if (who == 'business'){
+        input_dict["owner_nickname"] = mobile;
+        input_dict["owner_password"] = password;
+    } else {
+        input_dict["customer_password"] = password;
+        input_dict["customer_mobile_number"] = mobile;
+    }
+    $.getJSON(route,input_dict,function(data){
         if (data.ERROR) {
             alert(data.ERROR);
         } else {
@@ -51,6 +59,7 @@ $(document).ready(function(){
         var str = url.substr(1);
         who = str.split("&")[0].split("=")[1];
         if (who=='business'){
+            $("label#first_label").html("Input your nickname");
             $("h1").children("strong").html('Sign in as owner');
         } else {
             

@@ -100,7 +100,9 @@ def user_signup_submit():
         return jsonify({"ERROR": "Registration failed! Please try again..."})
 
 def get_restaurant_no():
-    total_restaurant_num = len(db.engine.execute("SELECT * FROM restaurant").fetchall())
+    total_restaurant_num = len(db.engine.execute("SELECT * FROM restaurant").fetchall()) + 1
+    print total_restaurant_num
+    print '0' * (3 - len(str(total_restaurant_num))) + str(total_restaurant_num)
     return '0' * (3 - len(str(total_restaurant_num))) + str(total_restaurant_num)
 
 @app.route('/restaurant_signup_submit', methods = ['GET', 'POST'])
@@ -108,7 +110,7 @@ def restaurant_signup_submit():
     print 'get request'
     owner_nickname = request.args.get("owner_nickname")
     restaurant_name = request.args.get("restaurant_name")
-    owner_password = request.args.get("customer_password")
+    owner_password = request.args.get("owner_password")
     print owner_nickname
     print restaurant_name
     print owner_password
@@ -213,7 +215,7 @@ def search_restaurant_results():
         selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
         for res in selected_result:
             restaurant_result.append(jsonify_restaurant(res))
-        print restaurant_result
+        print "restaurant_result:",restaurant_result
         return jsonify({"customer_id": customer_id, "result_list":restaurant_result, "total_result": total_result, "total_page": total_page})
     except Exception as e:
         print 'search failed!'

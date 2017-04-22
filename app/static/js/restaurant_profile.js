@@ -31,8 +31,6 @@ var change_mobile_number = function(customer_id) {
 	} 
 }
 
-
-
 $(document).ready(function(){
 	var url = location.search;
     alert("url is:"+url);
@@ -44,6 +42,8 @@ $(document).ready(function(){
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
         var restaurant_id = url_vars["restaurant_id"];
+        $("a#restaurant_dish_management").attr("href","restaurant_dish_management?restaurant_id="+restaurant_id)
+        $("a#restaurant_order_history").attr("href","restaurant_order_history?restaurant_id="+restaurant_id)
         $("button#change_password").bind("click",function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();

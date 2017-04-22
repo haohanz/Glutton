@@ -29,7 +29,6 @@ def signup():
     return render_template('signup.htm')
 
 @app.route('/home_page', methods = ['GET', 'POST'])
-# @login_required
 def home_page():
     return render_template('home_page.htm')
 
@@ -126,7 +125,6 @@ def restaurant_signup_submit():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Registration failed! Please try again..."})
 
-
 @app.route('/user_signin_submit', methods = ['GET', 'POST'])
 def user_signin_submit():
     customer_mobile_number = request.args.get("customer_mobile_number")
@@ -149,7 +147,6 @@ def user_signin_submit():
         print 'login failed!'
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Sign in failed, please try again later."})
-
 
 @app.route('/restaurant_signin_submit', methods = ['GET', 'POST'])
 def restaurant_signin_submit():
@@ -280,23 +277,20 @@ def change_password():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Change password failed, please try again later.."})
 
-def get_dish_no(restaurant_name):
-    prefix = g.cursor.execute("SELECT restaurant_id FROM restaurant WHERE restaurant_name = '%s'" % (restaurant_name)).fetchall()[0]
-    total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % prefix))
-    return prefix + '-' + '0' * (2 - len(total_dish_num)) + str(total_dish_num)
+def get_dish_no(restaurant_id):
+    total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % restaurant_id))
+    return restaurant_id + '-' + '0' * (2 - len(total_dish_num)) + str(total_dish_num)
 
 @app.route('/add_dish', methods = ['GET', 'POST'])
 def add_dish():
     dish_name = request.args.get("dish_name")
-    restaurant_name = request.args.get("restaurant_name")
+    restaurant_id = request.args.get("restaurant_id")
     dish_price = request.args.get("dish_price")
-    # dish_month_sale = request.args.get("dish_month_sale")
     try:
-        dish_id = get_dish_no()
+        dish_id = get_dish_no(restaurant_id)
         db.engine.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d');" % (dish_id, dish_name, dish_id[:3], float(dish_price), 0 ))
         print 'new dish inserted into database!'
-        # TODO
-        return "1"
+        return jsonify({"succeed!": "succeed!"})
     except Exception as e:
         print 'dish insert failed!'
         print traceback.format_exc(e)
@@ -324,13 +318,28 @@ def get_restaurant_detail():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Can't get restaurant details, please try again later..."})
 
-@app.route('/get_user_history', methods= ['GET', 'POST'])
-def get_user_history():
-    customer_id = request.args.get("customer_id")
-    # try:
-    #     pass
-        # g.cursor.execute("SELECT order")
-    # pass
+# @app.route('/get_user_history', methods= ['GET', 'POST'])
+# def get_user_history():
+#     customer_id = request.args.get("customer_id")
+#     customer_id = '000'
+#     print customer_id
+#     try:
+#         customer_order = g.cursor.execute("SELECT customer_order.restaurant_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time FROM customer_order WHERE customer_id = '%s'" % (customer_id)).fetchall()
+#         if customer_order:
+#             for order in customer_order:
+#                 print order
+#                 keywords = ["restaurant_id", "order_id", "create_time", "receive_time"]
+#                 order_dict = dict(zip(keywords, order))
+#                 restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant WHERE restaurant_id = '%s'" % (order[0])).fetchall()[0]
+#                 order_dict["restaurant_name"] = restaurant_name
+#                 total_price = g.cursor.execute("SELECT SUM()")
+#
+#
+#
+#     except Exception as e:
+#         print 'get history failed!'
+#         print traceback.format_exc(e)
+#         return jsonify({"ERROR": "Get user history failed, please try again later.."})
 
 @app.route('/get_restaurant_history', methods=['GET', 'POST'])
 def get_restaurant_history():

@@ -318,28 +318,37 @@ def get_restaurant_detail():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Can't get restaurant details, please try again later..."})
 
-# @app.route('/get_user_history', methods= ['GET', 'POST'])
-# def get_user_history():
-#     customer_id = request.args.get("customer_id")
-#     customer_id = '000'
-#     print customer_id
-#     try:
-#         customer_order = g.cursor.execute("SELECT customer_order.restaurant_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time FROM customer_order WHERE customer_id = '%s'" % (customer_id)).fetchall()
-#         if customer_order:
-#             for order in customer_order:
-#                 print order
-#                 keywords = ["restaurant_id", "order_id", "create_time", "receive_time"]
-#                 order_dict = dict(zip(keywords, order))
-#                 restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant WHERE restaurant_id = '%s'" % (order[0])).fetchall()[0]
-#                 order_dict["restaurant_name"] = restaurant_name
-#                 total_price = g.cursor.execute("SELECT SUM()")
-#
-#
-#
-#     except Exception as e:
-#         print 'get history failed!'
-#         print traceback.format_exc(e)
-#         return jsonify({"ERROR": "Get user history failed, please try again later.."})
+@app.route('/get_user_history', methods= ['GET', 'POST'])
+def get_user_history():
+    customer_id = request.args.get("customer_id")
+    print customer_id
+    try:
+        customer_order = g.cursor.execute("SELECT customer_order.restaurant_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time FROM customer_order WHERE customer_id = '%s'" % (customer_id)).fetchall()
+        if customer_order:
+            order_list = []
+            for order in customer_order:
+                print order
+                keywords = ["restaurant_id", "order_id", "create_time", "receive_time"]
+                order_dict = dict(zip(keywords, order))
+                restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant WHERE restaurant_id = '%s'" % (order[0])).fetchall()[0]
+                order_dict["restaurant_name"] = restaurant_name
+                dish_details = g.cursor.execute("SELECT dish.dish_name, dish.dish_price, dish_order.count FROM dish, dish_order, customer_order WHERE customer_order.order_id = dish_order.order_id AND dish_order.dish_id = dish.dish_id AND customer_order.order_id = '%s'" % (order_dict["order_id"])).fetchall()
+                order_total_price = sum(map(lambda x: x[1] * x[2], dish_details))
+                order_dict["order_total_price"] = order_total_price
+                dish_list = []
+                for dish in dish_details:
+                    dish_list.append(dict(zip(("dish_name", "dish_price", "dish_amount"), dish)))
+                order_dict["dishes"] = dish_list
+                print order_dict
+                order_list.append(order_dict)
+            print order_list
+            return str(order_list)
+        else:
+            return jsonify({"ERROR": "No orders! Don't you want to eat some?"})
+    except Exception as e:
+        print 'get history failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Get user history failed, please try again later.."})
 
 @app.route('/get_restaurant_history', methods=['GET', 'POST'])
 def get_restaurant_history():

@@ -345,7 +345,9 @@ def submit_order():
     dish_counts = request.args.get("dish_counts")
     print "dish_counts",dish_counts
     customer_id = request.args.get("customer_id")
+    print "customer_id",customer_id
     restaurant_id = request.args.get("restaurant_id")
+    print "restaurant_id",restaurant_id
     return jsonify({"succeed!":"succeed!"})
 
 @app.route('/change_restaurant_password', methods=['GET', 'POST'])

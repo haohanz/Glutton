@@ -52,7 +52,7 @@ $(document).ready(function(){
                       <div class="f6 text-gray mt-2">\
                             <span class="repo-language-color ml-0" style="background-color:#e34c26;"></span>\
                           <span class="mr-3" itemprop="programmingLanguage">\
-                            价格: '+dish_price+'¥<span id="dish_id">dish id:'+dish_id+'</span>\
+                            价格: '+dish_price+'¥\
                           </span>\
                           <a class="muted-link mr-3" href="https://github.com/WebpageFX/emoji-cheat-sheet.com/stargazers">\
                             <svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"></path></svg>\
@@ -62,6 +62,7 @@ $(document).ready(function(){
                   </div>\
                 <div class="col-3 float-right">   \
                   <div width="155" height="30">\
+                  <span id="dish_id" style="display:none;">'+dish_id+'</span>\
                   <a class="btn btn-sm disabled" id="cut_dish">Cut</a>\
                   <a class="js-social-count" id="dish_count">0</a>\
                   <a class="btn btn-sm btn-primary" id="add_dish">Add</a>\
@@ -77,7 +78,8 @@ $(document).ready(function(){
                 } else {
                     var dish_num = parseInt($(this).next().html());
                     $(this).next().html(String(dish_num-1));
-                    dish_counts[$(this).next("span#dish_id:first").html()] = dish_num - 1;
+                    var input_id = $(this).prev().html();
+                    dish_counts[input_id] = dish_num - 1;
                     if(dish_num-1 == 0) {
                         $(this).attr("class","btn btn-sm disabled");
                     }
@@ -90,13 +92,17 @@ $(document).ready(function(){
                     $(this).prev().prev().removeClass("disabled");
                 }
                 $(this).prev("a#dish_count:first").html((dish_num+1).toString());
-                    dish_counts[$(this).next("span#dish_id:first").html()] = dish_num + 1;
+                var input_id = $(this).prev().prev().prev().html();
+                alert(dish_num+1);
+                dish_counts[input_id] = dish_num + 1;
             });
 
             $("a#submit_order").bind("click",function(){
                 alert("dish_counts:"+dish_counts);
                 alert("customer_id:"+customer_id);
                 alert("restaurant_id:"+restaurant_id);
+                console.log(dish_counts);
+                dish_counts = JSON.stringify(dish_counts);
                 $.getJSON("/submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
                     alert("get data!!!"+data);
                 });

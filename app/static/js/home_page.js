@@ -21,7 +21,7 @@ $(document).ready(function(){
             // console.log("searched,the value is:"+search_value);
             // console.log("searched,the page is:"+page);
             if (url_vars['who'] == 'business'){
-            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
+                window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
             } else {
                 window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
             }

@@ -87,8 +87,20 @@ $(document).ready(function(){
 					alert("upload succeed!");
 				}
 			})
-
-
+		});
+		$("button#add_dish").bind("click",function(){  
+			var dish_name = $("input#dish_name").val();
+			var dish_price = $("input#dish_price").val();
+			alert("dish_price"+dish_price+"dish_name"+dish_name);
+			$.getJSON("/add_dish",
+				{"dish_name":dish_name,
+				1"dish_price":dish_price},function(data){
+				if (data.ERROR){
+					alert(data.ERROR);
+				} else {
+					alert("upload succeed!");
+				}
+			})
 		});
     }	
 })

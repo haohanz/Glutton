@@ -320,6 +320,8 @@ def get_restaurant_detail():
             dish_result = g.cursor.execute("SELECT dish FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant_id = '%s'" % (restaurant_id)).fetchall()
             for dish in dish_result:
                 dish_list.append(jsonify_dish(dish))
+            print "result_restaurant:",rrestaurant
+            print "result_dish_list:",dish_list
             return jsonify({"restaurant": jsonify_restaurant(restaurant), "dish": dish_list})
         else:
             return jsonify({"ERROR": "restaurant doesn't exist!"})

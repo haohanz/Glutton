@@ -1,12 +1,7 @@
 // home_page and search.js
 
 var search_value = "";
-$("#search_home_page").click(function(){
-	search_value = $("input[name='q']").val();
-    // console.log("searched,the value is:"+search_value);
-    // console.log("searched,the page is:"+page);
-	window.location.href="search_results?search_value="+search_value;
-});
+
 
 $(document).ready(function(){
     var url = location.search;
@@ -20,6 +15,12 @@ $(document).ready(function(){
         }
         $("span#picture_nickname").html(url_vars["customer_nickname"]);
         $("span#USER_ID").html(url_vars["customer_id"]);
+        $("#search_home_page").click(function(){
+            search_value = $("input[name='q']").val();
+            // console.log("searched,the value is:"+search_value);
+            // console.log("searched,the page is:"+page);
+            window.location.href="search_results?search_value="+search_value+'&customer_id='+url_vars["customer_id"];
+        });
     }
 });
 

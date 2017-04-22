@@ -11,12 +11,10 @@ var customer_id = "";
 var search = function(page,current_div,search_content){
 	alert("search_value"+search_content);
 	var route_to_search = '';
-	var input_dict = {};
+	var input_dict  = {"search_value":search_content,"page":page,"customer_id":customer_id};
 	if (current_div == restaurant){
-		input_dict  = {"search_value":search_content,"page":page,"restaurant_id":customer_id};
 		route_to_search = "search_restaurant_results";
 	} else {
-		input_dict = {"search_value":search_content,"page":page,"customer_id":customer_id};
 		route_to_search = "search_dish_results";
 	}
 	$.getJSON(route_to_search,input_dict,function(data){
@@ -113,7 +111,7 @@ var search = function(page,current_div,search_content){
 						<a class="muted-link">\
 						<svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14">\
 						<path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z">hehe</path>\
-						</svg>月销量:<br/>'+eachData.total_month_sale+'&nbsp;&nbsp;&nbsp;&nbsp;\
+						</svg>月销量:<br/>&nbsp;&nbsp;&nbsp;'+eachData.total_month_sale+'&nbsp;&nbsp;&nbsp;&nbsp;\
 						</a>\
 						</div>\
 						</div>\
@@ -264,14 +262,10 @@ $(document).ready(function(){
         for (var i = 0; i < str_split.length; i++) {
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
+        customer_id = url_vars["customer_id"];
         search_value = url_vars["search_value"];
-        if (who=='business') {
-        	customer_id = url_vars["restaurant_id"];
-        	search(1,current_div, search_value);
-        } else{
-	        customer_id = url_vars["customer_id"];
-        	search(1,"Restaurants", search_value);
-        }
+    	search(1,"Restaurants", search_value);
+        
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
 });

@@ -20,7 +20,11 @@ $(document).ready(function(){
             search_value = $("input[name='q']").val();
             // console.log("searched,the value is:"+search_value);
             // console.log("searched,the page is:"+page);
-            window.location.href="search_results?search_value="+search_value+'&customer_id='+url_vars["customer_id"];
+            if (url_vars['who'] == 'business'){
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
+            } else {
+                window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
+            }
         });
         $("a#jump_to_profile").bind("click",function() {
             window.location.href = "your_profile?customer_id="+customer_id;

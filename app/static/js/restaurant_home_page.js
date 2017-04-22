@@ -14,10 +14,14 @@ $(document).ready(function(){
         var restaurant_id = route['restaurant_id'];
         var restaurant_name = decodeURIComponent(route['restaurant_name']);
         var customer_id = route['customer_id'];
+        var who = route['who'];
+        if (who == 'business') {
+            $("a#submit_order").addClass("disabled");
+        }
         $("span#restaurant_name").html(restaurant_name);
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
         $.getJSON("/get_restaurant_detail",{"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-            alert("get data!!!~~~~~"+data);
+            console.log("get data!!!~~~~~"+data);
             $("ul#dish_info").html('');
             var str = '';
             var restaurant_info = eval(data.restaurant);
@@ -97,7 +101,20 @@ $(document).ready(function(){
             });
 
             $("a#submit_order").bind("click",function(){
+                if ($(this).hasClass("disabled")){
+                    return;
+                }
                 console.log(dish_counts);
+                var flag = 0;
+                $.each(dish_counts, function(key,value){
+                    if (parseInt(value) != 0) {
+                        flag = 1;
+                    }
+                });
+                if (flag == 0) {
+                    alert("Your order is empty!");
+                    return;
+                }
                 return_dish_counts = JSON.stringify(dish_counts);
                 alert("dish_counts"+return_dish_counts);
                 alert("customer_id"+customer_id);

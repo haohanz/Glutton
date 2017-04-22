@@ -262,11 +262,11 @@ def initialize_homepage():
 def upload_your_profile():
     customer_id = request.args.get("customer_id")
     customer_nickname = request.args.get("customer_nickname")
-    customer_address = request.args.get("cutomer_address")
+    customer_address = request.args.get("customer_address")
     customer_description = request.args.get("customer_description")
-    customer_appellation = request.args.get("customer_apppellation")
+    customer_appellation = request.args.get("customer_appellation")
     try:
-        db.engine.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', customer_description = '%s', customer_apppellation = '%s' WHERE customer_id = '%s'" %(customer_nickname, customer_address, customer_description, customer_appellation, customer_id))
+        db.engine.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', customer_description = '%s', customer_appellation = '%s' WHERE customer_id = '%s'" %(customer_nickname, customer_address, customer_description, customer_appellation, customer_id))
         print 'successfully updated profile!'
         updated_profile = g.cursor.execute("SELECT * FROM customer WHERE customer_id = '%s'" % (customer_id)).fetchall()
         return jsonify(jsonify_customer(updated_profile[0]))
@@ -282,6 +282,7 @@ def change_password():
     try:
         db.engine.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'" % (customer_password, customer_id))
         print 'successfully changed password!'
+        return jsonify({"Succeed!": "Change password Succeed!"})
     except Exception as e:
         print 'Change password failed!'
         print traceback.format_exc(e)

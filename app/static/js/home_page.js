@@ -15,16 +15,17 @@ $(document).ready(function(){
         }
         $("span#picture_nickname").html(url_vars["customer_nickname"]);
         $("span#USER_ID").html(url_vars["customer_id"]);
+        var customer_id = url_vars["customer_id"];
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
             // console.log("searched,the value is:"+search_value);
             // console.log("searched,the page is:"+page);
             window.location.href="search_results?search_value="+search_value+'&customer_id='+url_vars["customer_id"];
         });
+        $("a#jump_to_profile").bind("click",function() {
+            window.location.href = "your_profile?customer_id="+customer_id;
+        });
+    } else {
+        alert("Sign in first!");
     }
 });
-
-var jump_to_profile = function() {
-    window.location.href = "your_profile";
-}
-

@@ -238,7 +238,7 @@
             <dd><input placeholder="What's your appellation?" class="form-control" id="customer_appellation" size="30" type="text" value=""></dd>
           </dl>
         <dl class="form-group">
-          <dt><label>Change your personal statement</label></dt>
+          <dt><label>Change your personal description</label></dt>
           <dd class="user-profile-bio-field-container js-suggester-container js-length-limited-input-container">
             <textarea class="form-control user-profile-bio-field js-suggester-field js-length-limited-input" cols="40" data-input-max-length="160" data-warning-text="{{remaining}} remaining" id="user_profile_add" placeholder="Tell a little about yourself" rows="20"></textarea>
             <!-- <p class="note">
@@ -251,7 +251,7 @@
             </div>
           </dd>
         </dl>
-        <p><button class="btn" onclick="upload_your_profile()">Update profile</button></p>
+        <p><button class="btn" id="upload_your_profile">Update profile</button></p>
       </div>
   <!-- </form>   -->
 
@@ -285,7 +285,7 @@
         <dd><input class="form-control form-control" id="user_confirm_new_password" name="user[password_confirmation]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <p>
-        <button class="btn mr-2" onclick="change_password()">Update password</button>
+        <button class="btn mr-2" id="change_password">Update password</button>
         <span><a onclick="hhhhh()">I forgot my password</a></span>
       </p>
       <div id="hhhhh" style="display: none;">hahahahahahahahaha...</div>
@@ -314,7 +314,7 @@
         </dl>
       </div>
         <p>Changing your username can have <a href="https://help.github.com/articles/what-happens-when-i-change-my-username/">unintended side effects</a>.</p>
-        <p><a class="btn" onclick="change_mobile_number()" tabindex="3">Change mobile number</a></p>
+        <p><a class="btn" id="change_mobile_number" tabindex="3">Change mobile number</a></p>
         <div id="rename-user-confirm" style="display:none;">
           <div class="rename-warning js-user-rename-warning">
             <h2 class="facebox-header" data-facebox-id="facebox-header">Really change your username?</h2>

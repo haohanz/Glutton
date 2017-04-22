@@ -314,16 +314,16 @@ def get_restaurant_detail():
     customer_id = request.args.get("custmer_id")
     restaurant_id = request.args.get("restaurant_id")
     try:
-        restaurant = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'" % (restaurant_id))
+        restaurant = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'" % (restaurant_id)).fetchall()
         if restaurant:
             dish_list = []
             dish_result = g.cursor.execute("SELECT  dish_id, dish_name, dish.restaurant_id, dish_price, dish_month_sale FROM dish, restaurant WHERE dish.restaurant_id = restaurant.restaurant_id AND restaurant.restaurant_id = '%s'" % (restaurant_id)).fetchall()
             print dish_result
             for dish in dish_result:
                 dish_list.append(jsonify_dish(dish))
-            print "result_restaurant:",restaurant
+            print "result_restaurant:",restaurant[0]
             print "result_dish_list:",dish_list
-            return jsonify({"restaurant": jsonify_restaurant(restaurant), "dish": dish_list})
+            return jsonify({"restaurant": jsonify_restaurant(restaurant[0]), "dish": dish_list})
         else:
             return jsonify({"ERROR": "restaurant doesn't exist!"})
     except Exception as e:

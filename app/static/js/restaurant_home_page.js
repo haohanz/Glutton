@@ -105,6 +105,7 @@ $(document).ready(function(){
                     return;
                 }
                 console.log(dish_counts);
+
                 var flag = 0;
                 $.each(dish_counts, function(key,value){
                     if (parseInt(value) != 0) {

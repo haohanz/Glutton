@@ -35,6 +35,7 @@ dish_name CHAR(30) NOT NULL,
 restaurant_id CHAR(3) NOT NULL,
 dish_price DECIMAL(5,2) NOT NULL,
 dish_month_sale SMALLINT,
+deleted BOOL,
 PRIMARY KEY(dish_id),
 FOREIGN KEY(restaurant_id)REFERENCES restaurant(restaurant_id)
 );""")
@@ -45,6 +46,7 @@ customer_id CHAR(3) NOT NULL,
 order_id CHAR(3) NOT NULL,
 create_time DATETIME NOT NULL,
 receive_time DATETIME,
+comment CHAR(100),
 PRIMARY KEY(order_id),
 FOREIGN KEY(restaurant_id)REFERENCES restaurant(restaurant_id),
 FOREIGN KEY(customer_id)REFERENCES customer(customer_id)

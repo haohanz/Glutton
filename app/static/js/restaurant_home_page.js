@@ -22,7 +22,7 @@ $(document).ready(function(){
             var str = '';
             var restaurant_info = data.restaurant;
             var restaurant_description = restaurant_info.restaurant_description;
-            var delivery_price = restaurant_info.delivery_price;
+            var delivery_price = restaurant_info.delivery_fee;
             var base_deliver_price = restaurant_info.base_deliver_price;
             var open_time = restaurant_info.open_time;
             var total_month_sale = restaurant.total_month_sale;

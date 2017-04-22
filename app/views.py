@@ -321,8 +321,8 @@ def get_restaurant_detail():
             print dish_result
             for dish in dish_result:
                 dish_list.append(jsonify_dish(dish))
-            print 'fuck'
-            print dish_list
+            print "result_restaurant:",rrestaurant
+            print "result_dish_list:",dish_list
             return jsonify({"restaurant": jsonify_restaurant(restaurant), "dish": dish_list})
         else:
             return jsonify({"ERROR": "restaurant doesn't exist!"})

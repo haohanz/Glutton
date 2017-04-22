@@ -31,7 +31,7 @@ var signup = function() {
                 alert(data.ERROR);
             } else {
                 restaurant_id = data.restaurant_id;
-                window.location.href = 'owner_home_page?owner_nickname='+customer_nickname+"&restaurant_id="+restaurant_id;
+                window.location.href = 'owner_home_page?who=business&owner_nickname='+customer_nickname+"&customer_id="+restaurant_id;
             }
         });
     }

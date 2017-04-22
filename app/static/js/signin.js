@@ -32,22 +32,20 @@ var signin = function() {
             alert(data.ERROR);
         } else {
             if (who == 'business') {
-                window.location.href="owner_home_page?restaurant_id="+data.restaurant_id+
+                window.location.href="owner_home_page?customer_id="+data.restaurant_id+
                 "&owner_nickname="+data.owner_nickname+
                 "&restaurant_name="+data.restaurant_name+
                 // '&customer_mobile_number='+data.customer_mobile_number+
                 // "&customer_discription="+data.customer_discription+
                 "&restaurant_address="+data.restaurant_address+
-                "&restaurant_description="+data.restaurant_description;
-                "$who"+who;
+                "&who="+who;
             } else {
             window.location.href="home_page?customer_id="+data.customer_id+
                 "&customer_nickname="+data.customer_nickname+
                 '&customer_mobile_number='+data.customer_mobile_number+
                 "&customer_nickname="+data.customer_nickname+
                 "&customer_discription="+data.customer_discription+
-                "&customer_address="+data.customer_address;
-                "$who"+who;
+                "&who="+who;
             }
         }
     });

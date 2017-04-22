@@ -10,6 +10,7 @@ var who = '';
 var customer_id = "";
 var search = function(page,current_div,search_content){
 	alert("search_value"+search_content);
+	alert("who"+who);
 	var route_to_search = '';
 	var input_dict  = {"search_value":search_content,"page":page,"customer_id":customer_id};
 	if (current_div == restaurant){
@@ -93,7 +94,7 @@ var search = function(page,current_div,search_content){
 						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 						<div class="col-8 pr-3">\
 						<h3>\
-						<a href="restaurant_home_page?restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
+						<a href="restaurant_home_page?who='+who+'&restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
 						</h3>\
 						<p class="d-inline-block text-gray mb-2 pr-4">'+description+'\
 						</p>\
@@ -130,8 +131,8 @@ var search = function(page,current_div,search_content){
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
 					<h3>\
-					<a class="v-align-middle" href="restaurant_home_page?restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'">'+restaurant_name+'</a>/\
-					<a href="restaurant_home_page?restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+dish_name+'</a>\
+					<a class="v-align-middle" href="restaurant_home_page?who='+who+'&restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'">'+restaurant_name+'</a>/\
+					<a href="restaurant_home_page?who='+who+'&restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+dish_name+'</a>\
 					</h3>\
 					<p class="col-9 d-inline-block text-gray mb-2 pr-4">Dish id: \
 					'+dish_id+'\
@@ -262,6 +263,7 @@ $(document).ready(function(){
         }
         customer_id = url_vars["customer_id"];
         search_value = url_vars["search_value"];
+        who = url_vars["who"];
     	search(1,"Restaurants", search_value);
         
     }

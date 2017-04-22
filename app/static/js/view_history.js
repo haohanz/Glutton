@@ -22,15 +22,17 @@ $(document.ready(function(){
         $.get("/get_user_history",{"customer_id":customer_id},function(data){
         	alert("get data!"+data);
         	var str= '';
+        	var order_total_price = 0;
         	$.each(data,function(i,item){
         		var restaurant_name = item.restaurant_name;
         		var order_id = item.order_id;
-        		var order_total_price = item.order_total_price;
+        		// var order_total_price = item.order_total_price;
         		var dishes = item.dishes;
         		var dish_list = '<ul class="list-style-none lh-condensed">';
         		$.each(dishes, function(i, dish_item){
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
+        			order_total_price += dish_price;
 					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">¥'+dish_price+'</span></li>'+;
         		});
         		dish_list += '</ul>';

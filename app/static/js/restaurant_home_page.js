@@ -100,7 +100,11 @@ $(document).ready(function(){
                 console.log(dish_counts);
                 dish_counts = JSON.stringify(dish_counts);
                 $.getJSON("/submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-                    alert("get data!!!"+data);
+                    if (data.ERROR) {
+                        alert(data.ERROR);
+                    } else {
+                        alert("your order submitted!");
+                    }
                 });
             });
             

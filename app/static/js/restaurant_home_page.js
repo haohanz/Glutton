@@ -98,8 +98,11 @@ $(document).ready(function(){
 
             $("a#submit_order").bind("click",function(){
                 console.log(dish_counts);
-                dish_counts = JSON.stringify(dish_counts);
-                $.getJSON("/submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
+                return_dish_counts = JSON.stringify(dish_counts);
+                alert("dish_counts"+return_dish_counts);
+                alert("customer_id"+customer_id);
+                alert("restaurant_id"+restaurant_id);
+                $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
                     if (data.ERROR) {
                         alert(data.ERROR);
                     } else {

@@ -22,6 +22,7 @@ $(document).ready(function(){
         alert("customer_id"+customer_id);
         $.get("/get_user_history",{"customer_id":customer_id},function(data){
         	alert("get data!"+data);
+        	alert(typeof(data));
         	var str= '';
         	var order_total_price = 0;
         	$.each(data,function(i,item){

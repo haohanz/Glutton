@@ -6,7 +6,7 @@ from flask import render_template, jsonify, request, g
 from app import app, db
 from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
 from datetime import datetime
-
+import json
 @app.before_request
 def before_request():
     g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)
@@ -345,7 +345,7 @@ def get_user_history():
                 print order_dict
                 order_list.append(order_dict)
             print order_list
-            return str(order_list)
+            return jsonify({"result":order_list})
         else:
             return jsonify({"ERROR": "No orders! Don't you want to eat some?"})
     except Exception as e:

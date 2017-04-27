@@ -12,6 +12,9 @@ $(document).ready(function(){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
         var restaurant_id = route['restaurant_id'];
+        alert("restaurant_id"+restaurant_id);
+        $("a#add_dish").attr("href","restaurant_profile?restaurant_id="+restaurant_id);
+        alert("added href");
         // var restaurant_name = decodeURIComponent(route['restaurant_name']);
         var who = route['who'];
         if (who == 'business') {
@@ -45,7 +48,7 @@ $(document).ready(function(){
                 var dish_price = item.dish_price;
                 dish_counts[dish_id] = 0;
                 str += '\
-                <li class="repo-list-item repo-list-item-with-avatar">\
+                <li class="repo-list-item" style="width:90%">\
               <h3 class="mb-1">\
                 <a>'+dish_name+'\
                 </a>\
@@ -66,67 +69,15 @@ $(document).ready(function(){
                 <div class="col-3 float-right">   \
                   <div width="155" height="30">\
                   <span id="dish_id" style="display:none;">'+dish_id+'</span>\
-                  <a class="btn btn-sm disabled" id="cut_dish">Cut</a>\
-                  <a class="js-social-count" id="dish_count">0</a>\
-                  <a class="btn btn-sm btn-primary" id="add_dish">Add</a>\
+                  <a href="#faceboxdiv" rel="facebox" class="btn btn-sm btn-primary" id="cut_dish" style="width:59.28px; text-align:center">Edit</a>\
+                	<a class="btn btn-danger btn-sm btn-primary" id="add_dish">Delete</a>\
                   </div>\
                 </div>\
               </div>\
             </li>';
             });
             $("ul#dish_info").html(str);
-            $("a#cut_dish").bind("click",function(){
-                if ($(this).hasClass("disabled")){
-                    alert("disabled");
-                } else {
-                    var dish_num = parseInt($(this).next().html());
-                    $(this).next().html(String(dish_num-1));
-                    var input_id = $(this).prev().html();
-                    dish_counts[input_id] = dish_num - 1;
-                    if(dish_num-1 == 0) {
-                        $(this).attr("class","btn btn-sm disabled");
-                    }
-                }
-            });
 
-            $("a#add_dish").bind("click",function(){
-                var dish_num = parseInt($(this).prev("a#dish_count:first").html());
-                if (dish_num == 0){
-                    $(this).prev().prev().removeClass("disabled");
-                }
-                $(this).prev("a#dish_count:first").html((dish_num+1).toString());
-                var input_id = $(this).prev().prev().prev().html();
-                dish_counts[input_id] = dish_num + 1;
-            });
-
-            // $("a#submit_order").bind("click",function(){
-            //     if ($(this).hasClass("disabled")){
-            //         return;
-            //     }
-            //     console.log(dish_counts);
-
-            //     var flag = 0;
-            //     $.each(dish_counts, function(key,value){
-            //         if (parseInt(value) != 0) {
-            //             flag = 1;
-            //         }
-            //     });
-            //     if (flag == 0) {
-            //         alert("Your order is empty!");
-            //         return;
-            //     }
-            //     return_dish_counts = JSON.stringify(dish_counts);
-            //     alert("dish_counts"+return_dish_counts);
-            //     alert("customer_id"+customer_id);
-            //     alert("restaurant_id"+restaurant_id);
-            //     $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-            //         if (data.ERROR) {
-            //             alert(data.ERROR);
-            //         } else {
-            //             alert("your order submitted!");
-            //         }
-            //     });
-            // });
             
         });
     }

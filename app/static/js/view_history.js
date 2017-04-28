@@ -20,12 +20,16 @@ $(document).ready(function(){
         }
         var customer_id = url_vals["customer_id"];
         alert("customer_id"+customer_id);
-        $.get("/get_user_history",{"customer_id":customer_id},function(data){
-        	alert("get data!"+data);
+        $.getJSON("/get_user_history",{"customer_id":customer_id}, function(data){
+        	alert("get data!"+data.result);
+        	data = eval(data.result);
+        	console.log("data"+data);
+        	console.log("data[o]"+eval(data[0]));
+        	console.log("eval data"+eval(data));
         	alert(typeof(data));
         	var str= '';
         	var order_total_price = 0;
-        	$.each(data,function(i,item){
+        	$.each(data, function(i, item){
         		var restaurant_name = item.restaurant_name;
         		var order_id = item.order_id;
         		// var order_total_price = item.order_total_price;

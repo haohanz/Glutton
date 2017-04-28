@@ -52,7 +52,8 @@ $(document).ready(function(){
 				if (user_confirm_new_password != user_new_password) {
 					alert("Incorrect new passwords.");
 				} else {
-					$.post("/change_password",{"user_old_password":user_old_password,"customer_password":user_new_password,"customer_id":customer_id},function(data){
+					alert(user_new_password+customer_id);
+					$.getJSON("/change_password",{"customer_password":user_new_password,"customer_id":customer_id},function(data){
 						if (data.ERROR) {
 							alert(data.ERROR);
 						} else {

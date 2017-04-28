@@ -1,6 +1,7 @@
 // restaurant_home_page.js
 
 $(document).ready(function(){
+	var viewing_dish_id;
     var dish_counts = {};
     var url = location.search;
     alert("url is"+url);
@@ -50,7 +51,8 @@ $(document).ready(function(){
                 str += '\
                 <li class="repo-list-item" style="width:90%">\
               <h3 class="mb-1">\
-                <a>'+dish_name+'\
+              	<span id="dish_id" style="display:none;">'+dish_id+'</span>\
+                <a href="#faceboxdiv" rel="facebox" id="dish_name">'+dish_name+'\
                 </a>\
               </h3>\
               <div>\
@@ -68,8 +70,8 @@ $(document).ready(function(){
                   </div>\
                 <div class="col-3 float-right">   \
                   <div width="155" height="30">\
-                  <span id="dish_id" style="display:none;">'+dish_id+'</span>\
-                  <a href="#faceboxdiv" rel="facebox" class="btn btn-sm btn-primary" id="cut_dish" style="width:59.28px; text-align:center">Edit</a>\
+              	  <span id="dish_id" style="display:none;">'+dish_id+'</span>\
+                  <a id="dish_name" href="#faceboxdiv" rel="facebox" class="btn btn-sm btn-primary" id="cut_dish" style="width:59.28px; text-align:center">Edit</a>\
                 	<a class="btn btn-danger btn-sm btn-primary" id="add_dish">Delete</a>\
                   </div>\
                 </div>\
@@ -77,8 +79,20 @@ $(document).ready(function(){
             </li>';
             });
             $("ul#dish_info").html(str);
-
-            
+            $("a#dish_name").bind("click",function(){
+            	viewing_dish_id = $(this).prev("span#dish_id:first").html();
+            	alert(viewing_dish_id);
+            	$(this).attr("href","#faceboxdiv");
+            	$(this).attr("rel","facebox");
+            });            
+        });
+        $("a#change_dish").bind("click",function(){
+        	var dish_name = $(this).prev("input#dish_name");
+        	var dish_price = $(this).prev("input#dish_price");
+        	alert("dish_name"+dish_name+dish_price);
+        	$.post("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
+        		alert("get response"+data);
+        	});
         });
     }
 }); 

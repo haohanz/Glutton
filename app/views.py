@@ -268,6 +268,8 @@ def upload_your_profile():
 def change_password():
     customer_id = request.args.get("customer_id")
     customer_password = request.args.get("customer_password")
+    print customer_id
+    print customer_password
     try:
         db.engine.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'" % (customer_password, customer_id))
         print 'successfully changed password!'

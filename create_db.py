@@ -25,6 +25,7 @@ customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
 customer_description CHAR(100),
 customer_appellation CHAR(20),
+customer_avatar CHAR(20),
 PRIMARY KEY(customer_id)
 );
 """)

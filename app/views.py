@@ -516,7 +516,14 @@ def comment_order():
 def delete_order():
     order_id = request.args.get("order_id")
     try:
-        db.engine.execute()
+        import sqlite3
+        conn = sqlite3.connect('app.db')
+        c = conn.cursor()
+        c.execute("PRAGMA foreign_keys = ON")
+        c.execute("delete from customer_order where order_id = '%s'" % (order_id))
+        c.close()
+        conn.commit()
+        conn.close()
         print 'successfully deleted order!'
         return jsonify({"succeed!": "succeed!"})
     except Exception as e:

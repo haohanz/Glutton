@@ -59,7 +59,7 @@ order_id CHAR(4) NOT NULL,
 dish_id CHAR(6) NOT NULL,
 count SMALLINT NOT NULL ,
 PRIMARY KEY(dish_order_id),
-FOREIGN KEY(order_id)REFERENCES customer_order(order_id),
+FOREIGN KEY(order_id)REFERENCES customer_order(order_id) ON DELETE CASCADE,
 FOREIGN KEY(dish_id)REFERENCES dish(dish_id)
 );""")
 

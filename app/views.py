@@ -135,7 +135,7 @@ def user_signin_submit():
         result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
         print result
         if result:
-            customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_description, customer_appellation = result[0]
+            customer_id, customer_nickname, db_password, customer_mobile_number, customer_address, customer_description, customer_appellation, customer_avatar = result[0]
             if customer_password == db_password:
                 return jsonify(jsonify_customer(result[0]))
             else:
@@ -511,3 +511,15 @@ def comment_order():
         print 'comment order failed!'
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Comment order failed, please try again later.."})
+
+@app.route('/delete_order', methods=['GET', 'POST'])
+def delete_order():
+    order_id = request.args.get("order_id")
+    try:
+        db.engine.execute()
+        print 'successfully deleted order!'
+        return jsonify({"succeed!": "succeed!"})
+    except Exception as e:
+        print 'delete order failed!'
+        print traceback.format_exc(e)
+        return jsonify({"ERROR": "Delete order failed, please try again later.."})

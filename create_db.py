@@ -4,7 +4,7 @@ db.engine.execute('''
 CREATE TABLE restaurant(
 restaurant_id CHAR(3) NOT NULL,
 owner_nickname CHAR(20) NOT NULL UNIQUE,
-owner_password CHAR(20) NOT NULL,
+owner_password CHAR(40) NOT NULL,
 restaurant_name CHAR(50) NOT NULL,
 restaurant_address CHAR(100),
 delivery_price DECIMAL(5,2),
@@ -20,7 +20,7 @@ db.engine.execute("""
 CREATE TABLE customer(
 customer_id CHAR(3) NOT NULL,
 customer_nickname CHAR(20) NOT NULL,
-customer_password CHAR(20) NOT NULL,
+customer_password CHAR(40) NOT NULL,
 customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
 customer_description CHAR(100),

@@ -7,6 +7,12 @@ from app import app, db
 from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
 from datetime import datetime
 import json
+import hashlib
+
+def md5_encrypt(str):
+    m = hashlib.md5(str)
+    return m.hexdigest()
+
 @app.before_request
 def before_request():
     g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)
@@ -79,6 +85,7 @@ def user_signup_submit():
     customer_mobile_number = request.args.get("customer_mobile_number")
     customer_nickname = request.args.get("customer_nickname")
     customer_password = request.args.get("customer_password")
+    customer_password = md5_encrypt(customer_password)
     print customer_mobile_number
     print customer_nickname
     print customer_password
@@ -108,6 +115,7 @@ def restaurant_signup_submit():
     owner_nickname = request.args.get("owner_nickname")
     restaurant_name = request.args.get("restaurant_name")
     owner_password = request.args.get("owner_password")
+    owner_password = md5_encrypt(owner_password)
     print owner_nickname
     print restaurant_name
     print owner_password
@@ -130,6 +138,7 @@ def user_signin_submit():
     customer_mobile_number = request.args.get("customer_mobile_number")
     print customer_mobile_number
     customer_password = request.args.get("customer_password")
+    customer_password = md5_encrypt(customer_password)
     print customer_password
     try:
         result = g.cursor.execute("SELECT * FROM customer WHERE customer_mobile_number = '%s'" % (customer_mobile_number)).fetchall()
@@ -152,6 +161,7 @@ def user_signin_submit():
 def restaurant_signin_submit():
     owner_nickname = request.args.get("owner_nickname")
     owner_password = request.args.get("owner_password")
+    owner_password = md5_encrypt(owner_password)
     try:
         result = g.cursor.execute("SELECT * FROM restaurant WHERE owner_nickname = '%s'" % (owner_nickname)).fetchall()
         print result
@@ -269,6 +279,7 @@ def upload_your_profile():
 def change_password():
     customer_id = request.args.get("customer_id")
     customer_password = request.args.get("customer_password")
+    customer_password = md5_encrypt(customer_password)
     print customer_id
     print customer_password
     try:
@@ -431,6 +442,7 @@ def submit_order():
 def change_restaurant_password():
     restaurant_id = request.args.get("restaurant_id")
     owner_password = request.args.get("owner_password")
+    owner_password = md5_encrypt(owner_password)
     try:
         db.engine.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'" % (owner_password, restaurant_id))
         print 'successfully changed password!'

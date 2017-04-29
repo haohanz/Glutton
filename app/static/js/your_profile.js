@@ -66,7 +66,6 @@ $(document).ready(function(){
 			} 
 		}); 
 		$("button#upload_your_profile").bind("click",function(){
-
 			var customer_nickname = $("input#user_profile_name").val();
 			// var gender = $("#user_profile_gender").find("option:selected");
 			var customer_address = $("input#user_profile_birthday").val();

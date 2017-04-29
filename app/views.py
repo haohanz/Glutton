@@ -454,6 +454,9 @@ def receive_order():
 @app.route('/delete_dish', methods=['GET', 'POST'])
 def delete_dish():
     # TODO
+    dish_id = request.args.get("dish_id");
+    print 'delete:',dish_id
+    return "1"
     pass
 
 @app.route('/comment_order', methods=['GET', 'POST'])

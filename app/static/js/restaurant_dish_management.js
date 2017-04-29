@@ -1,10 +1,30 @@
 // restaurant_home_page.js
 
 $(document).ready(function(){
-	var viewing_dish_id;
+	var viewing_dish_id=0;
     var dish_counts = {};
     var url = location.search;
     alert("url is"+url);
+    alert("start");
+	$("button#change_dish").bind("click",function(){
+		alert("clicked");
+    	var dish_name = $(this).prev("input#dish_name");
+    	var dish_price = $(this).prev("input#dish_price");
+    	alert("dish_name"+dish_name+dish_price);
+    	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
+    		alert("get response"+data);
+    	});
+    });
+    alert("end");
+    $("button#change_dish").bind("click",function(){
+		alert("clicked");
+    	var dish_name = $(this).prev("input#dish_name");
+    	var dish_price = $(this).prev("input#dish_price");
+    	alert("dish_name"+dish_name+dish_price);
+    	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
+    		alert("get response"+data);
+    	});
+    });
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
         var splits = str.split("&");
@@ -72,7 +92,8 @@ $(document).ready(function(){
                   <div width="155" height="30">\
               	  <span id="dish_id" style="display:none;">'+dish_id+'</span>\
                   <a id="dish_name" href="#faceboxdiv" rel="facebox" class="btn btn-sm btn-primary" id="cut_dish" style="width:59.28px; text-align:center">Edit</a>\
-                	<a class="btn btn-danger btn-sm btn-primary" id="add_dish">Delete</a>\
+              	  <span id="dish_id" style="display:none;">'+dish_id+'</span>\
+                	<a class="btn btn-danger btn-sm btn-primary" id="delete_dish">Delete</a>\
                   </div>\
                 </div>\
               </div>\
@@ -84,16 +105,24 @@ $(document).ready(function(){
             	alert(viewing_dish_id);
             	$(this).attr("href","#faceboxdiv");
             	$(this).attr("rel","facebox");
-            });            
+            });
+            alert($("h2#edit_info").html());
+            $("h2#edit_info").click(function(){
+            	alert("clicked edit info");
+            });
+            $("a#delete_dish").bind("click",function(){
+            	var delete_dish_id = $(this).prev("span#dish_id:first").html();
+            	alert('are you sure to delete dish:'+delete_dish_id+"?");
+            	$.getJSON("/delete_dish",{"dish_id":delete_dish_id},function(data){
+            		if (data.ERROR){
+            			alert(data.ERROR);
+            		} else {
+            			alert("delete dish succeed!");
+            		}
+            	});
+            });   
         });
-        $("a#change_dish").bind("click",function(){
-        	var dish_name = $(this).prev("input#dish_name");
-        	var dish_price = $(this).prev("input#dish_price");
-        	alert("dish_name"+dish_name+dish_price);
-        	$.post("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
-        		alert("get response"+data);
-        	});
-        });
+
     }
 }); 
 

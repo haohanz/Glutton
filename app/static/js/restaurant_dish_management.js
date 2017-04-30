@@ -27,12 +27,12 @@ $(document).ready(function(){
             $("a#submit_order").addClass("disabled");
         }
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
-        $.getJSON("/get_restaurant_detail",{"restaurant_id":restaurant_id},function(data){
-            console.log("get data!!!~~~~~"+data);
+        $.getJSON("/get_restaurant_detail",{"customer_id":"-","restaurant_id":restaurant_id},function(data){
+            console.log("get data!!!~~~~~"+JSON.stringify(data));
             $("ul#dish_info").html('');
             var str = '';
             var restaurant_info = eval(data.restaurant);
-            eval(restaurant_info);
+            console.log(JSON.stringify(restaurant_info));
             var restaurant_description = restaurant_info.restaurant_description;
             var delivery_price = restaurant_info.delivery_fee;
             var base_deliver_price = restaurant_info.base_deliver_price;
@@ -48,6 +48,8 @@ $(document).ready(function(){
             $("span#delivery_span").html(time_span);
             $("span#month_total_sale").html(total_month_sale);
             $.each(dishes, function(i,item){
+            	var dish_deleted = item.deleted;
+            	console.log(dish_deleted);
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.dish_month_sale;

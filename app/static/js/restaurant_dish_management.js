@@ -1,30 +1,15 @@
 // restaurant_home_page.js
 
+var viewing_dish_id=0;
+
 $(document).ready(function(){
-	var viewing_dish_id=0;
     var dish_counts = {};
     var url = location.search;
     alert("url is"+url);
-    alert("start");
-	$("button#change_dish").bind("click",function(){
-		alert("clicked");
-    	var dish_name = $(this).prev("input#dish_name");
-    	var dish_price = $(this).prev("input#dish_price");
-    	alert("dish_name"+dish_name+dish_price);
-    	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
-    		alert("get response"+data);
-    	});
-    });
-    alert("end");
-    $("button#change_dish").bind("click",function(){
-		alert("clicked");
-    	var dish_name = $(this).prev("input#dish_name");
-    	var dish_price = $(this).prev("input#dish_price");
-    	alert("dish_name"+dish_name+dish_price);
-    	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
-    		alert("get response"+data);
-    	});
-    });
+
+
+
+
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
         var splits = str.split("&");
@@ -42,12 +27,12 @@ $(document).ready(function(){
             $("a#submit_order").addClass("disabled");
         }
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
-        $.getJSON("/get_restaurant_detail",{"restaurant_id":restaurant_id},function(data){
-            console.log("get data!!!~~~~~"+data);
+        $.getJSON("/get_restaurant_detail",{"customer_id":"-","restaurant_id":restaurant_id},function(data){
+            console.log("get data!!!~~~~~"+JSON.stringify(data));
             $("ul#dish_info").html('');
             var str = '';
             var restaurant_info = eval(data.restaurant);
-            eval(restaurant_info);
+            console.log(JSON.stringify(restaurant_info));
             var restaurant_description = restaurant_info.restaurant_description;
             var delivery_price = restaurant_info.delivery_fee;
             var base_deliver_price = restaurant_info.base_deliver_price;
@@ -63,6 +48,8 @@ $(document).ready(function(){
             $("span#delivery_span").html(time_span);
             $("span#month_total_sale").html(total_month_sale);
             $.each(dishes, function(i,item){
+            	var dish_deleted = item.deleted;
+            	console.log(dish_deleted);
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.dish_month_sale;
@@ -98,13 +85,31 @@ $(document).ready(function(){
                 </div>\
               </div>\
             </li>';
+      //       	str+=
+				  // '\
+				  // <div id="faceboxdiv" class="column" style="display: none">\
+				  // <div class="Subhead mt-0 mb-0">\
+				  //   <h2 id="edit_info" class="Subhead-heading">Edit info</h2>\
+				  // </div>\
+				  //         <dl class="form-group">\
+				  //           <dt><label>Rename this dish</label></dt>\
+				  //           <dd><input class="form-control" id="dish_name" size="30" placeholder="Input a new dish name" type="text" value=""></dd>\
+				  //         </dl>\
+				  //       <dl class="form-group">\
+				  //         <dt><label>Input the price of this dish(¥)</label></dt>\
+				  //           <dd><input placeholder="Input the price of this dish" class="form-control" id="dish_price" size="30" type="text" value=""></dd>\
+				  //         </dl>\
+				  //       <dl class="form-group">\
+				  //       </dl>\
+				  //       <p><button class="btn" id="change_dish">Update dish info</button></p>\
+				  // </div>';
             });
             $("ul#dish_info").html(str);
             $("a#dish_name").bind("click",function(){
             	viewing_dish_id = $(this).prev("span#dish_id:first").html();
             	alert(viewing_dish_id);
-            	$(this).attr("href","#faceboxdiv");
-            	$(this).attr("rel","facebox");
+            	// $(this).attr("href","#faceboxdiv");
+            	// $(this).attr("rel","facebox");
             });
             alert($("h2#edit_info").html());
             $("h2#edit_info").click(function(){
@@ -129,8 +134,29 @@ $(document).ready(function(){
 
 
 
+var dish_name = $("input#dish_name").text();
+var dish_price = $("input#dish_price").val();
 
+var set_dish_name = function(obj) {
+	dish_name = obj.value;
+}
 
+var set_dish_price = function(obj) {
+	dish_price = obj.value;
+}
+
+var submit_change_dish = function() {
+	console.log("clicked");
+	console.log("dish_name"+dish_name+dish_price+"viewing_dish_id"+viewing_dish_id);
+	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
+		console.log("get response"+data);
+		if (data.ERROR){
+			alert(data.ERROR);
+		} else {
+			alert("Succeed!");
+		}
+	});
+}
 
 
 

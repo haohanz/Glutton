@@ -4,7 +4,7 @@ db.engine.execute('''
 CREATE TABLE restaurant(
 restaurant_id CHAR(3) NOT NULL,
 owner_nickname CHAR(20) NOT NULL UNIQUE,
-owner_password CHAR(20) NOT NULL,
+owner_password CHAR(40) NOT NULL,
 restaurant_name CHAR(50) NOT NULL,
 restaurant_address CHAR(100),
 delivery_price DECIMAL(5,2),
@@ -20,11 +20,12 @@ db.engine.execute("""
 CREATE TABLE customer(
 customer_id CHAR(3) NOT NULL,
 customer_nickname CHAR(20) NOT NULL,
-customer_password CHAR(20) NOT NULL,
+customer_password CHAR(40) NOT NULL,
 customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
 customer_description CHAR(100),
 customer_appellation CHAR(20),
+customer_avatar CHAR(20),
 PRIMARY KEY(customer_id)
 );
 """)
@@ -58,7 +59,7 @@ order_id CHAR(4) NOT NULL,
 dish_id CHAR(6) NOT NULL,
 count SMALLINT NOT NULL ,
 PRIMARY KEY(dish_order_id),
-FOREIGN KEY(order_id)REFERENCES customer_order(order_id),
+FOREIGN KEY(order_id)REFERENCES customer_order(order_id) ON DELETE CASCADE,
 FOREIGN KEY(dish_id)REFERENCES dish(dish_id)
 );""")
 

@@ -305,7 +305,7 @@ def add_dish():
     print dish_price
     try:
         dish_id = get_dish_no(restaurant_id)
-        db.engine.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d');" % (dish_id, dish_name, dish_id[:3], float(dish_price), 0 ))
+        db.engine.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d', '%d');" % (dish_id, dish_name, dish_id[:3], float(dish_price), 0, 0))
         print 'new dish inserted into database!'
         return jsonify({"succeed!": "succeed!"})
     except Exception as e:
@@ -479,6 +479,7 @@ def change_dish():
     dish_price = request.args.get("dish_price")
     dish_name = request.args.get("dish_name")
     # 这里可以更改dish_name～
+    # TODO
     try:
         db.engine.execute("UPDATE dish SET dish_price = '%f' WHERE dish_id = '%s'" % (float(dish_price), dish_id))
         print 'successfully updated dish!'

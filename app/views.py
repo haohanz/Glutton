@@ -429,6 +429,8 @@ def upload_restaurant_profile():
 def change_dish():
     dish_id = request.args.get("dish_id")
     dish_price = request.args.get("dish_price")
+    dish_name = request.args.get("dish_name")
+    # 这里可以更改dish_name～
     try:
         db.engine.execute("UPDATE dish SET dish_price = '%f' WHERE dish_id = '%s'" % (float(dish_price), dish_id))
         print 'successfully updated dish!'

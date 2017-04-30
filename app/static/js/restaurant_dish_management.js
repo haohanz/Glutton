@@ -1,30 +1,15 @@
 // restaurant_home_page.js
 
+var viewing_dish_id=0;
+
 $(document).ready(function(){
-	var viewing_dish_id=0;
     var dish_counts = {};
     var url = location.search;
     alert("url is"+url);
-    alert("start");
-	$("button#change_dish").bind("click",function(){
-		alert("clicked");
-    	var dish_name = $(this).prev("input#dish_name");
-    	var dish_price = $(this).prev("input#dish_price");
-    	alert("dish_name"+dish_name+dish_price);
-    	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
-    		alert("get response"+data);
-    	});
-    });
-    alert("end");
-    $("button#change_dish").bind("click",function(){
-		alert("clicked");
-    	var dish_name = $(this).prev("input#dish_name");
-    	var dish_price = $(this).prev("input#dish_price");
-    	alert("dish_name"+dish_name+dish_price);
-    	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
-    		alert("get response"+data);
-    	});
-    });
+
+
+
+
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
         var splits = str.split("&");
@@ -98,13 +83,31 @@ $(document).ready(function(){
                 </div>\
               </div>\
             </li>';
+      //       	str+=
+				  // '\
+				  // <div id="faceboxdiv" class="column" style="display: none">\
+				  // <div class="Subhead mt-0 mb-0">\
+				  //   <h2 id="edit_info" class="Subhead-heading">Edit info</h2>\
+				  // </div>\
+				  //         <dl class="form-group">\
+				  //           <dt><label>Rename this dish</label></dt>\
+				  //           <dd><input class="form-control" id="dish_name" size="30" placeholder="Input a new dish name" type="text" value=""></dd>\
+				  //         </dl>\
+				  //       <dl class="form-group">\
+				  //         <dt><label>Input the price of this dish(¥)</label></dt>\
+				  //           <dd><input placeholder="Input the price of this dish" class="form-control" id="dish_price" size="30" type="text" value=""></dd>\
+				  //         </dl>\
+				  //       <dl class="form-group">\
+				  //       </dl>\
+				  //       <p><button class="btn" id="change_dish">Update dish info</button></p>\
+				  // </div>';
             });
             $("ul#dish_info").html(str);
             $("a#dish_name").bind("click",function(){
             	viewing_dish_id = $(this).prev("span#dish_id:first").html();
             	alert(viewing_dish_id);
-            	$(this).attr("href","#faceboxdiv");
-            	$(this).attr("rel","facebox");
+            	// $(this).attr("href","#faceboxdiv");
+            	// $(this).attr("rel","facebox");
             });
             alert($("h2#edit_info").html());
             $("h2#edit_info").click(function(){
@@ -129,8 +132,29 @@ $(document).ready(function(){
 
 
 
+var dish_name = $("input#dish_name").text();
+var dish_price = $("input#dish_price").val();
 
+var set_dish_name = function(obj) {
+	dish_name = obj.value;
+}
 
+var set_dish_price = function(obj) {
+	dish_price = obj.value;
+}
+
+var submit_change_dish = function() {
+	console.log("clicked");
+	console.log("dish_name"+dish_name+dish_price+"viewing_dish_id"+viewing_dish_id);
+	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
+		console.log("get response"+data);
+		if (data.ERROR){
+			alert(data.ERROR);
+		} else {
+			alert("Succeed!");
+		}
+	});
+}
 
 
 

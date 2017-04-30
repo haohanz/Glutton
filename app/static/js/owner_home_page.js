@@ -12,8 +12,11 @@ $(document).ready(function(){
         for (var i = 0; i < url_var.length; i++) {
             url_vars[url_var[i].split("=")[0]] = url_var[i].split("=")[1];
         }
+        console.log($("span#picture_nickname").html());
         $("span#picture_nickname").html(url_vars["owner_nickname"]);
         $("span#USER_ID").html(url_vars["customer_id"]);
+        console.log($("span#picture_nickname").html());
+        console.log(JSON.stringify(url_vars));
         var customer_id = url_vars["customer_id"];
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
@@ -27,6 +30,8 @@ $(document).ready(function(){
     } else {
         alert("Sign in first!");
     }
+        console.log($("span#picture_nickname").html());
+    
 });
 
 

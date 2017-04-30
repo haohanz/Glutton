@@ -52,7 +52,7 @@ $(document).ready(function(){
 				if (user_confirm_new_password != user_new_password) {
 					alert("Incorrect new passwords.");
 				} else {
-					$.post("/change_restaurant_password",{"owner_password":user_new_password,"restaurant_id":restaurant_id},function(data){
+					$.getJSON("/change_restaurant_password",{"owner_password":user_new_password,"restaurant_id":restaurant_id},function(data){
 						if (data.ERROR) {
 							alert(data.ERROR);
 						} else {

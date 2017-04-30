@@ -511,6 +511,7 @@ def delete_dish():
         print traceback.format_exc(e)
         return jsonify({"ERROR": "Dish delete failed, please try again later.."})
 
+
 @app.route('/comment_order', methods=['GET', 'POST'])
 def comment_order():
     order_id = request.args.get("order_id")

@@ -73,7 +73,7 @@
     \renewcommand{\thetable}{\ifnum \c@section>\z@ \thesection-\fi \@arabic\c@table}
   \makeatother
 
-%\par\setlength{\parindent}{1em}\normalsize 
+%\par\setlength{\parindent}{1em}\normalsize
 \section{项目简介}
  \begin{itemize}
   \item 项目背景
@@ -90,10 +90,34 @@
  \end{itemize}
 
 \section{项目细节}
+
  \subsection{针对用户的功能}
+ \begin{figure}[H]
+   \centering
+     \includegraphics[width=6.00in,height=3.00in]{customer.png}
+     \caption{\small{主页面}}\label{fig:dummy}
+  \end{figure}
+  
   \begin{itemize}
   \item 注册/登录
+  \begin{figure}[H]
+   \begin{minipage}[t]{0.5\linewidth}
+    \centering
+     \includegraphics[width=3.2in]{signup.png}
+     \caption{\small{用户注册}}\label{fig:dummy}
+   \end{minipage}
+   \begin{minipage}[t]{0.5\linewidth}
+    \centering
+     \includegraphics[width=3.2in]{signin.png}
+      \caption{\small{用户登录}}\label{fig:dummy}
+   \end{minipage}
+   \end{figure}
   \item 更改信息/头像
+  \begin{figure}[H]
+   \centering
+     \includegraphics[width=5.00in,height=3.00in]{customer-profile.png}
+     \caption{\small{用户更改信息/头像}}\label{fig:dummy}
+  \end{figure}
   \item 查找商家
   \item 下单
   \item 收货
@@ -102,7 +126,24 @@
  \subsection{针对商家的功能}
   \begin{itemize}
   \item 注册/登录
+  \begin{figure}[H]
+   \begin{minipage}[t]{0.5\linewidth}
+    \centering
+     \includegraphics[width=3.2in]{restaurant.png}
+     \caption{\small{商家界面}}\label{fig:dummy}
+   \end{minipage}
+   \begin{minipage}[t]{0.5\linewidth}
+    \centering
+     \includegraphics[width=3.2in]{rsignup.png}
+      \caption{\small{商家注册}}\label{fig:dummy}
+   \end{minipage}
+   \end{figure}
   \item 更改信息
+  \begin{figure}[H]
+   \centering
+     \includegraphics[width=5.00in,height=4.00in]{restaurant-profile.png}
+     \caption{\small{商家更改信息/头像}}\label{fig:dummy}
+  \end{figure}
   \item 增加菜品
   \item 删除菜品
   \item 修改菜品
@@ -121,14 +162,14 @@
      \includegraphics[width=5.00in,height=3.00in]{ER.png}
      \caption{\small{数据库ER图}}\label{fig:dummy}
   \end{figure}
- 
+
  \item 关系图
   \begin{figure}[H]
     \centering
      \includegraphics[width=6.00in,height=4.00in]{tables.png}
      \caption{\small{数据库表格关系图}}\label{fig:dummy}
   \end{figure}
-  
+
  \item 建表语句
  \par\setlength{\parindent}{1em}\normalsize 数据库Glutton共包含5张表：商家表、用户表、菜品表、用户订单表、菜品订单表。
  \begin{itemize}
@@ -165,18 +206,41 @@
      \caption{\small{创建菜品订单表}}\label{fig:dummy}
    \end{minipage}
   \end{figure}
-  
+
  \item 插入语句
-  \begin{description}
-  利用INSERT语句向数据库中插入商家和菜品信息。示例如下：\\
-  \item 商家信息：INSERT INTO restaurant VALUES('001','restaurant1','password','学城粥铺','上海市浦东新区张江镇华佗路572号',2,0,45,'09:00-23:00',743,' 需要米饭的亲们，可以在商品里面点哦，我们的炒菜是不配米饭的，除了商务套餐和盖浇饭以外，敬请谅解');\\
-  \item 菜品信息：INSERT INTO dish VALUES('003-01','（大杯）红茶玛奇朵','003',15,717);
-  \end{description}
-  
- \item 查找语句-创建视图语句
+  \par\setlength{\parindent}{1em}\normalsize 利用INSERT语句向数据库中插入商家和菜品信息。示例如下：
+  \begin{figure}[H]
+    \raggedright
+     \includegraphics[width=16cm,height=0.6cm]{insert1.png}
+     \caption{\small{商家信息插入语句}}\label{fig:dummy}
+  \end{figure}
+  \begin{figure}[H]
+    \raggedright
+     \includegraphics{insert2.png}
+     \caption{\small{菜品信息插入语句}}\label{fig:dummy}
+  \end{figure}
+ \item 查询语句-创建视图语句
+  \par\setlength{\parindent}{1em}\normalsize 使用SEARCH语句及CREATE VIEW语句实现
+  \begin{itemize}
+   \item 商家
+    \par\setlength{\parindent}{1em}\normalsize 可以查看自己店铺的菜品和订单，并可以选择以一定的顺序（如菜品月销量，订单创建时间等）列表显示。
+   \item 用户
+    \par\setlength{\parindent}{1em}\normalsize 可以查看所有的店铺，并进入一家店铺查看所有菜品，这里采用创建视图的方式显示。用户还可以查询自己的订单历史记录。
+  \end{itemize}
  \item 更改语句
+   \par\setlength{\parindent}{1em}\normalsize 使用UPDATE SET语句实现
  \item 删除语句
+   \par\setlength{\parindent}{1em}\normalsize 使用DELETE语句实现。
+   \begin{itemize}
+    \item 商家删除菜品
+     \par\setlength{\parindent}{1em}\normalsize 采用隐式删除的方式，对于被删除的菜品，deleted属性被置为true，在商家列表中不再显示，且用户不能再查询到该菜品。但在用户历史订单中仍可以看到该菜品，这种设计更符合实际情况。
+    \item 用户删除订单
+     \par\setlength{\parindent}{1em}\normalsize 采用级联删除的方法，对于被删除的用户订单customer\_order，删除这一条元组的同时，在菜品订单dish\_order 表中同时删除以该订单为外键的菜品订单。
+   \end{itemize}
+
+
  \end{itemize}
+
 
 
 \end{document}

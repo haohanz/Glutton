@@ -493,6 +493,7 @@ def change_dish():
 @app.route('/receive_order', methods=['GET', 'POST'])
 def receive_order():
     order_id = request.args.get("order_id")
+    print "order_id",order_id
     try:
         db.engine.execute("UPDATE order SET receive_time = '%s' WHERE order_id = '%s'" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S", order_id)))
         print 'successfully received order!'

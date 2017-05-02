@@ -50,6 +50,10 @@ $(document).ready(function(){
             $.each(dishes, function(i,item){
             	var dish_deleted = item.deleted;
             	console.log(dish_deleted);
+            	if (dish_deleted.toString() == "1") {
+            		alert("deleted!");
+            		// here is a pass, don't know how
+            	}
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.dish_month_sale;
@@ -154,6 +158,8 @@ var submit_change_dish = function() {
 			alert(data.ERROR);
 		} else {
 			alert("Succeed!");
+			window.location.hrft=location.search;
+			// here is a refresh, don't know how
 		}
 	});
 }

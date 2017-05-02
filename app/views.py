@@ -495,7 +495,7 @@ def receive_order():
     order_id = request.args.get("order_id")
     print "order_id",order_id
     try:
-        db.engine.execute("UPDATE order SET receive_time = '%s' WHERE order_id = '%s'" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), order_id))
+        db.engine.execute("UPDATE customer_order SET receive_time = '%s' WHERE order_id = '%s'" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), order_id))
         print 'successfully received order!'
         return jsonify({"succeed!": "succeed!"})
     except Exception as e:
@@ -520,8 +520,10 @@ def delete_dish():
 def comment_order():
     order_id = request.args.get("order_id")
     comment = request.args.get("comment")
+    print "order_id",order_id
+    print "comment",comment
     try:
-        db.engine.execute("UPDATE order SET comment = '%s' WHERE order_id = '%s'" % (comment, order_id))
+        db.engine.execute("UPDATE customer_order SET comment = '%s' WHERE order_id = '%s'" % (comment, order_id))
         print 'successfully comment order!'
         return jsonify({"succeed!": "succeed!"})
     except Exception as e:

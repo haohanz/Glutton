@@ -1,14 +1,5 @@
 // view_history.js
 
-// [
-// {"restaurant_name":restaurant_name,
-// "order_id":order_id,
-// "order_total_price":这里我需要一个此订单中所有dish的cost的总和～～,
-// "dishes":[{"dish_name": dish_name,"dish_price", dish_price},{"dish_name": dish_name,"dish_price", dish_price}...],
-// "order_received":1 或者 0     # 1代表已经收到，0代表没有收到
-// },
-
-
 // way to test:
 // http://127.0.0.1:5000/view_history?customer_id=001
 
@@ -44,11 +35,11 @@ $(document).ready(function(){
         		var dishes = item.dishes;
         		var dish_list = '<ul class="list-style-none lh-condensed">';
         		$.each(dishes, function(j, dish_item){
-                    console.log("count:"+dish_item.dish_amount);
+                    dish_amount = dish_item.dish_amount;
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
         			order_total_price += dish_price;
-					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">¥'+dish_price+'</span></li>';
+					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">'+dish_price+'¥ &nbsp'+dish_amount+'份</span></li>';
         		});
         		dish_list += '</ul>';
         		if (i%3 == 0) {
@@ -74,7 +65,7 @@ $(document).ready(function(){
 					    <ul class="list-style-none lh-condensed">\
 					    '+dish_list+'\
 					  </div>\
-					    <a id="commit_receive" onclick="received_order(this,' + order_id + ')" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
+					    <a id="commit_receive" href="#faceboxdiv" rel="facebox" onclick="received_order(this,' + order_id + ')" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
 					</div>\
                 </td>';
                 // console.log("final str is: "+str);
@@ -84,6 +75,8 @@ $(document).ready(function(){
         });
     }
 });
+
+var comment_order_id = '0';
 
 var received_order = function(obj,order_id){
     if ($(obj).hasClass("disabled")) {
@@ -96,12 +89,36 @@ var received_order = function(obj,order_id){
                 alert(data.ERROR);
             }else {
                 alert("success!")
-                $(this).addClass("disabled");
+                $(obj).addClass("disabled");
+                window.location.href = '#faceboxdiv';
+                $(obj).attr("href","#faceboxdiv");
+                $(obj).attr("rel","facebox");
+                comment_order_id = order_id;
             }
         })
     }
 };
 
+var dish_comment = '';
+
+var set_comment = function(obj) {
+    dish_comment = obj.value;
+}
+
+var submit_comment = function() {
+     // href="cssrain.jpg" rel="facebox"
+    console.log("comment"+dish_comment+"order_id"+comment_order_id);
+    $.getJSON("/comment_order",{"comment":dish_comment,"order_id":comment_order_id},function(data){
+        console.log("get response"+data);
+        if (data.ERROR){
+            alert(data.ERROR);
+            return;
+        } else {
+            // alert("Succeed!");
+            // here is a refresh, don't know how
+        }
+    });
+}
 
 
 

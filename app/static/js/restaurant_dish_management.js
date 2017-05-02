@@ -47,13 +47,8 @@ $(document).ready(function(){
             $("span#open_time_restaurant").html(open_time);
             $("span#delivery_span").html(time_span);
             $("span#month_total_sale").html(total_month_sale);
+
             $.each(dishes, function(i,item){
-            	var dish_deleted = item.deleted;
-            	console.log(dish_deleted);
-            	if (dish_deleted.toString() == "1") {
-            		alert("deleted!");
-            		// here is a pass, don't know how
-            	}
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.dish_month_sale;
@@ -89,25 +84,8 @@ $(document).ready(function(){
                 </div>\
               </div>\
             </li>';
-      //       	str+=
-				  // '\
-				  // <div id="faceboxdiv" class="column" style="display: none">\
-				  // <div class="Subhead mt-0 mb-0">\
-				  //   <h2 id="edit_info" class="Subhead-heading">Edit info</h2>\
-				  // </div>\
-				  //         <dl class="form-group">\
-				  //           <dt><label>Rename this dish</label></dt>\
-				  //           <dd><input class="form-control" id="dish_name" size="30" placeholder="Input a new dish name" type="text" value=""></dd>\
-				  //         </dl>\
-				  //       <dl class="form-group">\
-				  //         <dt><label>Input the price of this dish(¥)</label></dt>\
-				  //           <dd><input placeholder="Input the price of this dish" class="form-control" id="dish_price" size="30" type="text" value=""></dd>\
-				  //         </dl>\
-				  //       <dl class="form-group">\
-				  //       </dl>\
-				  //       <p><button class="btn" id="change_dish">Update dish info</button></p>\
-				  // </div>';
             });
+
             $("ul#dish_info").html(str);
             $("a#dish_name").bind("click",function(){
             	viewing_dish_id = $(this).prev("span#dish_id:first").html();
@@ -115,10 +93,7 @@ $(document).ready(function(){
             	// $(this).attr("href","#faceboxdiv");
             	// $(this).attr("rel","facebox");
             });
-            alert($("h2#edit_info").html());
-            $("h2#edit_info").click(function(){
-            	alert("clicked edit info");
-            });
+
             $("a#delete_dish").bind("click",function(){
             	var delete_dish_id = $(this).prev("span#dish_id:first").html();
             	alert('are you sure to delete dish:'+delete_dish_id+"?");
@@ -129,7 +104,8 @@ $(document).ready(function(){
             			alert("delete dish succeed!");
             		}
             	});
-            });   
+            });
+
         });
 
     }
@@ -158,19 +134,11 @@ var submit_change_dish = function() {
 			alert(data.ERROR);
 		} else {
 			alert("Succeed!");
-			window.location.hrft=location.search;
+			// window.location.hrft=location.search;
 			// here is a refresh, don't know how
 		}
 	});
 }
-
-
-
-
-
-
-
-
 
 var submit_order = function() {
     $.getJSON("submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

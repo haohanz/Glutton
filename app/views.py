@@ -520,8 +520,6 @@ def delete_dish():
 def comment_order():
     order_id = request.args.get("order_id")
     comment = request.args.get("comment")
-    print "order_id",order_id
-    print "comment",comment
     try:
         db.engine.execute("UPDATE customer_order SET comment = '%s' WHERE order_id = '%s'" % (comment, order_id))
         print 'successfully comment order!'

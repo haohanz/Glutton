@@ -44,12 +44,7 @@ $(document).ready(function(){
         		var dishes = item.dishes;
         		var dish_list = '<ul class="list-style-none lh-condensed">';
         		$.each(dishes, function(j, dish_item){
-                    console.log("if deleted:"+dish_item.deleted);
-                    console.log("count:"+dish_item.count);
-                    if (dish_item.deleted) {
-                        console.log("deleted:"+dish_item);
-                        return;
-                    }
+                    console.log("count:"+dish_item.dish_amount);
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
         			order_total_price += dish_price;

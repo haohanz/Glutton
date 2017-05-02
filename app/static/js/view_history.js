@@ -88,11 +88,7 @@ var received_order = function(obj,order_id){
             if (data.ERROR){
                 alert(data.ERROR);
             }else {
-                alert("success!")
                 $(obj).addClass("disabled");
-                window.location.href = '#faceboxdiv';
-                $(obj).attr("href","#faceboxdiv");
-                $(obj).attr("rel","facebox");
                 comment_order_id = order_id;
             }
         })
@@ -114,7 +110,7 @@ var submit_comment = function() {
             alert(data.ERROR);
             return;
         } else {
-            // alert("Succeed!");
+            alert("Succeed!");
             // here is a refresh, don't know how
         }
     });

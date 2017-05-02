@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
+<!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
+<sql>
+<datatypes db="mysql">
+	<group color="rgb(238,238,170)" label="Numeric">
+		<type label="Integer" quote="" sql="INTEGER" length="0" />
+	 	<type label="TINYINT" quote="" sql="TINYINT" length="0" />
+	 	<type label="SMALLINT" quote="" sql="SMALLINT" length="0" />
+	 	<type label="MEDIUMINT" quote="" sql="MEDIUMINT" length="0" />
+	 	<type label="INT" quote="" sql="INT" length="0" />
+		<type label="BIGINT" quote="" sql="BIGINT" length="0" />
+		<type label="Decimal" quote="" sql="DECIMAL" length="1" re="DEC" />
+		<type label="Single precision" quote="" sql="FLOAT" length="0" />
+		<type label="Double precision" quote="" sql="DOUBLE" length="0" re="DOUBLE" />
+	</group>
+
+	<group color="rgb(255,200,200)" label="Character">
+		<type label="Char" quote="'" sql="CHAR" length="1" />
+		<type label="Varchar" quote="'" sql="VARCHAR" length="1" />
+		<type label="Text" quote="'" sql="MEDIUMTEXT" length="0" re="TEXT" />
+		<type label="Binary" quote="'" sql="BINARY" length="1" />
+		<type label="Varbinary" quote="'" sql="VARBINARY" length="1" />
+		<type label="BLOB" quote="'" sql="BLOB" length="0" re="BLOB" />
+	</group>
+
+	<group color="rgb(200,255,200)" label="Date &amp; Time">
+		<type label="Date" quote="'" sql="DATE" length="0" />
+		<type label="Time" quote="'" sql="TIME" length="0" />
+		<type label="Datetime" quote="'" sql="DATETIME" length="0" />
+		<type label="Year" quote="" sql="YEAR" length="0" />
+		<type label="Timestamp" quote="'" sql="TIMESTAMP" length="0" />
+	</group>
+	
+	<group color="rgb(200,200,255)" label="Miscellaneous">
+		<type label="ENUM" quote="" sql="ENUM" length="1" />
+		<type label="SET" quote="" sql="SET" length="1" />
+		<type label="Bit" quote="" sql="bit" length="0" />
+	</group>
+</datatypes><table x="86" y="40" name="restaurant">
+<row name="restaurant_id" null="0" autoincrement="1">
+<datatype>CHAR(3)</datatype>
+</row>
+<row name="owner_nickname" null="1" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+<default>NULL</default></row>
+<row name="owner_password" null="0" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+</row>
+<row name="restaurant_name" null="0" autoincrement="0">
+<datatype>CHAR(50)</datatype>
+</row>
+<row name="restaurant_address" null="1" autoincrement="0">
+<datatype>CHAR(100)</datatype>
+<default>NULL</default></row>
+<row name="delivery_price" null="1" autoincrement="0">
+<datatype>DECIMAL(5，2)</datatype>
+<default>NULL</default></row>
+<row name="base_deliver_price" null="1" autoincrement="0">
+<datatype>DECIMAL(5，2)</datatype>
+<default>NULL</default></row>
+<row name="time_span" null="1" autoincrement="0">
+<datatype>SMALLINT</datatype>
+<default>NULL</default></row>
+<row name="total_month_sale" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="restaurant_description" null="1" autoincrement="0">
+<datatype>CHAR(200)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>restaurant_id</part>
+</key>
+<key type="INDEX" name="">
+</key>
+</table>
+<table x="87" y="346" name="customer">
+<row name="customer_id" null="0" autoincrement="0">
+<datatype>CHAR(3)</datatype>
+</row>
+<row name="customer_nickname" null="0" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+</row>
+<row name="customer_password" null="0" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+</row>
+<row name="customer_mobile_number" null="1" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+<default>NULL</default></row>
+<row name="customer_address" null="1" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+<default>NULL</default></row>
+<row name="customer_description" null="1" autoincrement="0">
+<datatype>CHAR(100)</datatype>
+<default>NULL</default></row>
+<row name="customer_appellation" null="1" autoincrement="0">
+<datatype>CHAR(20)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>customer_id</part>
+</key>
+</table>
+<table x="373" y="78" name="dish">
+<row name="dish_id" null="0" autoincrement="0">
+<datatype>CHAR(6)</datatype>
+</row>
+<row name="dish_name" null="1" autoincrement="0">
+<datatype>CHAR(30)</datatype>
+<default>NULL</default></row>
+<row name="restaurant_id" null="1" autoincrement="0">
+<datatype>CHAR(3)</datatype>
+<default>NULL</default><relation table="restaurant" row="restaurant_id" />
+</row>
+<row name="dish_price" null="1" autoincrement="0">
+<datatype>DECIMAL(5,2)</datatype>
+<default>NULL</default></row>
+<row name="dish_month_sale" null="1" autoincrement="0">
+<datatype>SMALLINT</datatype>
+<default>NULL</default></row>
+<row name="deleted" null="1" autoincrement="0">
+<datatype>TINYINT</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>dish_id</part>
+</key>
+</table>
+<table x="382" y="362" name="customer_order">
+<row name="order_id" null="1" autoincrement="1">
+<datatype>CHAR(3)</datatype>
+<default>NULL</default></row>
+<row name="restaurant_id" null="1" autoincrement="0">
+<datatype>VARCHAR(3)</datatype>
+<default>NULL</default><relation table="restaurant" row="restaurant_id" />
+</row>
+<row name="customer_id" null="1" autoincrement="0">
+<datatype>CHAR(3)</datatype>
+<default>NULL</default><relation table="customer" row="customer_id" />
+</row>
+<row name="create_time" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="receive_time" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="comment" null="1" autoincrement="0">
+<datatype>CHAR(100)</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>order_id</part>
+</key>
+</table>
+<table x="576" y="182" name="dish_order">
+<row name="dish_order_id" null="1" autoincrement="1">
+<datatype>CHAR(4)</datatype>
+<default>NULL</default><relation table="customer_order" row="order_id" />
+</row>
+<row name="order_id" null="1" autoincrement="0">
+<datatype>CHAR(4)</datatype>
+<default>NULL</default></row>
+<row name="dish_id" null="1" autoincrement="0">
+<datatype>CHAR(6)</datatype>
+<default>NULL</default><relation table="dish" row="dish_id" />
+</row>
+<row name="count" null="1" autoincrement="0">
+<datatype>SMALLINT</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>dish_order_id</part>
+</key>
+</table>
+</sql>

@@ -334,7 +334,20 @@
 <script src="../static/js/jquery-3.1.1.min.js"></script>
 <script src="../static/js/view_history.js"></script>
 
-  
+<!-- EDIT BLOCK : START-->
+
+<div id="faceboxdiv" class="column" style="display: none">
+<div class="Subhead mt-0 mb-0">
+  <h2 id="edit_info" class="Subhead-heading">Comment this order</h2>
+</div>
+        <dl class="form-group">
+          <dt><label>Write your comment here!</label></dt>
+          <dd><textarea class="form-control" id="dish_name" size="30" onblur="set_comment(this)" placeholder="Write your comment here!" type="text" value=""></textarea></dd>
+        </dl>
+      <p><button onclick="submit_comment()" class="btn" id="change_dish">Submit comment</button></p>
+</div>
+
+<!-- EDIT BLOCK : END-->
 
 
 </body></html>

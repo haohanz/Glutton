@@ -1,2 +1,0 @@
-// owner_navi.js
-

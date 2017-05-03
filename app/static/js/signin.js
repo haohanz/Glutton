@@ -65,4 +65,5 @@ $(document).ready(function(){
         $("span#picture_nickname").html(nickname);
         $("span#USER_ID").html(customer_id);
     }
+    $("a").css("cursor","pointer");
 })

@@ -12,12 +12,35 @@ $(document).ready(function(){
         for (var i = 0; i < url_var.length; i++) {
             url_vars[url_var[i].split("=")[0]] = url_var[i].split("=")[1];
         }
+        
         console.log($("span#picture_nickname").html());
         $("span#picture_nickname").html(url_vars["owner_nickname"]);
         $("span#USER_ID").html(url_vars["customer_id"]);
         console.log($("span#picture_nickname").html());
         console.log(JSON.stringify(url_vars));
         var customer_id = url_vars["customer_id"];
+        var restaurant_id = customer_id;
+
+        $("a#navi_home_page").bind("click",function(){
+            window.location.href="owner_home_page?customer_id="+restaurant_id;
+        });
+
+        $("a#navi_my_profile").bind("click",function(){
+            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_dishes").bind("click",function(){
+            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_orders").bind("click",function(){
+            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+        });
+
+        $("#navi_search_home_page").click(function(){
+            search_value = $("input[name='q_navi']").val();
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
+        });
 
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
@@ -44,6 +67,7 @@ $(document).ready(function(){
             var restaurant_address = restaurant_info.restaurant_address;
             var dishes = data.dish;
             var dish_num = dishes.length;
+
             $("span#picture_nickname").html(restaurant_name);
 
             $.each(dishes, function(i,item){
@@ -67,10 +91,10 @@ $(document).ready(function(){
                 $("div#owner_dishes").html(str);
             }
         });
-
     } else {
         alert("Sign in first!");
     }
+    $("a").css("cursor","pointer");
 });
 
 

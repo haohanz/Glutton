@@ -52,6 +52,7 @@ $(document).ready(function(){
         } else {
         }
     }
+    $("a").css("cursor","pointer");
 })
 
 $("a#navi").bind("click",function(){

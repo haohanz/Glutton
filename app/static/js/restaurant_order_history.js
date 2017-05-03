@@ -11,6 +11,33 @@ $(document).ready(function(){
         	url_vals[str_splits[i].split("=")[0]] = str_splits[i].split("=")[1];
         }
         var restaurant_id = url_vals["restaurant_id"];
+
+        $("a#navi_home_page").bind("click",function(){
+            window.location.href="owner_home_page?customer_id="+restaurant_id;
+        });
+
+        $("a#navi_my_profile").bind("click",function(){
+            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_dishes").bind("click",function(){
+            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_orders").bind("click",function(){
+            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+        });
+
+        $("#navi_search_home_page").click(function(){
+            search_value = $("input[name='q_navi']").val();
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+        });
+
+        $("#search_home_page").click(function(){
+            search_value = $("input[name='q']").val();
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+        });
+
         console.log("restaurant_id"+restaurant_id);
         $.getJSON("/get_restaurant_history",{"restaurant_id":restaurant_id}, function(data){
         	console.log("get data:"+JSON.stringify(data));
@@ -83,6 +110,7 @@ $(document).ready(function(){
             $("#main_body").html(str);
         });
     }
+    $("a").css("cursor","pointer");
 });
 
 var comment_order_id = '0';
@@ -95,38 +123,9 @@ var view_comment = function(obj){
     } else {
         var com = $(obj).prev("span:first").html();
     	alert("comment:"+com);
-        // var order_id = $(this).prev("span#order_id").html();
-        // $.getJSON("/receive_order",{"order_id":order_id,"received":true},function(data){
-        //     if (data.ERROR){
-        //         alert(data.ERROR);
-        //     }else {
-        //         $(obj).addClass("disabled");
-        //         comment_order_id = order_id;
-        //     }
-        // })
     }
 };
 
-// var dish_comment = '';
-
-// var set_comment = function(obj) {
-//     dish_comment = obj.value;
-// }
-
-// var submit_comment = function() {
-//      // href="cssrain.jpg" rel="facebox"
-//     console.log("comment"+dish_comment+"order_id"+comment_order_id);
-//     $.getJSON("/comment_order",{"comment":dish_comment,"order_id":comment_order_id},function(data){
-//         console.log("get response"+data);
-//         if (data.ERROR){
-//             alert(data.ERROR);
-//             return;
-//         } else {
-//             alert("Succeed!");
-//             // here is a refresh, don't know how
-//         }
-//     });
-// }
 
 
 

@@ -7,9 +7,6 @@ $(document).ready(function(){
     var url = location.search;
     alert("url is"+url);
 
-
-
-
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
         var splits = str.split("&");
@@ -18,7 +15,6 @@ $(document).ready(function(){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
         var restaurant_id = route['restaurant_id'];
-        alert("restaurant_id"+restaurant_id);
         $("a#add_dish").attr("href","restaurant_profile?restaurant_id="+restaurant_id);
         alert("added href");
         // var restaurant_name = decodeURIComponent(route['restaurant_name']);
@@ -26,27 +22,26 @@ $(document).ready(function(){
         if (who == 'business') {
             $("a#submit_order").addClass("disabled");
         }
-        $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
         $.getJSON("/get_restaurant_detail",{"customer_id":"-","restaurant_id":restaurant_id},function(data){
             console.log("get data!!!~~~~~"+JSON.stringify(data));
             $("ul#dish_info").html('');
             var str = '';
             var restaurant_info = eval(data.restaurant);
             console.log(JSON.stringify(restaurant_info));
-            var restaurant_description = restaurant_info.restaurant_description;
             var delivery_price = restaurant_info.delivery_fee;
+            $("span#month_total_sale").html(delivery_price);
             var base_deliver_price = restaurant_info.base_deliver_price;
+            $("span#delivery_span").html(base_deliver_price);
             var restaurant_name = restaurant_info.restaurant_name;
+            $("span#restaurant_name").html(restaurant_name);
             var open_time = restaurant_info.open_time;
-            var time_span = restaurant_info.time_span;
-            var total_month_sale = restaurant_info.total_month_sale;
+            $("span#open_time_restaurant").html(open_time);
             var restaurant_address = restaurant_info.restaurant_address;
+            var restaurant_description = restaurant_info.restaurant_description;
+            $("span#restaurant_id").html("地址："+restaurant_address+"; 描述："+restaurant_description);
             var dishes = data.dish;
             var dish_num = dishes.length;
-	        $("span#restaurant_name").html(restaurant_name);
-            $("span#open_time_restaurant").html(open_time);
-            $("span#delivery_span").html(time_span);
-            $("span#month_total_sale").html(total_month_sale);
+
 
             $.each(dishes, function(i,item){
                 var dish_id = item.dish_id;

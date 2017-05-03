@@ -10,9 +10,11 @@ $(document).ready(function(){
         var str = url.substr(1);
         var url_var = str.split("&");
         var url_vars = {}
+
         for (var i = 0; i < url_var.length; i++) {
             url_vars[url_var[i].split("=")[0]] = url_var[i].split("=")[1];
         }
+
         var customer_id = url_vars["customer_id"];
         var customer_nickname;
         var customer_avatar = "5";
@@ -25,7 +27,6 @@ $(document).ready(function(){
                 customer_avatar = data.customer_avatar;
             }
         });
-
 
         $("span#picture_nickname").html(customer_nickname);
         $("span#USER_ID").html(customer_id);

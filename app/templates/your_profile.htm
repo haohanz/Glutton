@@ -214,7 +214,7 @@
 <!-- BLOCK 1 : PROFILE START-->
 <div id="YourBasicProfile" name="display" style="display:;">
 
-  <div class="col-9 float-right">    
+  <div class="col-9 float-left">    
   <div class="Subhead mt-0 mb-0">
     <h2 class="Subhead-heading">Your basic profile</h2>
   </div>
@@ -268,21 +268,24 @@
       <h2 class="Subhead-heading">Change password</h2>
     </div>
 
+
     <!-- Change Password -->
     <!-- '"` --><!-- </textarea></xmp> -->
     <!-- <form accept-charset="UTF-8" class="edit_user" id="change_password"> -->
-    <div style="margin:0;padding:0;display:inline">
+    <!-- <div style="margin:0;padding:0;display:inline">
+    </div> -->
+    <div class="column two-thirds">
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_old_password">Old password</label></dt>
-        <dd><input class="form-control form-control" id="user_old_password" name="user[old_password]" required="required" tabindex="2" type="password"></dd>
+        <dd><input placeholder="Input your old password" class="form-control form-control" id="user_old_password" name="user[old_password]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_new_password">New password</label></dt>
-        <dd><input class="form-control form-control" id="user_new_password" name="user[password]" required="required" tabindex="2" type="password"></dd>
+        <dd><input placeholder="input your new password" class="form-control form-control" id="user_new_password" name="user[password]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_confirm_new_password">Confirm new password</label></dt>
-        <dd><input class="form-control form-control" id="user_confirm_new_password" name="user[password_confirmation]" required="required" tabindex="2" type="password"></dd>
+        <dd><input placeholder="confirm your new password" class="form-control form-control" id="user_confirm_new_password" name="user[password_confirmation]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <p>
         <button class="btn mr-2" id="change_password">Update password</button>

@@ -48,6 +48,7 @@ $(document).ready(function(){
         			}
 					// str += '<div class="plans-cards pt-3 my-3">';
 				}
+                console.log("order_id in str:"+order_id);
         		str += '\
                 <td>\
 					 <div class="plans-card text-center bg-white border rounded-2">\
@@ -64,10 +65,20 @@ $(document).ready(function(){
 					    <h4 class="alt-h4 lh-condensed mb-1">Includes:</h4>\
 					    <ul class="list-style-none lh-condensed">\
 					    '+dish_list+'\
-					  </div>\
-					    <a id="commit_receive" href="#faceboxdiv" rel="facebox" onclick="received_order(this,' + order_id + ')" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
-					</div>\
-                </td>';
+					  </div>';
+                // here is to determin if receive_time is None
+
+                if (receive_time != null) {
+                    console.log("receive_time is null");
+                    str += '<a class="btn btn-block btn-outline f4 plans-card-btn disabled">Received the Dishes</a>\
+                         </div>\
+                     </td>';
+                } else { 
+                    str +=  '<a id="commit_receive" href="#faceboxdiv" rel="facebox" onclick="received_order(this,' + order_id +')" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
+                         </div>\
+                     </td>';
+                }
+
                 // console.log("final str is: "+str);
         	});
             str += '</tr></tbody></table>';

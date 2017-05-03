@@ -1,6 +1,6 @@
 // your_profile.js
 
-
+$("a#menu-list").attr("style","cursor:pointer");
 
 
 $("a#menu-list").bind('click', function(){

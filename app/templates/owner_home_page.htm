@@ -42,7 +42,7 @@
 <!-- #ffa500 orange-->
 
         
-<div class="header" role="banner" style="background-color: #27ae60">
+<div class="header" role="banner" style="background-color: ##222">
   <div class="container clearfix">
     <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
           <img src="../static/img/Glutton.png" aria-hidden="true" class="octicon octicon-mark-github" height="35" version="1.1" viewBox="-10 -10 26 26" width="35" position-relative="-50px -100px"/>
@@ -54,15 +54,18 @@
 
       <ul class="header-nav float-left" role="navigation">
         <li class="header-nav-item">
-          <a href="https://github.com/pulls" aria-label="Pull requests you created" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
-            Pull requests
+          <a id="navi_home_page" aria-label="Pull requests you created" class="selected js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
+            Home Page
 </a>        </li>
         <li class="header-nav-item">
-          <a href="https://github.com/issues" aria-label="Issues you created" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
-            Issues
+          <a id="navi_my_profile" aria-label="Issues you created" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
+            My Profile
 </a>        </li>
           <li class="header-nav-item">
-            <a class="header-nav-link" href="https://gist.github.com/" data-ga-click="Header, go to gist, text:gist">Gist</a>
+            <a class="header-nav-link" id="navi_my_dishes" data-ga-click="Header, go to gist, text:gist">My Dishes</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" id="navi_my_orders" data-ga-click="Header, go to gist, text:gist">My Orders</a>
           </li>
       </ul>
 
@@ -193,7 +196,7 @@
       </div>
     </div>
 
-      <a aria-label="Change your avatar" class="vcard-avatar d-block tooltipped tooltipped-s"><img alt="" class="avatar width-full rounded-2" height="230" src="../static/img/avatars/owner_avatar.jpg" width="230"></a>
+      <a aria-label="" class="vcard-avatar d-block tooltipped tooltipped-s"><img alt="" class="avatar width-full rounded-2" height="230" src="../static/img/avatars/owner_avatar.jpg" width="230"></a>
 
       
 <div class="vcard-names-container py-3 js-user-profile-sticky-fields is-placeholder" style="visibility: hidden; display: none; height: 56px;"></div>

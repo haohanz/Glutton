@@ -42,7 +42,6 @@ $(document).ready(function(){
             var dishes = data.dish;
             var dish_num = dishes.length;
 
-
             $.each(dishes, function(i,item){
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;

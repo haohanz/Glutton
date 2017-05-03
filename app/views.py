@@ -483,10 +483,8 @@ def change_dish():
     dish_price = request.args.get("dish_price")
     dish_name = request.args.get("dish_name")
     print "dish_name",dish_name
-    # 这里可以更改dish_name～
-    # TODO
     try:
-        db.engine.execute("UPDATE dish SET dish_price = '%f' WHERE dish_id = '%s'" % (float(dish_price), dish_id))
+        db.engine.execute("UPDATE dish SET dish_price = '%f', dish_name = '%s'  WHERE dish_id = '%s'" % (float(dish_price), dish_name, dish_id))
         print 'successfully updated dish!'
         updated_dish = g.cursor.execute("SELECT * FROM dish WHERE dish_id = '%s'" % (dish_id)).fetchall()
         return jsonify(jsonify_dish(updated_dish[0]))
@@ -498,7 +496,8 @@ def change_dish():
 @app.route('/receive_order', methods=['GET', 'POST'])
 def receive_order():
     order_id = request.args.get("order_id")
-    print "order_id",order_id
+    order_id = '0' * (3 - len(order_id)) + order_id
+    print order_id
     try:
         db.engine.execute("UPDATE customer_order SET receive_time = '%s' WHERE order_id = '%s'" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), order_id))
         print 'successfully received order!'
@@ -524,6 +523,7 @@ def delete_dish():
 @app.route('/comment_order', methods=['GET', 'POST'])
 def comment_order():
     order_id = request.args.get("order_id")
+    order_id = '0' * (3 - len(order_id)) + order_id
     comment = request.args.get("comment")
     print 'comment:',comment
     try:

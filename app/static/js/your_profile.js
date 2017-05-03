@@ -1,6 +1,6 @@
 // your_profile.js
 
-
+$("a#menu-list").attr("style","cursor:pointer");
 
 
 $("a#menu-list").bind('click', function(){
@@ -44,6 +44,7 @@ $(document).ready(function(){
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
         var customer_id = url_vars["customer_id"];
+        var customer_avatar = url_vars["customer_avatar"];
         $("button#change_password").bind("click",function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();
@@ -65,6 +66,7 @@ $(document).ready(function(){
 				alert("Incomplete Inputs.");
 			} 
 		}); 
+
 		$("button#upload_your_profile").bind("click",function(){
 			var customer_nickname = $("input#user_profile_name").val();
 			// var gender = $("#user_profile_gender").find("option:selected");
@@ -79,9 +81,13 @@ $(document).ready(function(){
 					alert("upload succeed!");
 				}
 			})
-
-
 		});
+
+        $("#avatar").attr("src","../static/img/avatars/"+customer_avatar+".jpg");
+
+        $("#avatar").bind("click",function(){
+            window.location.href = "change_avatar?customer_id="+customer_id;
+        });
     }	
 })
 

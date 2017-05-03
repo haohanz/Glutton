@@ -64,6 +64,7 @@ $(document).ready(function(){
 				alert("Incomplete Inputs.");
 			} 
 		}); 
+
 		$("button#upload_your_profile").bind("click",function(){  
 			var restaurant_name = $("input#user_profile_name").val();
 			var restaurant_address = $("input#user_profile_birthday").val();

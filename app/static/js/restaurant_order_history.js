@@ -71,7 +71,8 @@ $(document).ready(function(){
 						</div>\
                		</td>';
         		} else { 
-					str +=  '<a id="commit_receive" href="#faceboxdiv" rel="facebox" onclick="received_order(this,' + order_id + ','+comment+')" class="btn btn-block btn-outline f4 plans-card-btn">View Comment</a>\
+                    console.log("commet is:"+comment);
+					str +=  '<span id="comment" style="display:none;">'+comment+'</span><a id="commit_receive" onclick="view_comment(this)" class="btn btn-block btn-outline f4 plans-card-btn">View Comment</a>\
 						</div>\
                 	</td>';
             	}
@@ -86,14 +87,15 @@ $(document).ready(function(){
 
 var comment_order_id = '0';
 
-var received_order = function(obj,order_id,comment){
+var view_comment = function(obj){
     if ($(obj).hasClass("disabled")) {
+        alert("customer haven't commented yet!");
         return;
         // how to stop the facebox?
     } else {
-    	alert("Order id:"+order_id+";comment:"+comment);
+        var com = $(obj).prev("span:first").html();
+    	alert("comment:"+com);
         // var order_id = $(this).prev("span#order_id").html();
-        console.log("order_id"+order_id);
         // $.getJSON("/receive_order",{"order_id":order_id,"received":true},function(data){
         //     if (data.ERROR){
         //         alert(data.ERROR);

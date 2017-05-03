@@ -31,7 +31,7 @@
     
 
 
-  <div class="position-relative js-header-wrapper ">
+  <div class="position-relative js-header-wrapper">
     <a href="https://github.com/hh1680651#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
     <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
 
@@ -39,10 +39,10 @@
     
     
 
-
+<!-- #ffa500 orange-->
 
         
-<div class="header" role="banner">
+<div class="header" role="banner" style="background-color: ##222">
   <div class="container clearfix">
     <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
           <img src="../static/img/Glutton.png" aria-hidden="true" class="octicon octicon-mark-github" height="35" version="1.1" viewBox="-10 -10 26 26" width="35" position-relative="-50px -100px"/>
@@ -54,15 +54,18 @@
 
       <ul class="header-nav float-left" role="navigation">
         <li class="header-nav-item">
-          <a href="https://github.com/pulls" aria-label="Pull requests you created" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
-            Pull requests
+          <a id="navi_home_page" aria-label="Pull requests you created" class="selected js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:pulls context:user" data-hotkey="g p" data-selected-links="/pulls /pulls/assigned /pulls/mentioned /pulls">
+            Home Page
 </a>        </li>
         <li class="header-nav-item">
-          <a href="https://github.com/issues" aria-label="Issues you created" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
-            Issues
+          <a id="navi_my_profile" aria-label="Issues you created" class="js-selected-navigation-item header-nav-link" data-ga-click="Header, click, Nav menu - item:issues context:user" data-hotkey="g i" data-selected-links="/issues /issues/assigned /issues/mentioned /issues">
+            My Profile
 </a>        </li>
           <li class="header-nav-item">
-            <a class="header-nav-link" href="https://gist.github.com/" data-ga-click="Header, go to gist, text:gist">Gist</a>
+            <a class="header-nav-link" id="navi_my_dishes" data-ga-click="Header, go to gist, text:gist">My Dishes</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" id="navi_my_orders" data-ga-click="Header, go to gist, text:gist">My Orders</a>
           </li>
       </ul>
 
@@ -107,7 +110,7 @@
 
   <li class="header-nav-item dropdown js-menu-container">
     <a class="header-nav-link name tooltipped tooltipped-sw js-menu-target" href="https://github.com/hh1680651" aria-label="View profile and more" data-ga-click="Header, show menu, icon:avatar">
-      <img alt="@hh1680651" class="avatar" src="../static/home_page_files/23527044" height="20" width="20">
+      <img alt="@hh1680651" class="avatar" src="../static/img/avatars/owner_avatar.jpg" height="20" width="20">
       <span class="dropdown-caret"></span>
     </a>
 
@@ -193,7 +196,7 @@
       </div>
     </div>
 
-      <a href="https://github.com/account" aria-label="Change your avatar" class="vcard-avatar d-block tooltipped tooltipped-s"><img alt="" class="avatar width-full rounded-2" height="230" src="../static/home_page_files/23527044(2)" width="230"></a>
+      <a aria-label="" class="vcard-avatar d-block tooltipped tooltipped-s"><img alt="" class="avatar width-full rounded-2" height="230" src="../static/img/avatars/owner_avatar.jpg" width="230"></a>
 
       
 <div class="vcard-names-container py-3 js-user-profile-sticky-fields is-placeholder" style="visibility: hidden; display: none; height: 56px;"></div>
@@ -261,17 +264,12 @@
           <div data-pjax="">
 
 
-<div id="owners_dishes">
-<a href="???????????" class="exploregrid-item exploregrid-item-mini px-3 py-4">
-      <h4 class="exploregrid-item-title">
-        <span class="text-bold">Software Defined Radio</span>
-      </h4>
-      <span class="repo-language-color pinned-repo-meta" style="background-color:#DA5B0B;"></span>价格：¥<span id="dish_price">
-      100</span><span style="width: 300px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"/></svg>月销量：<span id="month_sale">100</span>
-</a>
-</div>
 
+<div id="owner_dishes">
+<br/>
+<p>You have no dishes, add some!</p>
+
+</div>
 
 
 

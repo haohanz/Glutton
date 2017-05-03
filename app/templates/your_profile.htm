@@ -172,11 +172,10 @@
 <dl class="form-group edit-profile-avatar mr-4 float-left">
   <dt><label for="upload-profile-picture">Profile picture</label></dt>
   <dd class="avatar-upload-container clearfix">
-    <img alt="@hh1680651" class="avatar rounded-2" height="200" src="../static/img/my_photo.jpg" width="200">
+    <img alt="@hh1680651" class="avatar rounded-2" height="200" id="avatar" src="../static/img/avatars/5.jpg" width="200">
     <div class="avatar-upload">
-      <label class="position-relative btn button-change-avatar mt-3 width-full text-center">
-        Upload new picture
-        <input type="file" class="manual-file-chooser width-full height-full ml-0 js-manual-file-chooser js-avatar-field">
+      <label id="change_avatar" class="position-relative btn button-change-avatar mt-3 width-full text-center">
+        Change Avatar
       </label>
 
       <div class="upload-state loading">
@@ -214,7 +213,7 @@
 <!-- BLOCK 1 : PROFILE START-->
 <div id="YourBasicProfile" name="display" style="display:;">
 
-  <div class="col-9 float-right">    
+  <div class="col-9 float-left">    
   <div class="Subhead mt-0 mb-0">
     <h2 class="Subhead-heading">Your basic profile</h2>
   </div>
@@ -268,21 +267,24 @@
       <h2 class="Subhead-heading">Change password</h2>
     </div>
 
+
     <!-- Change Password -->
     <!-- '"` --><!-- </textarea></xmp> -->
     <!-- <form accept-charset="UTF-8" class="edit_user" id="change_password"> -->
-    <div style="margin:0;padding:0;display:inline">
+    <!-- <div style="margin:0;padding:0;display:inline">
+    </div> -->
+    <div class="column two-thirds">
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_old_password">Old password</label></dt>
-        <dd><input class="form-control form-control" id="user_old_password" name="user[old_password]" required="required" tabindex="2" type="password"></dd>
+        <dd><input placeholder="Input your old password" class="form-control form-control" id="user_old_password" name="user[old_password]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_new_password">New password</label></dt>
-        <dd><input class="form-control form-control" id="user_new_password" name="user[password]" required="required" tabindex="2" type="password"></dd>
+        <dd><input placeholder="input your new password" class="form-control form-control" id="user_new_password" name="user[password]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <dl class="form-group password-confirmation-form">
         <dt><label for="user_confirm_new_password">Confirm new password</label></dt>
-        <dd><input class="form-control form-control" id="user_confirm_new_password" name="user[password_confirmation]" required="required" tabindex="2" type="password"></dd>
+        <dd><input placeholder="confirm your new password" class="form-control form-control" id="user_confirm_new_password" name="user[password_confirmation]" required="required" tabindex="2" type="password"></dd>
       </dl>
       <p>
         <button class="btn mr-2" id="change_password">Update password</button>

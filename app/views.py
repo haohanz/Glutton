@@ -42,6 +42,10 @@ def home_page():
 def your_profile():
     return render_template('your_profile.htm')
 
+@app.route('/change_avatar', methods = ['GET', 'POST'])
+def change_avatar():
+    return render_template('change_avatar.htm')
+
 @app.route('/view_history', methods = ['GET', 'POST'])
 def view_history():
     return render_template('view_history.htm')
@@ -378,7 +382,7 @@ def get_restaurant_history():
      {}, {}, ...]
     """
     restaurant_id = request.args.get("restaurant_id")
-    print restaurant_id
+    print "restaurant_id",restaurant_id
     try:
         restaurant_order = g.cursor.execute("SELECT customer_order.customer_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time, customer_order.comment FROM customer_order WHERE restaurant_id = '%s'" % (restaurant_id)).fetchall()
         if restaurant_order:
@@ -478,6 +482,7 @@ def change_dish():
     dish_id = request.args.get("dish_id")
     dish_price = request.args.get("dish_price")
     dish_name = request.args.get("dish_name")
+    print "dish_name",dish_name
     # 这里可以更改dish_name～
     # TODO
     try:
@@ -520,6 +525,7 @@ def delete_dish():
 def comment_order():
     order_id = request.args.get("order_id")
     comment = request.args.get("comment")
+    print 'comment:',comment
     try:
         db.engine.execute("UPDATE customer_order SET comment = '%s' WHERE order_id = '%s'" % (comment, order_id))
         print 'successfully comment order!'

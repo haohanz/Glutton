@@ -5,7 +5,6 @@ var search_value = "";
 
 $(document).ready(function(){
     var url = location.search;
-    alert("url is:"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
         var url_var = str.split("&");
@@ -16,6 +15,10 @@ $(document).ready(function(){
         }
 
         var customer_id = url_vars["customer_id"];
+
+        $("a#home_page_link").bind("click",function(){
+            window.location.href="restaurant_home_page?who=customer&restaurant_name="+$(this).html()+"customer_id="+customer_id+"&restaurant_id="+$(this).prop("name");
+        });
 
         $("a#navi_home_page").bind("click",function(){
             window.location.href="home_page?customer_id="+customer_id;
@@ -43,8 +46,8 @@ $(document).ready(function(){
             } else {
                 customer_nickname = data.customer_nickname;
                 customer_avatar = data.customer_avatar;
+                console.log("customer_avatar:"+customer_avatar);
                 customer_mobile_number = data.customer_mobile_number;
-                // alert("customer_avatar"+customer_avatar);
                 $("#avatar").attr("src","../static/img/avatars/"+customer_avatar+".jpg");
                 $("span#picture_nickname").html(customer_nickname);
                 $("span#USER_ID").html(customer_mobile_number);
@@ -54,8 +57,7 @@ $(document).ready(function(){
 
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
-            // console.log("searched,the value is:"+search_value);
-            // console.log("searched,the page is:"+page);
+            console.log("searched,the value is:"+search_value);
             if (url_vars['who'] == 'business'){
                 window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
             } else {

@@ -38,6 +38,7 @@ $(document).ready(function(){
         			alert(data.ERROR);
         		} else {
         			alert("change avatar succeed!");
+                    window.location.href="your_profile?customer_id="+customer_id;
         		}
         	});
         });

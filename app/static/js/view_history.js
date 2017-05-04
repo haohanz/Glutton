@@ -14,6 +14,24 @@ $(document).ready(function(){
         	url_vals[str_splits[i].split("=")[0]] = str_splits[i].split("=")[1];
         }
         var customer_id = url_vals["customer_id"];
+
+        $("a#navi_home_page").bind("click",function(){
+            window.location.href="home_page?customer_id="+customer_id;
+        });
+
+        $("a#navi_my_profile").bind("click",function(){
+            window.location.href="your_profile?customer_id="+customer_id;
+        });
+
+        $("a#navi_my_orders").bind("click",function(){
+            window.location.href="view_history?customer_id="+customer_id;
+        });
+
+        $("#navi_search_home_page").click(function(){
+            search_value = $("input[name='q_navi']").val();
+            window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
+        });
+
         console.log("customer_id"+customer_id);
         $.getJSON("/get_user_history",{"customer_id":customer_id}, function(data){
             if (data.ERROR) {
@@ -85,6 +103,7 @@ $(document).ready(function(){
             $("#main_body").html(str);
         });
     }
+    $("a").css("cursor","pointer");
 });
 
 var comment_order_id = '0';

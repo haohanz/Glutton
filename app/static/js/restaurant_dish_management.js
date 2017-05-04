@@ -15,6 +15,30 @@ $(document).ready(function(){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
         var restaurant_id = route['restaurant_id'];
+
+
+        $("a#navi_home_page").bind("click",function(){
+            window.location.href="owner_home_page?customer_id="+restaurant_id;
+        });
+
+        $("a#navi_my_profile").bind("click",function(){
+            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_dishes").bind("click",function(){
+            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_orders").bind("click",function(){
+            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+        });
+
+        $("#navi_search_home_page").click(function(){
+            search_value = $("input[name='q_navi']").val();
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+        });
+
+
         $("a#add_dish").attr("href","restaurant_profile?restaurant_id="+restaurant_id);
         alert("added href");
         // var restaurant_name = decodeURIComponent(route['restaurant_name']);
@@ -103,6 +127,7 @@ $(document).ready(function(){
         });
 
     }
+    $("a").css("cursor","pointer");
 }); 
 
 

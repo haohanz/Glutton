@@ -9,8 +9,8 @@ var search_value = "";
 var who = '';
 var customer_id = "";
 var search = function(page,current_div,search_content){
-	alert("search_value"+search_content);
-	alert("who"+who);
+	console.log("search_value"+search_content);
+	console.log("who"+who);
 	var route_to_search = '';
 	var input_dict  = {"search_value":search_content,"page":page,"customer_id":customer_id};
 	if (current_div == restaurant){
@@ -48,12 +48,10 @@ var search = function(page,current_div,search_content){
 				$("div.pagination").append(str+'<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
 			}
 			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
-			// alert("get:" + $("div.pagination").children("a#page_n").val());
 		} 
 			
 		
 
-		// $("input#search_block_in_search_results").html(search_value);
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
 		if(current_div == restaurant){
@@ -65,31 +63,6 @@ var search = function(page,current_div,search_content){
 				var restaurant_id = eachData.restaurant_id;
 				var description = eachData.restaurant_description;
 				
-
-
-
-					// <div class="topics-row-container col-9 d-inline-flex flex-wrap flex-items-center f6 my-1">\
-					// 	<a class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
-					// 	配送费: '+eachData.delivery_fee+'\
-					// 	</a>\
-					// 	<a class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
-					// 	起送费: '+eachData.base_delivery_price+'\
-					// 	</a>\
-					// 	<a class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
-					// 	配送时间: '+eachData.time_span+'\
-					// 	</a>\
-					// 	</div>\
-
-
-
-
-
-						// <p class="col-9 d-inline-block text-gray mb-2 pr-4">起送费: \
-						// '+eachData.base_delivery_price+'\
-						// </p>\
-				alert("discription"+description);
-				alert("address"+address);
-				// alert("restaurant_id"+restaurant_id);
 				var str = '\
 						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 						<div class="col-8 pr-3">\
@@ -117,7 +90,6 @@ var search = function(page,current_div,search_content){
 				$("div#tofill").append(str);
 			});
 		} else {
-			alert("this");
 			$.each(data.result_list, function(i,eachData){
 			eval(eachData);
 			var dish_name = eachData.dish_name;
@@ -126,7 +98,6 @@ var search = function(page,current_div,search_content){
 			var dish_month_sale = eachData.dish_month_sale;
 			var dish_id = eachData.dish_id;
 			var restaurant_id = eachData.restaurant_id;
-			// alert("restaurant_id"+restaurant_id);
 			var str = '\
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
@@ -213,7 +184,6 @@ var next_page = function() {
 			$("div.pagination").text('');
 			$("div.pagination").append(str+'<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
 			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
-			// alert("get:" + $("div.pagination").children("a#page_n").val());
 			toPage(parseInt(page)+1, $("div.pagination").children("a#page_n:first"));
 		} else {
 			toPage(parseInt(page)+1, obj);
@@ -253,7 +223,6 @@ var previous_page = function() {
 
 $(document).ready(function(){
 	var url = location.search;
-    alert("url is:"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
         var url_vars = {}
@@ -264,10 +233,52 @@ $(document).ready(function(){
         customer_id = url_vars["customer_id"];
         search_value = url_vars["search_value"];
         who = url_vars["who"];
+        if (who == 'customer') {
+	        $("a#navi_home_page").bind("click",function(){
+	            window.location.href="home_page?customer_id="+customer_id;
+	        });
+
+	        $("a#navi_my_profile").bind("click",function(){
+	            window.location.href="your_profile?customer_id="+customer_id;
+	        });
+
+	        $("a#navi_my_orders").bind("click",function(){
+	            window.location.href="view_history?customer_id="+customer_id;
+	        });
+
+	        $("#navi_search_home_page").click(function(){
+	            search_value = $("input[name='q_navi']").val();
+	            window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
+	        });
+        } else {
+        	var restaurant_id = customer_id;
+        	$("#navi_dishes").attr("style","display:block;");
+	        $("a#navi_home_page").bind("click",function(){
+	            window.location.href="owner_home_page?customer_id="+restaurant_id;
+	        });
+
+	        $("a#navi_my_profile").bind("click",function(){
+	            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+	        });
+
+	        $("a#navi_my_dishes").bind("click",function(){
+	            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+	        });
+
+	        $("a#navi_my_orders").bind("click",function(){
+	            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+	        });
+
+	        $("#navi_search_home_page").click(function(){
+	            search_value = $("input[name='q_navi']").val();
+	            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+	        });
+        }
     	search(1,"Restaurants", search_value);
         
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
+    $("a").css("cursor","pointer");
 });
 
 

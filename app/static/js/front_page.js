@@ -15,6 +15,7 @@ $(document).ready(function(){
     		$("a[name='Business']").attr("class",'js-selected-navigation-item nav-item selected');
         }
     }
+    $("a").css("cursor","pointer");
 })
 
 $("a#navi").bind("click",function(){

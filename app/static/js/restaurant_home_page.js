@@ -15,9 +15,50 @@ $(document).ready(function(){
         var restaurant_name = decodeURIComponent(route['restaurant_name']);
         var customer_id = route['customer_id'];
         var who = route['who'];
-        if (who == 'business') {
+
+        if (who == 'customer') {
+            $("a#navi_home_page").bind("click",function(){
+                window.location.href="home_page?customer_id="+customer_id;
+            });
+
+            $("a#navi_my_profile").bind("click",function(){
+                window.location.href="your_profile?customer_id="+customer_id;
+            });
+
+            $("a#navi_my_orders").bind("click",function(){
+                window.location.href="view_history?customer_id="+customer_id;
+            });
+
+            $("#navi_search_home_page").click(function(){
+                search_value = $("input[name='q_navi']").val();
+                window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
+            });
+        } else {
             $("a#submit_order").addClass("disabled");
+            var restaurant_id = customer_id;
+            $("#navi_dishes").attr("style","display:block;");
+            $("a#navi_home_page").bind("click",function(){
+                window.location.href="owner_home_page?customer_id="+restaurant_id;
+            });
+
+            $("a#navi_my_profile").bind("click",function(){
+                window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+            });
+
+            $("a#navi_my_dishes").bind("click",function(){
+                window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+            });
+
+            $("a#navi_my_orders").bind("click",function(){
+                window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+            });
+
+            $("#navi_search_home_page").click(function(){
+                search_value = $("input[name='q_navi']").val();
+                window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+            });
         }
+
         $("span#restaurant_name").html(restaurant_name);
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
         $.getJSON("/get_restaurant_detail",{"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
@@ -132,6 +173,7 @@ $(document).ready(function(){
             
         });
     }
+    $("a").css("cursor","pointer");
 }); 
 
 

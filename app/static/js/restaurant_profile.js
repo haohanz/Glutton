@@ -18,22 +18,8 @@ var hhhhh = function() {
 	$("div#hhhhh").attr("style","display:block;");
 }
 
-var change_mobile_number = function(customer_id) {
-	var old_mobile_number = $("input#old_mobile_number").val();
-	var user_password = $("input#user_password").val();
-	var new_mobile_number = $("input#new_mobile_number").val();
-	if (old_mobile_number && user_password && new_mobile_number) {
-		$.post("/change_mobile_number",{"old_mobile_number":old_mobile_number,"user_password":user_password,"new_mobile_number":new_mobile_number,"customer_id":customer_id},function(){
-			alert("Update mobile number succeed.");
-		});
-	} else {
-		alert("Incomplete Inputs.");
-	} 
-}
-
 $(document).ready(function(){
 	var url = location.search;
-    alert("url is:"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
         var url_vars = {}
@@ -42,8 +28,46 @@ $(document).ready(function(){
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
         var restaurant_id = url_vars["restaurant_id"];
-        $("a#restaurant_dish_management").attr("href","restaurant_dish_management?restaurant_id="+restaurant_id)
-        $("a#restaurant_order_history").attr("href","restaurant_order_history?restaurant_id="+restaurant_id)
+        $.getJSON("get_restaurant_detail",{"restaurant_id":restaurant_id},function(data){
+        	var restaurant_info = data.restaurant;
+
+        	$("input#user_profile_name").attr("value",restaurant_info.restaurant_name);
+			$("input#user_profile_birthday").attr("value",restaurant_info.restaurant_address);
+			$("input#customer_appellation").attr("value",restaurant_info.delivery_fee);
+			$("input#base_customer_appellation").attr("value",restaurant_info.base_deliver_price);
+			$("input#time_of_service").attr("value",restaurant_info.open_time);
+			$("textarea#user_profile_add").html(restaurant_info.restaurant_description);
+
+
+        })
+        			
+
+        $("a#restaurant_dish_management").attr("href","restaurant_dish_management?restaurant_id="+restaurant_id);
+        $("a#restaurant_order_history").attr("href","restaurant_order_history?restaurant_id="+restaurant_id);
+
+
+        $("a#navi_home_page").bind("click",function(){
+            window.location.href="owner_home_page?customer_id="+restaurant_id;
+        });
+
+        $("a#navi_my_profile").bind("click",function(){
+            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_dishes").bind("click",function(){
+            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_orders").bind("click",function(){
+            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+        });
+
+        $("#navi_search_home_page").click(function(){
+            search_value = $("input[name='q_navi']").val();
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+        });
+
+
         $("button#change_password").bind("click",function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();
@@ -64,6 +88,7 @@ $(document).ready(function(){
 				alert("Incomplete Inputs.");
 			} 
 		}); 
+
 		$("button#upload_your_profile").bind("click",function(){  
 			var restaurant_name = $("input#user_profile_name").val();
 			var restaurant_address = $("input#user_profile_birthday").val();
@@ -71,7 +96,6 @@ $(document).ready(function(){
 			var base_deliver_price = $("input#base_customer_appellation").val();
 			var open_time = $("input#time_of_service").val();
 			var restaurant_description = $("textarea#user_profile_add").val();
-			// alert(restaurant_name+restaurant_address+delivery_price+base_delivery_price+open_time+restaurant_description);
 			$.getJSON("/upload_restaurant_profile",
 				{"base_deliver_price":base_deliver_price,
 				"restaurant_id":restaurant_id,
@@ -85,13 +109,13 @@ $(document).ready(function(){
 					alert(data.ERROR);
 				} else {
 					alert("upload succeed!");
+					window.location.href = location.search;
 				}
 			})
 		});
 		$("button#add_dish").bind("click",function(){  
 			var dish_name = $("input#dish_name").val();
 			var dish_price = $("input#dish_price").val();
-			alert("dish_price"+dish_price+"dish_name"+dish_name);
 			$.getJSON("/add_dish",
 				{"dish_name":dish_name,
 				"restaurant_id":restaurant_id,
@@ -100,10 +124,12 @@ $(document).ready(function(){
 					alert(data.ERROR);
 				} else {
 					alert("upload succeed!");
+					window.location.href = location.search;
 				}
 			})
 		});
     }	
+    $("a").css("cursor","pointer");
 })
 
 

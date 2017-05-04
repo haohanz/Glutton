@@ -12,9 +12,6 @@ var who = 'customer';
 var signin = function() {
     var password = $("input[name='password']").val();
     var mobile = $("input[name='login']").val();
-    alert("who"+who);
-    alert("password"+password);
-    alert("mobile"+mobile);
     var route = "user_signin_submit";
     if (who == 'business'){
         route = "restaurant_signin_submit";
@@ -35,16 +32,12 @@ var signin = function() {
                 window.location.href="owner_home_page?customer_id="+data.restaurant_id+
                 "&owner_nickname="+data.owner_nickname+
                 "&restaurant_name="+data.restaurant_name+
-                // '&customer_mobile_number='+data.customer_mobile_number+
-                // "&customer_discription="+data.customer_discription+
-                "&restaurant_address="+data.restaurant_address+
                 "&who="+who;
             } else {
             window.location.href="home_page?customer_id="+data.customer_id+
                 "&customer_nickname="+data.customer_nickname+
                 '&customer_mobile_number='+data.customer_mobile_number+
                 "&customer_nickname="+data.customer_nickname+
-                "&customer_discription="+data.customer_discription+
                 "&who="+who;
             }
         }
@@ -65,4 +58,5 @@ $(document).ready(function(){
         $("span#picture_nickname").html(nickname);
         $("span#USER_ID").html(customer_id);
     }
+    $("a").css("cursor","pointer");
 })

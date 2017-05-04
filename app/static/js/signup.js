@@ -2,15 +2,12 @@
 var customer_id = "";
 var who = "";
 var signup = function() {
-    alert("who"+who);
     if(who==''){
     	customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
-        alert("get from html:"+customer_nickname + customer_password + customer_mobile_number);
         $.getJSON("/user_signup_submit",{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
             console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
-            alert("getdata"+data);
             if (data.ERROR) {
                 alert(data.ERROR);
             } else {
@@ -19,14 +16,11 @@ var signup = function() {
             }
     });
     } else {
-        alert("who"+who);
         customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
-        alert("get from html:"+customer_nickname + customer_password+customer_mobile_number);
         $.getJSON('/restaurant_signup_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname,"restaurant_name":customer_mobile_number},function(data){
             console.log('sent:'+customer_password+customer_nickname);
-            alert("getdata"+data);
             if (data.ERROR) {
                 alert(data.ERROR);
             } else {
@@ -52,6 +46,7 @@ $(document).ready(function(){
         } else {
         }
     }
+    $("a").css("cursor","pointer");
 })
 
 $("a#navi").bind("click",function(){

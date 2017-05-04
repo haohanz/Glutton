@@ -8,23 +8,34 @@ var page_num = 0;
 var search_value = "";
 var who = '';
 var customer_id = "";
-var search = function(page,current_div,search_content){
-	alert("search_value"+search_content);
-	alert("who"+who);
+var search = function(page,current_div,search_content, key){
+	console.log("search_value"+search_content);
+	console.log("who"+who);
 	var route_to_search = '';
 	var input_dict  = {"search_value":search_content,"page":page,"customer_id":customer_id};
 	if (current_div == restaurant){
-		route_to_search = "search_restaurant_results";
+		if (key == 0) {
+			route_to_search = "search_restaurant_results";
+		} else if (key == 1) {
+			route_to_search = "search_restaurant_results_by_price";
+		} else {
+			route_to_search = "search_restaurant_results_by_sale";
+		}
 	} else {
-		route_to_search = "search_dish_results";
+		if (key == 0){
+			route_to_search = "search_dish_results";
+		} else if (key == 1) {
+			route_to_search = "search_dish_results_by_price";
+		} else {
+			route_to_search = "search_dish_results_by_sale";
+		}
 	}
 	$.getJSON(route_to_search,input_dict,function(data){
+
 		if (data.ERROR) {
 			alert("data.ERROR");
 		}
-		if (data.total_page == 0 || data.total_page == 1){
-			$("span.next_page").attr("class","next_page disabled");
-		}
+
 		$("span#total_result_len").text(data.total_result);
 		$("span#current_div").text(current_div);
 		if (page_num != data.total_page || page == 0) {
@@ -48,48 +59,29 @@ var search = function(page,current_div,search_content){
 				$("div.pagination").append(str+'<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
 			}
 			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
-			// alert("get:" + $("div.pagination").children("a#page_n").val());
 		} 
-			
+		if (data.total_page == 0 || data.total_page == '1'){
+			$("span.next_page").attr("class","next_page disabled");
+		}
 		
 
-		// $("input#search_block_in_search_results").html(search_value);
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
 		if(current_div == restaurant){
+			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 				eval(eachData);
 				var name = eachData.restaurant_name;
-				var count = eachData.count;
 				var address = eachData.restaurant_address;
+				if (address == null) {
+					address = '暂无';
+				}
 				var restaurant_id = eachData.restaurant_id;
 				var description = eachData.restaurant_description;
+				if (description == null) {
+					description = '暂无';
+				}
 				
-
-
-
-					// <div class="topics-row-container col-9 d-inline-flex flex-wrap flex-items-center f6 my-1">\
-					// 	<a class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
-					// 	配送费: '+eachData.delivery_fee+'\
-					// 	</a>\
-					// 	<a class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
-					// 	起送费: '+eachData.base_delivery_price+'\
-					// 	</a>\
-					// 	<a class="topic-tag topic-tag-link f6 my-1" data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:headers,repository_id:23285482,repository_nwo:helmetjs/&lt;em&gt;csp&lt;/em&gt;,repository_public:true,repository_is_fork:false">\
-					// 	配送时间: '+eachData.time_span+'\
-					// 	</a>\
-					// 	</div>\
-
-
-
-
-
-						// <p class="col-9 d-inline-block text-gray mb-2 pr-4">起送费: \
-						// '+eachData.base_delivery_price+'\
-						// </p>\
-				alert("discription"+description);
-				alert("address"+address);
-				// alert("restaurant_id"+restaurant_id);
 				var str = '\
 						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 						<div class="col-8 pr-3">\
@@ -115,18 +107,28 @@ var search = function(page,current_div,search_content){
 						';
 				console.log("name:"+name);
 				$("div#tofill").append(str);
+
+				var results_str = '<li>\
+						            <span class="bar" style="width: 19%;"></span>\
+						            <a href="restaurant_home_page?who='+who+'&restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="filter-item"><span class="count"></span>'+name+'</a>\
+						        </li>';
+				$("#results_overview").append(results_str);
+
+
 			});
 		} else {
-			alert("this");
+			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 			eval(eachData);
 			var dish_name = eachData.dish_name;
 			var dish_price = eachData.dish_price;
 			var restaurant_name = eachData.restaurant_name;
 			var dish_month_sale = eachData.dish_month_sale;
+			if (dish_month_sale == null) {
+				dish_month_sale = '暂无';
+			}
 			var dish_id = eachData.dish_id;
 			var restaurant_id = eachData.restaurant_id;
-			// alert("restaurant_id"+restaurant_id);
 			var str = '\
 					<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 					<div class="col-8 pr-3">\
@@ -148,8 +150,16 @@ var search = function(page,current_div,search_content){
 					</div>\
 					</div>\
 					';
-			console.log("name:"+name);
 			$("div#tofill").append(str);
+
+			var results_str = '<li>\
+						            <span class="bar" style="width: 19%;"></span>\
+						            <a href="restaurant_home_page?who='+who+'&restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="filter-item">\
+						              <span class="count">'+dish_price+'¥</span>'+dish_name+'\
+						            </a>\
+						        </li>';
+			$("#results_overview").append(results_str);
+
 		});
 		}
 	});
@@ -172,22 +182,24 @@ var toPage = function(page, obj) {
 	console.log("page:"+page);
 	$("a.current").attr("class",'');
 	$(obj).attr("class","current");
-	search(parseInt(page), current_div, search_value);
+	search(parseInt(page), current_div, search_value, 0);
 }
 
 
 var getDishes = function() {
 	$("a#getDishes").attr("class","underline-nav-item selected");
 	$("a#getRestaurants").attr("class","underline-nav-item");
+	$("span#best_match").html("Best Match");
 	current_div = dishes;
-	search(1, current_div, search_value);
+	search(1, current_div, search_value, 0);
 }
 
 var getRestaurants = function() {
+	$("span#best_match").html("Best Match");
 	$("a#getDishes").attr("class","underline-nav-item");
 	$("a#getRestaurants").attr("class","underline-nav-item selected");
 	current_div = restaurant;
-	search(1, current_div, search_value);
+	search(1, current_div, search_value, 0);
 }
 
 var next_page = function() {
@@ -213,7 +225,6 @@ var next_page = function() {
 			$("div.pagination").text('');
 			$("div.pagination").append(str+'<span class="gap">…</span>'+'<span class="next_page" rel="next" onclick="next_page()">Next</span>');
 			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
-			// alert("get:" + $("div.pagination").children("a#page_n").val());
 			toPage(parseInt(page)+1, $("div.pagination").children("a#page_n:first"));
 		} else {
 			toPage(parseInt(page)+1, obj);
@@ -253,7 +264,6 @@ var previous_page = function() {
 
 $(document).ready(function(){
 	var url = location.search;
-    alert("url is:"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
         var url_vars = {}
@@ -263,11 +273,66 @@ $(document).ready(function(){
         }
         customer_id = url_vars["customer_id"];
         search_value = url_vars["search_value"];
+
+        $("#search_origin").bind("click",function(){
+    		search(1,current_div, search_value, 0);
+        });
+
+        $("#search_by_price").bind("click",function(){
+    		search(1,current_div, search_value, 1);
+        });
+
+        $("#search_by_sale").bind("click",function(){
+    		search(1,current_div, search_value, 2);
+        });
+
         who = url_vars["who"];
-    	search(1,"Restaurants", search_value);
+        if (who == 'customer') {
+	        $("a#navi_home_page").bind("click",function(){
+	            window.location.href="home_page?customer_id="+customer_id;
+	        });
+
+	        $("a#navi_my_profile").bind("click",function(){
+	            window.location.href="your_profile?customer_id="+customer_id;
+	        });
+
+	        $("a#navi_my_orders").bind("click",function(){
+	            window.location.href="view_history?customer_id="+customer_id;
+	        });
+
+	        $("#navi_search_home_page").click(function(){
+	            search_value = $("input[name='q_navi']").val();
+	            window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
+	        });
+        } else {
+        	var restaurant_id = customer_id;
+        	$("#navi_dishes").attr("style","display:block;");
+	        $("a#navi_home_page").bind("click",function(){
+	            window.location.href="owner_home_page?customer_id="+restaurant_id;
+	        });
+
+	        $("a#navi_my_profile").bind("click",function(){
+	            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+	        });
+
+	        $("a#navi_my_dishes").bind("click",function(){
+	            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+	        });
+
+	        $("a#navi_my_orders").bind("click",function(){
+	            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+	        });
+
+	        $("#navi_search_home_page").click(function(){
+	            search_value = $("input[name='q_navi']").val();
+	            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+	        });
+        }
+    	search(1,"Restaurants", search_value, 0);
         
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
+    $("a").css("cursor","pointer");
 });
 
 

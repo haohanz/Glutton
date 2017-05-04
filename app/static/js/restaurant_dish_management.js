@@ -5,10 +5,6 @@ var viewing_dish_id=0;
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;
-    alert("url is"+url);
-
-
-
 
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
@@ -18,38 +14,55 @@ $(document).ready(function(){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
         var restaurant_id = route['restaurant_id'];
-        alert("restaurant_id"+restaurant_id);
+
+        $("a#navi_home_page").bind("click",function(){
+            window.location.href="owner_home_page?customer_id="+restaurant_id;
+        });
+
+        $("a#navi_my_profile").bind("click",function(){
+            window.location.href="restaurant_profile?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_dishes").bind("click",function(){
+            window.location.href="restaurant_dish_management?restaurant_id="+restaurant_id;
+        });
+
+        $("a#navi_my_orders").bind("click",function(){
+            window.location.href="restaurant_order_history?restaurant_id="+restaurant_id;
+        });
+
+        $("#navi_search_home_page").click(function(){
+            search_value = $("input[name='q_navi']").val();
+            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
+        });
+
         $("a#add_dish").attr("href","restaurant_profile?restaurant_id="+restaurant_id);
-        alert("added href");
-        // var restaurant_name = decodeURIComponent(route['restaurant_name']);
+
         var who = route['who'];
         if (who == 'business') {
             $("a#submit_order").addClass("disabled");
         }
-        $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
         $.getJSON("/get_restaurant_detail",{"customer_id":"-","restaurant_id":restaurant_id},function(data){
             console.log("get data!!!~~~~~"+JSON.stringify(data));
             $("ul#dish_info").html('');
             var str = '';
             var restaurant_info = eval(data.restaurant);
             console.log(JSON.stringify(restaurant_info));
-            var restaurant_description = restaurant_info.restaurant_description;
             var delivery_price = restaurant_info.delivery_fee;
+            $("span#month_total_sale").html(delivery_price);
             var base_deliver_price = restaurant_info.base_deliver_price;
+            $("span#delivery_span").html(base_deliver_price);
             var restaurant_name = restaurant_info.restaurant_name;
+            $("span#restaurant_name").html(restaurant_name);
             var open_time = restaurant_info.open_time;
-            var time_span = restaurant_info.time_span;
-            var total_month_sale = restaurant_info.total_month_sale;
+            $("span#open_time_restaurant").html(open_time);
             var restaurant_address = restaurant_info.restaurant_address;
+            var restaurant_description = restaurant_info.restaurant_description;
+            $("span#restaurant_id").html("地址："+restaurant_address+"; 描述："+restaurant_description);
             var dishes = data.dish;
             var dish_num = dishes.length;
-	        $("span#restaurant_name").html(restaurant_name);
-            $("span#open_time_restaurant").html(open_time);
-            $("span#delivery_span").html(time_span);
-            $("span#month_total_sale").html(total_month_sale);
+
             $.each(dishes, function(i,item){
-            	var dish_deleted = item.deleted;
-            	console.log(dish_deleted);
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.dish_month_sale;
@@ -85,36 +98,13 @@ $(document).ready(function(){
                 </div>\
               </div>\
             </li>';
-      //       	str+=
-				  // '\
-				  // <div id="faceboxdiv" class="column" style="display: none">\
-				  // <div class="Subhead mt-0 mb-0">\
-				  //   <h2 id="edit_info" class="Subhead-heading">Edit info</h2>\
-				  // </div>\
-				  //         <dl class="form-group">\
-				  //           <dt><label>Rename this dish</label></dt>\
-				  //           <dd><input class="form-control" id="dish_name" size="30" placeholder="Input a new dish name" type="text" value=""></dd>\
-				  //         </dl>\
-				  //       <dl class="form-group">\
-				  //         <dt><label>Input the price of this dish(¥)</label></dt>\
-				  //           <dd><input placeholder="Input the price of this dish" class="form-control" id="dish_price" size="30" type="text" value=""></dd>\
-				  //         </dl>\
-				  //       <dl class="form-group">\
-				  //       </dl>\
-				  //       <p><button class="btn" id="change_dish">Update dish info</button></p>\
-				  // </div>';
             });
+
             $("ul#dish_info").html(str);
             $("a#dish_name").bind("click",function(){
             	viewing_dish_id = $(this).prev("span#dish_id:first").html();
-            	alert(viewing_dish_id);
-            	// $(this).attr("href","#faceboxdiv");
-            	// $(this).attr("rel","facebox");
             });
-            alert($("h2#edit_info").html());
-            $("h2#edit_info").click(function(){
-            	alert("clicked edit info");
-            });
+
             $("a#delete_dish").bind("click",function(){
             	var delete_dish_id = $(this).prev("span#dish_id:first").html();
             	alert('are you sure to delete dish:'+delete_dish_id+"?");
@@ -123,12 +113,15 @@ $(document).ready(function(){
             			alert(data.ERROR);
             		} else {
             			alert("delete dish succeed!");
+                        window.location.href = location.search;
             		}
             	});
-            });   
+            });
+
         });
 
     }
+    $("a").css("cursor","pointer");
 }); 
 
 
@@ -154,17 +147,10 @@ var submit_change_dish = function() {
 			alert(data.ERROR);
 		} else {
 			alert("Succeed!");
+			window.location.href = location.search;
 		}
 	});
 }
-
-
-
-
-
-
-
-
 
 var submit_order = function() {
     $.getJSON("submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

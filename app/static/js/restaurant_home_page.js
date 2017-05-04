@@ -3,7 +3,6 @@
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;
-    alert("url is"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
         var splits = str.split("&");
@@ -15,9 +14,50 @@ $(document).ready(function(){
         var restaurant_name = decodeURIComponent(route['restaurant_name']);
         var customer_id = route['customer_id'];
         var who = route['who'];
-        if (who == 'business') {
+
+        if (who == 'customer') {
+            $("a#navi_home_page").bind("click",function(){
+                window.location.href="home_page?customer_id="+customer_id;
+            });
+
+            $("a#navi_my_profile").bind("click",function(){
+                window.location.href="your_profile?customer_id="+customer_id;
+            });
+
+            $("a#navi_my_orders").bind("click",function(){
+                window.location.href="view_history?customer_id="+customer_id;
+            });
+
+            $("#navi_search_home_page").click(function(){
+                search_value = $("input[name='q_navi']").val();
+                window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
+            });
+            
+        } else {
             $("a#submit_order").addClass("disabled");
+            $("#navi_dishes").attr("style","display:block;");
+            $("a#navi_home_page").bind("click",function(){
+                window.location.href="owner_home_page?customer_id="+customer_id;
+            });
+
+            $("a#navi_my_profile").bind("click",function(){
+                window.location.href="restaurant_profile?restaurant_id="+customer_id;
+            });
+
+            $("a#navi_my_dishes").bind("click",function(){
+                window.location.href="restaurant_dish_management?restaurant_id="+customer_id;
+            });
+
+            $("a#navi_my_orders").bind("click",function(){
+                window.location.href="restaurant_order_history?restaurant_id="+customer_id;
+            });
+
+            $("#navi_search_home_page").click(function(){
+                search_value = $("input[name='q_navi']").val();
+                window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+customer_id;
+            });
         }
+
         $("span#restaurant_name").html(restaurant_name);
         $("span#restaurant_id").html("restaurant_id: "+restaurant_id);
         $.getJSON("/get_restaurant_detail",{"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
@@ -26,19 +66,20 @@ $(document).ready(function(){
             var str = '';
             var restaurant_info = eval(data.restaurant);
             eval(restaurant_info);
-            var restaurant_description = restaurant_info.restaurant_description;
-            var delivery_price = restaurant_info.delivery_fee;
-            var base_deliver_price = restaurant_info.base_deliver_price;
-            var open_time = restaurant_info.open_time;
             var time_span = restaurant_info.time_span;
-            var total_month_sale = restaurant_info.total_month_sale;
+            var delivery_price = restaurant_info.delivery_fee;
+            $("span#month_total_sale").html(delivery_price);
+            var base_deliver_price = restaurant_info.base_deliver_price;
+            $("span#delivery_span").html(base_deliver_price);
+            var restaurant_name = restaurant_info.restaurant_name;
+            $("span#restaurant_name").html(restaurant_name);
+            var open_time = restaurant_info.open_time;
+            $("span#open_time_restaurant").html(open_time);
             var restaurant_address = restaurant_info.restaurant_address;
+            var restaurant_description = restaurant_info.restaurant_description;
+            $("span#restaurant_id").html("地址："+restaurant_address+"; 描述："+restaurant_description);
             var dishes = data.dish;
             var dish_num = dishes.length;
-            alert("open_time"+open_time);
-            $("span#open_time_restaurant").html(open_time);
-            $("span#delivery_span").html(time_span);
-            $("span#month_total_sale").html(total_month_sale);
             $.each(dishes, function(i,item){
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
@@ -101,51 +142,50 @@ $(document).ready(function(){
             });
 
             $("a#submit_order").bind("click",function(){
+
                 if ($(this).hasClass("disabled")){
                     return;
                 }
-                console.log(dish_counts);
-
                 var flag = 0;
                 $.each(dish_counts, function(key,value){
                     if (parseInt(value) != 0) {
                         flag = 1;
                     }
                 });
+
                 if (flag == 0) {
                     alert("Your order is empty!");
                     return;
                 }
-                return_dish_counts = JSON.stringify(dish_counts);
-                alert("dish_counts"+return_dish_counts);
-                alert("customer_id"+customer_id);
-                alert("restaurant_id"+restaurant_id);
-                $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-                    if (data.ERROR) {
-                        alert(data.ERROR);
+                alert("customer_id:"+customer_id);
+                $.getJSON("/initialize_homepage",{"customer_id":customer_id},function(customer_data){
+
+                    if (customer_data.ERROR){
+                        alert(customer_data.ERROR);
                     } else {
-                        alert("your order submitted!");
+                        var customer_address = customer_data.customer_address;
+                        if (customer_address == null || customer_address == '') {
+                            alert("Please input your address first!");
+                            window.location.href="your_profile?customer_id="+customer_id;
+                        } else { 
+
+                            return_dish_counts = JSON.stringify(dish_counts);
+                            $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
+                                if (data.ERROR) {
+                                    alert(data.ERROR);
+                                } else {
+                                    window.location.href=location.search;
+                                    alert("your order submitted!");
+                                }
+                            });
+                        }
                     }
                 });
             });
-            
         });
     }
+    $("a").css("cursor","pointer");
 }); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 var submit_order = function() {
     $.getJSON("submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

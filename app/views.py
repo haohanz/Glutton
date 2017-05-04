@@ -191,12 +191,11 @@ def upload_your_profile():
 	customer_address = request.args.get("customer_address")
 	customer_description = request.args.get("customer_description")
 	customer_appellation = request.args.get("customer_appellation")
-	customer_avatar = request.args.get("customer_avatar")
 	try:
 		g.cursor.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', "
-		                 "customer_description = '%s', customer_appellation = '%s', customer_avatar = '%s' "
+		                 "customer_description = '%s', customer_appellation = '%s'"
 		                 "WHERE customer_id = '%s'" %(customer_nickname, customer_address, customer_description,
-		                                              customer_appellation, customer_avatar, customer_id))
+		                                              customer_appellation, customer_id))
 		g.conn.commit()
 		updated_profile = g.cursor.execute("SELECT * FROM customer WHERE customer_id = '%s'"
 		                                   % (customer_id)).fetchall()

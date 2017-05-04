@@ -5,7 +5,6 @@ var viewing_dish_id=0;
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;
-    alert("url is"+url);
 
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
@@ -15,7 +14,6 @@ $(document).ready(function(){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
         var restaurant_id = route['restaurant_id'];
-
 
         $("a#navi_home_page").bind("click",function(){
             window.location.href="owner_home_page?customer_id="+restaurant_id;
@@ -38,10 +36,8 @@ $(document).ready(function(){
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
         });
 
-
         $("a#add_dish").attr("href","restaurant_profile?restaurant_id="+restaurant_id);
-        alert("added href");
-        // var restaurant_name = decodeURIComponent(route['restaurant_name']);
+
         var who = route['who'];
         if (who == 'business') {
             $("a#submit_order").addClass("disabled");
@@ -107,9 +103,6 @@ $(document).ready(function(){
             $("ul#dish_info").html(str);
             $("a#dish_name").bind("click",function(){
             	viewing_dish_id = $(this).prev("span#dish_id:first").html();
-            	alert(viewing_dish_id);
-            	// $(this).attr("href","#faceboxdiv");
-            	// $(this).attr("rel","facebox");
             });
 
             $("a#delete_dish").bind("click",function(){
@@ -120,6 +113,7 @@ $(document).ready(function(){
             			alert(data.ERROR);
             		} else {
             			alert("delete dish succeed!");
+                        window.location.href = location.search;
             		}
             	});
             });
@@ -153,8 +147,7 @@ var submit_change_dish = function() {
 			alert(data.ERROR);
 		} else {
 			alert("Succeed!");
-			// window.location.hrft=location.search;
-			// here is a refresh, don't know how
+			window.location.href = location.search;
 		}
 	});
 }

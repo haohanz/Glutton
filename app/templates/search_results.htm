@@ -13,7 +13,7 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>Welcome to Glutton</title>
+  <title>Search Glutton</title>
 
   
 
@@ -130,7 +130,7 @@
     <span id="total_result_len">3,326</span> <span id="current_div">repository</span> results
 </h3>
 
-    <div class="select-menu js-menu-container js-select-menu float-right select-menu-modal-right">
+    <div id="search_by_key" class="select-menu js-menu-container js-select-menu float-right select-menu-modal-right" style="display: none">
       <button class="btn btn-sm select-menu-button js-menu-target" type="button" tabindex="0" aria-haspopup="true">
         <i>Sort:</i>
         <span class="js-select-button">Best match</span>
@@ -142,18 +142,20 @@
             <span class="select-menu-title">Sort options</span>
           </div>
           <div class="select-menu-list">
+
               <span class="select-menu-item js-navigation-open js-navigation-item selected">
                 <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
-                <span class="select-menu-item-text js-select-button-text">Random</span>
-              </span>              
-              <a class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=desc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
-              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
-              <span class="select-menu-item-text js-select-button-text">By name</span>
-</a>              <a class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=asc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
-                <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
-                <span class="select-menu-item-text js-select-button-text">By popularity</span>
+                <span id="search_origin" class="select-menu-item-text js-select-button-text">Random</span>
+              </span> 
 
-</a>          </div>
+              <span class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=desc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
+              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
+              <span id="search_by_price" class="select-menu-item-text js-select-button-text">By Price</span>
+</span>              <span class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=asc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
+                <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
+                <span id="search_by_sale" class="select-menu-item-text js-select-button-text">By popularity</span>
+
+</span>          </div>
         </div>
       </div>
     </div>
@@ -200,78 +202,8 @@
     <h2 class="d-inline-block f5 mb-2">
       Results Overview
     </h2>
-
-    <ul class="filter-list small" data-pjax="">
-        <li>
-            <span class="bar" style="width: 19%;"></span>
-
-            <a href="https://github.com/search?l=Java&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">485</span>
-              Java
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 16%;"></span>
-
-            <a href="https://github.com/search?l=JavaScript&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">394</span>
-              JavaScript
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 14%;"></span>
-
-            <a href="https://github.com/search?l=Python&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">359</span>
-              Python
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 7%;"></span>
-
-            <a href="https://github.com/search?l=C%23&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">177</span>
-              C#
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 7%;"></span>
-
-            <a href="https://github.com/search?l=C%2B%2B&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">175</span>
-              C++
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 7%;"></span>
-
-            <a href="https://github.com/search?l=HTML&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">164</span>
-              HTML
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 4%;"></span>
-
-            <a href="https://github.com/search?l=C&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">111</span>
-              C
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 4%;"></span>
-
-            <a href="https://github.com/search?l=PHP&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">110</span>
-              PHP
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 3%;"></span>
-
-            <a href="https://github.com/search?l=Ruby&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">83</span>
-              Ruby
-</a>        </li>
-        <li>
-            <span class="bar" style="width: 4px;"></span>
-
-            <a href="https://github.com/search?l=CSS&amp;q=csp&amp;type=Repositories&amp;utf8=%E2%9C%93" class="filter-item">
-              <span class="count">49</span>
-              CSS
-</a>        </li>
+    <ul id="results_overview" class="filter-list small" data-pjax="">
+        
     </ul>
   </div>
 

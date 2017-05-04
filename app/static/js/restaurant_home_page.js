@@ -32,6 +32,7 @@ $(document).ready(function(){
                 search_value = $("input[name='q_navi']").val();
                 window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
             });
+            
         } else {
             $("a#submit_order").addClass("disabled");
             var restaurant_id = customer_id;
@@ -142,50 +143,50 @@ $(document).ready(function(){
             });
 
             $("a#submit_order").bind("click",function(){
+
                 if ($(this).hasClass("disabled")){
                     return;
                 }
-                console.log(dish_counts);
 
-                var flag = 0;
-                $.each(dish_counts, function(key,value){
-                    if (parseInt(value) != 0) {
-                        flag = 1;
-                    }
-                });
-                if (flag == 0) {
-                    alert("Your order is empty!");
-                    return;
-                }
-                return_dish_counts = JSON.stringify(dish_counts);
-                $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-                    if (data.ERROR) {
-                        alert(data.ERROR);
+
+
+                $.getJSON("initialize_homepage",{"customer_id":customer_id},function(customer_data){
+                    if (customer_data.ERROR){
+                        alert(customer_data.ERROR);
                     } else {
-                        window.location.href=location.search;
-                        alert("your order submitted!");
+                        var customer_address = customer_data.customer_address;
+                        if (customer_address == null || customer_address == '') {
+                            alert("Please input your address first!");
+                            window.location.href="your_profile?customer_id="+customer_id;
+                        } else {
+                            var flag = 0;
+                            $.each(dish_counts, function(key,value){
+                                if (parseInt(value) != 0) {
+                                    flag = 1;
+                                }
+                            });
+                            if (flag == 0) {
+                                alert("Your order is empty!");
+                                return;
+                            }
+
+                            return_dish_counts = JSON.stringify(dish_counts);
+                            $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
+                                if (data.ERROR) {
+                                    alert(data.ERROR);
+                                } else {
+                                    window.location.href=location.search;
+                                    alert("your order submitted!");
+                                }
+                            });
+                        }
                     }
                 });
             });
-            
         });
     }
     $("a").css("cursor","pointer");
 }); 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 var submit_order = function() {
     $.getJSON("submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

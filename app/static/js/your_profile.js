@@ -84,7 +84,6 @@ $(document).ready(function(){
 				if (user_confirm_new_password != user_new_password) {
 					alert("Incorrect new passwords.");
 				} else {
-					alert(user_new_password+customer_id);
 					$.getJSON("/change_password",{"customer_password":user_new_password,"customer_id":customer_id},function(data){
 						if (data.ERROR) {
 							alert(data.ERROR);
@@ -104,7 +103,6 @@ $(document).ready(function(){
 			var customer_address = $("input#user_profile_birthday").val();
 			var customer_appellation = $("input#customer_appellation").val();
 			var customer_description = $("textarea#user_profile_add").val();
-			alert("NICKNAME"+customer_nickname + "DESCRIPTION"+customer_description + "ADDRESS"+customer_address + "ID"+customer_id + "APPELL"+customer_appellation);
 			$.getJSON("/upload_your_profile",{"customer_nickname":customer_nickname,"customer_description":customer_description,"customer_appellation":customer_appellation,"customer_address":customer_address,"customer_id":customer_id},function(data){
 				if (data.ERROR){
 					alert(data.ERROR);

@@ -72,10 +72,15 @@ var search = function(page,current_div,search_content, key){
 			$.each(data.result_list, function(i,eachData){
 				eval(eachData);
 				var name = eachData.restaurant_name;
-				var count = eachData.count;
 				var address = eachData.restaurant_address;
+				if (address == null) {
+					address = '暂无';
+				}
 				var restaurant_id = eachData.restaurant_id;
 				var description = eachData.restaurant_description;
+				if (description == null) {
+					description = '暂无';
+				}
 				
 				var str = '\
 						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
@@ -103,7 +108,6 @@ var search = function(page,current_div,search_content, key){
 				console.log("name:"+name);
 				$("div#tofill").append(str);
 
-
 				var results_str = '<li>\
 						            <span class="bar" style="width: 19%;"></span>\
 						            <a href="restaurant_home_page?who='+who+'&restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="filter-item"><span class="count"></span>'+name+'</a>\
@@ -120,6 +124,9 @@ var search = function(page,current_div,search_content, key){
 			var dish_price = eachData.dish_price;
 			var restaurant_name = eachData.restaurant_name;
 			var dish_month_sale = eachData.dish_month_sale;
+			if (dish_month_sale == null) {
+				dish_month_sale = '暂无';
+			}
 			var dish_id = eachData.dish_id;
 			var restaurant_id = eachData.restaurant_id;
 			var str = '\

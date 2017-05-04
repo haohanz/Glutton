@@ -96,7 +96,6 @@ $(document).ready(function(){
 			var base_deliver_price = $("input#base_customer_appellation").val();
 			var open_time = $("input#time_of_service").val();
 			var restaurant_description = $("textarea#user_profile_add").val();
-			// alert(restaurant_name+restaurant_address+delivery_price+base_delivery_price+open_time+restaurant_description);
 			$.getJSON("/upload_restaurant_profile",
 				{"base_deliver_price":base_deliver_price,
 				"restaurant_id":restaurant_id,
@@ -110,13 +109,13 @@ $(document).ready(function(){
 					alert(data.ERROR);
 				} else {
 					alert("upload succeed!");
+					window.location.href = location.search;
 				}
 			})
 		});
 		$("button#add_dish").bind("click",function(){  
 			var dish_name = $("input#dish_name").val();
 			var dish_price = $("input#dish_price").val();
-			alert("dish_price"+dish_price+"dish_name"+dish_name);
 			$.getJSON("/add_dish",
 				{"dish_name":dish_name,
 				"restaurant_id":restaurant_id,
@@ -125,6 +124,7 @@ $(document).ready(function(){
 					alert(data.ERROR);
 				} else {
 					alert("upload succeed!");
+					window.location.href = location.search;
 				}
 			})
 		});

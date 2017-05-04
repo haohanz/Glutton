@@ -78,7 +78,7 @@ $(document).ready(function(){
         		str += '\
                 <td>\
 					 <div class="plans-card text-center bg-white border rounded-2">\
-					    <a class="d-block mb-0 py-2 px-3 border-bottom text-green no-underline">\
+					    <a class="d-block mb-0 py-2 px-3 border-bottom text-blue no-underline">\
 					      <h2 class="alt-h3">'+restaurant_name+'</h2>\
 					    </a>\
 					  <div class="plans-card-text p-3">\

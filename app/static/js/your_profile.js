@@ -32,7 +32,6 @@ var change_mobile_number = function(customer_id) {
 }
 
 
-
 $(document).ready(function(){
 	var url = location.search;
     if (url.indexOf("?") != -1) {
@@ -68,6 +67,10 @@ $(document).ready(function(){
         		var customer_avatar = data.customer_avatar;
         		console.log("customer_avatar:"+customer_avatar);
 		        $("#avatar").attr("src","../static/img/avatars/"+customer_avatar+".jpg");
+		        $("input#user_profile_name").attr("value",data.customer_nickname);
+		        $("input#user_profile_birthday").attr("value",data.customer_address);
+				$("input#customer_appellation").attr("value",data.customer_appellation);
+				$("textarea#user_profile_add").html(data.customer_description);
         	}
         })
 

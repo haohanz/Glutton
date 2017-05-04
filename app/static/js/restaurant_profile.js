@@ -28,6 +28,20 @@ $(document).ready(function(){
         	url_vars[str_split[i].split("=")[0]] = str_split[i].split("=")[1];
         }
         var restaurant_id = url_vars["restaurant_id"];
+        $.getJSON("get_restaurant_detail",{"restaurant_id":restaurant_id},function(data){
+        	var restaurant_info = data.restaurant;
+
+        	$("input#user_profile_name").attr("value",restaurant_info.restaurant_name);
+			$("input#user_profile_birthday").attr("value",restaurant_info.restaurant_address);
+			$("input#customer_appellation").attr("value",restaurant_info.delivery_fee);
+			$("input#base_customer_appellation").attr("value",restaurant_info.base_deliver_price);
+			$("input#time_of_service").attr("value",restaurant_info.open_time);
+			$("textarea#user_profile_add").html(restaurant_info.restaurant_description);
+
+
+        })
+        			
+
         $("a#restaurant_dish_management").attr("href","restaurant_dish_management?restaurant_id="+restaurant_id);
         $("a#restaurant_order_history").attr("href","restaurant_order_history?restaurant_id="+restaurant_id);
 

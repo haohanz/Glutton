@@ -8,7 +8,7 @@ var page_num = 0;
 var search_value = "";
 var who = '';
 var customer_id = "";
-var search = function(page,current_div,search_content){
+var search = function(page,current_div,search_content, key){
 	console.log("search_value"+search_content);
 	console.log("who"+who);
 	var route_to_search = '';
@@ -16,15 +16,20 @@ var search = function(page,current_div,search_content){
 	if (current_div == restaurant){
 		route_to_search = "search_restaurant_results";
 	} else {
-		route_to_search = "search_dish_results";
+		if (key == 0){
+			route_to_search = "search_dish_results";
+		} else if (key == 1) {
+			route_to_search = "search_dish_results_by_price";
+		} else {
+			route_to_search = "search_dish_results_by_sale";
+		}
 	}
 	$.getJSON(route_to_search,input_dict,function(data){
+
 		if (data.ERROR) {
 			alert("data.ERROR");
 		}
-		if (data.total_page == 0 || data.total_page == 1){
-			$("span.next_page").attr("class","next_page disabled");
-		}
+
 		$("span#total_result_len").text(data.total_result);
 		$("span#current_div").text(current_div);
 		if (page_num != data.total_page || page == 0) {
@@ -49,12 +54,16 @@ var search = function(page,current_div,search_content){
 			}
 			$("a#page_n").bind("click",function(){toPage($(this).html(),this);});
 		} 
-			
+		if (data.total_page == 0 || data.total_page == '1'){
+			$("span.next_page").attr("class","next_page disabled");
+		}
 		
 
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
 		if(current_div == restaurant){
+			$("#search_by_key").attr("style","display:none");
+			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 				eval(eachData);
 				var name = eachData.restaurant_name;
@@ -88,8 +97,19 @@ var search = function(page,current_div,search_content){
 						';
 				console.log("name:"+name);
 				$("div#tofill").append(str);
+
+
+				var results_str = '<li>\
+						            <span class="bar" style="width: 19%;"></span>\
+						            <a href="restaurant_home_page?who='+who+'&restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="filter-item"><span class="count"></span>'+name+'</a>\
+						        </li>';
+				$("#results_overview").append(results_str);
+
+
 			});
 		} else {
+			$("#search_by_key").attr("style","display:block");
+			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 			eval(eachData);
 			var dish_name = eachData.dish_name;
@@ -119,8 +139,16 @@ var search = function(page,current_div,search_content){
 					</div>\
 					</div>\
 					';
-			console.log("name:"+name);
 			$("div#tofill").append(str);
+
+			var results_str = '<li>\
+						            <span class="bar" style="width: 19%;"></span>\
+						            <a href="restaurant_home_page?who='+who+'&restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="filter-item">\
+						              <span class="count">'+dish_price+'¥</span>'+dish_name+'\
+						            </a>\
+						        </li>';
+			$("#results_overview").append(results_str);
+
 		});
 		}
 	});
@@ -143,7 +171,7 @@ var toPage = function(page, obj) {
 	console.log("page:"+page);
 	$("a.current").attr("class",'');
 	$(obj).attr("class","current");
-	search(parseInt(page), current_div, search_value);
+	search(parseInt(page), current_div, search_value, 0);
 }
 
 
@@ -151,14 +179,14 @@ var getDishes = function() {
 	$("a#getDishes").attr("class","underline-nav-item selected");
 	$("a#getRestaurants").attr("class","underline-nav-item");
 	current_div = dishes;
-	search(1, current_div, search_value);
+	search(1, current_div, search_value, 0);
 }
 
 var getRestaurants = function() {
 	$("a#getDishes").attr("class","underline-nav-item");
 	$("a#getRestaurants").attr("class","underline-nav-item selected");
 	current_div = restaurant;
-	search(1, current_div, search_value);
+	search(1, current_div, search_value, 0);
 }
 
 var next_page = function() {
@@ -232,6 +260,19 @@ $(document).ready(function(){
         }
         customer_id = url_vars["customer_id"];
         search_value = url_vars["search_value"];
+
+        $("#search_origin").bind("click",function(){
+    		search(1,"dishes", search_value, 0);
+        });
+
+        $("#search_by_price").bind("click",function(){
+    		search(1,"Dishes", search_value, 1);
+        });
+
+        $("#search_by_sale").bind("click",function(){
+    		search(1,"Dishes", search_value, 2);
+        });
+
         who = url_vars["who"];
         if (who == 'customer') {
 	        $("a#navi_home_page").bind("click",function(){
@@ -274,7 +315,7 @@ $(document).ready(function(){
 	            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
 	        });
         }
-    	search(1,"Restaurants", search_value);
+    	search(1,"Restaurants", search_value, 0);
         
     }
 	$("a#page_n").bind("click",function(){toPage($(this).html(),this);});

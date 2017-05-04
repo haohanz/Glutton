@@ -20,7 +20,6 @@ var hhhhh = function() {
 
 $(document).ready(function(){
 	var url = location.search;
-    alert("url is:"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
         var url_vars = {}

@@ -3,7 +3,6 @@
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;
-    alert("url is"+url);
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);        
         var splits = str.split("&");
@@ -159,13 +158,11 @@ $(document).ready(function(){
                     return;
                 }
                 return_dish_counts = JSON.stringify(dish_counts);
-                alert("dish_counts"+return_dish_counts);
-                alert("customer_id"+customer_id);
-                alert("restaurant_id"+restaurant_id);
                 $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
                     if (data.ERROR) {
                         alert(data.ERROR);
                     } else {
+                        window.location.href=location.search;
                         alert("your order submitted!");
                     }
                 });

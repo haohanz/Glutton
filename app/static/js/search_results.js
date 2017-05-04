@@ -14,7 +14,13 @@ var search = function(page,current_div,search_content, key){
 	var route_to_search = '';
 	var input_dict  = {"search_value":search_content,"page":page,"customer_id":customer_id};
 	if (current_div == restaurant){
-		route_to_search = "search_restaurant_results";
+		if (key == 0) {
+			route_to_search = "search_restaurant_results";
+		} else if (key == 1) {
+			route_to_search = "search_restaurant_results_by_price";
+		} else {
+			route_to_search = "search_restaurant_results_by_sale";
+		}
 	} else {
 		if (key == 0){
 			route_to_search = "search_dish_results";
@@ -62,7 +68,6 @@ var search = function(page,current_div,search_content, key){
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
 		if(current_div == restaurant){
-			$("#search_by_key").attr("style","display:none");
 			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 				eval(eachData);
@@ -108,7 +113,6 @@ var search = function(page,current_div,search_content, key){
 
 			});
 		} else {
-			$("#search_by_key").attr("style","display:block");
 			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 			eval(eachData);
@@ -178,11 +182,13 @@ var toPage = function(page, obj) {
 var getDishes = function() {
 	$("a#getDishes").attr("class","underline-nav-item selected");
 	$("a#getRestaurants").attr("class","underline-nav-item");
+	$("span#best_match").html("Best Match");
 	current_div = dishes;
 	search(1, current_div, search_value, 0);
 }
 
 var getRestaurants = function() {
+	$("span#best_match").html("Best Match");
 	$("a#getDishes").attr("class","underline-nav-item");
 	$("a#getRestaurants").attr("class","underline-nav-item selected");
 	current_div = restaurant;
@@ -262,15 +268,15 @@ $(document).ready(function(){
         search_value = url_vars["search_value"];
 
         $("#search_origin").bind("click",function(){
-    		search(1,"dishes", search_value, 0);
+    		search(1,current_div, search_value, 0);
         });
 
         $("#search_by_price").bind("click",function(){
-    		search(1,"Dishes", search_value, 1);
+    		search(1,current_div, search_value, 1);
         });
 
         $("#search_by_sale").bind("click",function(){
-    		search(1,"Dishes", search_value, 2);
+    		search(1,current_div, search_value, 2);
         });
 
         who = url_vars["who"];

@@ -281,8 +281,8 @@ def search_dish_results():
 		print traceback.format_exc(e)
 		return jsonify({"ERROR": "Search failed, please try again later..."})
 
-@app.route('/search_restaurant_results_by_key', methods = ['GET','POST'])
-def search_restaurant_results_by_key():
+@app.route('/search_restaurant_results_by_price', methods = ['GET','POST'])
+def search_restaurant_results_by_price():
 	# search_key in ["delivery_price", "base_deliver_price", "total_month_sale"]
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
@@ -291,17 +291,8 @@ def search_restaurant_results_by_key():
 	search_key = request.args.get("search_key")
 	search_key = urllib.unquote(str(search_key))
 	try:
-		if search_key == "delivery_price":
-			result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
-			                          "ORDER BY delivery_price" % (search_value)).fetchall()
-		elif search_key == "base_deliver_price":
-			result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
-			                          "ORDER BY base_deliver_price" % (search_value)).fetchall()
-		elif search_key == "total_month_sale":
-			result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
-			                          "ORDER BY total_month_sale DESC" % (search_value)).fetchall()
-		else:
-			return jsonify({"ERROR": "search_key invalid!"})
+		result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
+		                          "ORDER BY base_deliver_price" % (search_value)).fetchall()
 		total_result = len(result)
 		total_page = total_result / PAGINATION_PER_PAGE + 1
 		restaurant_result = []
@@ -314,39 +305,29 @@ def search_restaurant_results_by_key():
 		print traceback.format_exc(e)
 		return jsonify({"ERROR": "Search failed, please try again later..."})
 
-# @app.route('/search_dish_results_by_key', methods = ['GET', 'POST'])
-# def search_dish_results_by_key():
-# 	# search_key in ["dish_price", "dish_month_sale"]
-# 	customer_id = request.args.get("customer_id")
-# 	page = int(request.args.get("page")) - 1
-# 	search_value = request.args.get("search_value")
-# 	search_value = urllib.unquote(str(search_value))
-# 	search_key = request.args.get("search_key")
-# 	search_key = urllib.unquote(str(search_key))
-# 	try:
-# 		if search_key == "dish_price":
-# 			result = g.cursor.execute("SELECT dish_id, dish_name, dish.restaurant_id, dish_price, dish_month_sale, "
-# 			                          "restaurant_name FROM dish, restaurant WHERE dish_name LIKE '%%%s%%' "
-# 			                          "AND dish.restaurant_id = restaurant.restaurant_id AND NOT deleted "
-# 			                          "ORDER BY dish_price" % (search_value)).fetchall()
-# 		elif search_key == "dish_month_sale":
-# 			result = g.cursor.execute("SELECT dish_id, dish_name, dish.restaurant_id, dish_price, dish_month_sale, "
-# 			                          "restaurant_name FROM dish, restaurant WHERE dish_name LIKE '%%%s%%' "
-# 			                          "AND dish.restaurant_id = restaurant.restaurant_id AND NOT deleted "
-# 			                          "ORDER BY dish_month_sale DESC " % (search_value)).fetchall()
-# 		else:
-# 			return jsonify({"ERROR": "search_key invalid!"})
-# 		total_result = len(result)
-# 		total_page = total_result / PAGINATION_PER_PAGE + 1
-# 		dish_result = []
-# 		selected_result = result[page * PAGINATION_PER_PAGE: (page+1) * PAGINATION_PER_PAGE]
-# 		for res in selected_result:
-# 			dish_result.append(jsonify_dish_with_restaurant_name(res))
-# 		return jsonify({"customer_id": customer_id, "result_list":dish_result,
-# 		                "total_result": total_result, "total_page": total_page})
-# 	except Exception as e:
-# 		print traceback.format_exc(e)
-# 		return jsonify({"ERROR": "Search failed, please try again later..."})
+@app.route('/search_restaurant_results_by_sale', methods = ['GET','POST'])
+def search_restaurant_results_by_sale():
+	# search_key in ["delivery_price", "base_deliver_price", "total_month_sale"]
+	customer_id = request.args.get("customer_id")
+	page = int(request.args.get("page")) - 1
+	search_value = request.args.get("search_value")
+	search_value = urllib.unquote(str(search_value))
+	search_key = request.args.get("search_key")
+	search_key = urllib.unquote(str(search_key))
+	try:
+		result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
+		                          "ORDER BY total_month_sale DESC" % (search_value)).fetchall()
+		total_result = len(result)
+		total_page = total_result / PAGINATION_PER_PAGE + 1
+		restaurant_result = []
+		selected_result = result[page * PAGINATION_PER_PAGE: (page + 1) * PAGINATION_PER_PAGE]
+		for res in selected_result:
+			restaurant_result.append(jsonify_restaurant(res))
+		return jsonify({"customer_id": customer_id, "result_list": restaurant_result,
+		                "total_result": total_result, "total_page": total_page})
+	except Exception as e:
+		print traceback.format_exc(e)
+		return jsonify({"ERROR": "Search failed, please try again later..."})
 
 @app.route('/search_dish_results_by_price', methods = ['GET', 'POST'])
 def search_dish_results_by_price():

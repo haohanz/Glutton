@@ -130,10 +130,10 @@
     <span id="total_result_len">3,326</span> <span id="current_div">repository</span> results
 </h3>
 
-    <div id="search_by_key" class="select-menu js-menu-container js-select-menu float-right select-menu-modal-right" style="display: none">
+    <div id="search_by_key" class="select-menu js-menu-container js-select-menu float-right select-menu-modal-right" style="display: block">
       <button class="btn btn-sm select-menu-button js-menu-target" type="button" tabindex="0" aria-haspopup="true">
         <i>Sort:</i>
-        <span class="js-select-button">Best match</span>
+        <span class="js-select-button" id="best_match">Best match</span>
       </button>
       <div class="select-menu-modal-holder js-menu-content js-navigation-container">
         <div class="select-menu-modal">
@@ -143,17 +143,19 @@
           </div>
           <div class="select-menu-list">
 
-              <span class="select-menu-item js-navigation-open js-navigation-item selected">
+              <span id="key" class="select-menu-item js-navigation-open js-navigation-item selected">
                 <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
                 <span id="search_origin" class="select-menu-item-text js-select-button-text">Random</span>
               </span> 
 
-              <span class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=desc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
+              <span id="key" class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=desc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
               <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
               <span id="search_by_price" class="select-menu-item-text js-select-button-text">By Price</span>
-</span>              <span class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=asc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
-                <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
-                <span id="search_by_sale" class="select-menu-item-text js-select-button-text">By popularity</span>
+              </span> 
+
+              <span id="key" class="select-menu-item js-navigation-open js-navigation-item" href="https://github.com/search?o=asc&amp;q=csp&amp;s=stars&amp;type=Repositories&amp;utf8=%E2%9C%93">
+              <svg aria-hidden="true" class="octicon octicon-check select-menu-item-icon" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5z"></path></svg>
+              <span id="search_by_sale" class="select-menu-item-text js-select-button-text">By popularity</span>
 
 </span>          </div>
         </div>
@@ -218,9 +220,9 @@
   <div class="site-footer" role="contentinfo">
     <ul class="site-footer-links">
       <li>© <span title="0.19891s from github-fe-f06f8d5.cp1-iad.github.net"> Copyright:</span></li>
-        <li><a href="Mailto:14300240007@fudan.edu.cn" data-ga-click="Footer, go to terms, text:terms">Tianxiao Hu</a></li>
-        <li><a data-ga-click="Footer, go to privacy, text:privacy">Haohan Zhang</a></li>
-        <li><a data-ga-click="Footer, go to security, text:security">Jingyuan Liu</a></li>
+        <li><a href="Mailto:14300240007@fudan.edu.cn">Tianxiao Hu</a></li>
+        <li><a href="Mailto:14300240009@fudan.edu.cn>Haohan Zhang</a></li>
+        <li><a href=">Jingyuan Liu</a></li>
       <span title="0.19891s from github-fe-f06f8d5.cp1-iad.github.net">  Group: Glutton;</span></li> Course Project #1 for Introduction to Database Systems(COMP130010.03)@ Fudan University, 2017 Spring. <span title="0.19891s from github-fe-f06f8d5.cp1-iad.github.net">Professor:</span></li>
       <li><a href="http://www.cs.fudan.edu.cn/?page_id=2439###" data-ga-click="Footer, go to status, text:status">Wei Wang</a>;</li>  
     </ul>

@@ -77,7 +77,7 @@ $(document).ready(function(){
             $("span#open_time_restaurant").html(open_time);
             var restaurant_address = restaurant_info.restaurant_address;
             var restaurant_description = restaurant_info.restaurant_description;
-            $("span#restaurant_id").html("地址："+restaurant_address+"; 描述："+restaurant_description);
+            $("span#restaurant_id").html("地址："+restaurant_address+"; <br/>描述："+restaurant_description);
             var dishes = data.dish;
             var dish_num = dishes.length;
             $.each(dishes, function(i,item){
@@ -119,7 +119,7 @@ $(document).ready(function(){
             $("ul#dish_info").html(str);
             $("a#cut_dish").bind("click",function(){
                 if ($(this).hasClass("disabled")){
-                    alert("disabled");
+                    return;
                 } else {
                     var dish_num = parseInt($(this).next().html());
                     $(this).next().html(String(dish_num-1));
@@ -157,7 +157,7 @@ $(document).ready(function(){
                     alert("Your order is empty!");
                     return;
                 }
-                alert("customer_id:"+customer_id);
+
                 $.getJSON("/initialize_homepage",{"customer_id":customer_id},function(customer_data){
 
                     if (customer_data.ERROR){
@@ -168,7 +168,6 @@ $(document).ready(function(){
                             alert("Please input your address first!");
                             window.location.href="your_profile?customer_id="+customer_id;
                         } else { 
-
                             return_dish_counts = JSON.stringify(dish_counts);
                             $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
                                 if (data.ERROR) {

@@ -71,7 +71,6 @@ $(document).ready(function(){
 
 
         $("#avatar").bind("click",function(){
-            alert(customer_id);
             window.location.href = "change_avatar?customer_id="+customer_id;
         });
 

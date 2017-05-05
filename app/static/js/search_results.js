@@ -68,6 +68,7 @@ var search = function(page,current_div,search_content, key){
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
 		if(current_div == restaurant){
+			$("#search_by_price_content").html("By base delivery fee");
 			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 				eval(eachData);
@@ -81,14 +82,17 @@ var search = function(page,current_div,search_content, key){
 				if (description == null) {
 					description = '暂无';
 				}
-				
+				var base_delivery_price = eachData.base_deliver_price;
+				if (base_delivery_price == null) {
+					base_delivery_price == '暂无';
+				}
 				var str = '\
 						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
 						<div class="col-8 pr-3">\
 						<h3>\
 						<a href="restaurant_home_page?who='+who+'&restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
 						</h3>\
-						<p class="d-inline-block text-gray mb-2 pr-4">'+description+'\
+						<p class="d-inline-block text-gray mb-2 pr-4">'+description+'（起送费：'+base_delivery_price+'¥）\
 						</p>\
 						<p class="f6 text-gray mb-0 mt-2">'+address+'</p>\
 						</div>\
@@ -117,6 +121,7 @@ var search = function(page,current_div,search_content, key){
 
 			});
 		} else {
+			$("#search_by_price").html("By Price");
 			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 			eval(eachData);
@@ -143,8 +148,8 @@ var search = function(page,current_div,search_content, key){
 					<div class="d-table-cell col-2 text-gray pt-2">\
 					<span class="repo-language-color ml-0" style="background-color:#f1e05a;"></span>价格: '+dish_price+'¥\
 					</div>\
-					<div class="col-2 text-right pt-1 pr-3 pt-2">\
-					<a class="muted-link" href="https://github.com/helmetjs/csp/stargazers">\
+					<div class="col-3 pt-1 pr-3 pt-2">\
+					<a class="muted-link">\
 					<svg aria-label="star" class="octicon octicon-star" height="16" role="img" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z"></path></svg>月销量: '+dish_month_sale+'\
 					</a>\
 					</div>\

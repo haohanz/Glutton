@@ -1,3 +1,10 @@
+# -*- coding:utf-8 -*-
+"""
+Author: Tianxiao Hu
+Last Modified: 2017.5.5
+Email: hutianxiao_fdu@126.com
+Project for Introduction to Database Systems(COMP130010.03)@Fudan University
+"""
 import  sqlite3
 from config import SQLALCHEMY_DATABASE_LOC
 
@@ -34,7 +41,7 @@ customer_mobile_number CHAR(20) UNIQUE,
 customer_address CHAR(100),
 customer_description CHAR(100),
 customer_appellation CHAR(20),
-customer_avatar CHAR(20),
+customer_avatar CHAR(20) NOT NULL,
 PRIMARY KEY(customer_id)
 );
 """)

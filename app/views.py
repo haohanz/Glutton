@@ -1,4 +1,10 @@
 # -*- coding:utf-8 -*-
+"""
+Author: Tianxiao Hu
+Last Modified: 2017.5.5
+Email: hutianxiao_fdu@126.com
+Project for Introduction to Database Systems(COMP130010.03)@Fudan University
+"""
 import urllib
 import hashlib
 import sqlite3
@@ -32,10 +38,6 @@ def index():
 @app.route('/signup')
 def signup():
 	return render_template('signup.htm')
-
-@app.route('/footer')
-def footer():
-	return render_template('footer.html')
 
 @app.route('/home_page')
 def home_page():
@@ -84,27 +86,51 @@ def restaurant_order_history():
 ### functions defined for app routes ###
 
 def md5_encrypt(str):
+	"""
+	:param str: string to encrypt
+	:return: encrypted string
+	"""
 	m = hashlib.md5(str)
 	return m.hexdigest()
 
 def get_user_no():
+	"""
+	create a unique id for a new user
+	:return: string
+	"""
 	total_user_num = len(g.cursor.execute("SELECT * FROM customer").fetchall()) + 1
 	return '0' * (3 - len(str(total_user_num))) + str(total_user_num)
 
 def get_restaurant_no():
 	# restaurant_id start from '001'
+	"""
+	create a unique id for a new restaurant
+	:return: string
+	"""
 	total_restaurant_num = len(g.cursor.execute("SELECT * FROM restaurant").fetchall()) + 1
 	return '0' * (3 - len(str(total_restaurant_num))) + str(total_restaurant_num)
 
 def get_customer_order_no():
+	"""
+	create a unique id for a new customer_order
+	:return: string
+	"""
 	total_customer_order_num = len(g.cursor.execute("SELECT * FROM customer_order").fetchall()) + 1
 	return '0' * (3 - len(str(total_customer_order_num))) + str(total_customer_order_num)
 
 def get_dish_order_no():
+	"""
+	create a unique id for a new dish_order
+	:return: string
+	"""
 	total_dish_order_num = len(g.cursor.execute("SELECT * FROM dish_order").fetchall()) + 1
 	return '0' * (4 - len(str(total_dish_order_num))) + str(total_dish_order_num)
 
 def get_dish_no(restaurant_id):
+	"""
+	create a unique id for a new dish
+	:return: string
+	"""
 	total_dish_num = len(g.cursor.execute("SELECT * FROM dish, restaurant "
 	                                      "WHERE dish.restaurant_id = restaurant.restaurant_id "
 	                                      "AND restaurant.restaurant_id = '%s'"
@@ -112,13 +138,13 @@ def get_dish_no(restaurant_id):
 	return restaurant_id + '-' + '0' * (2 - len(str(total_dish_num))) + str(total_dish_num)
 
 def jsonify_restaurant(restaurant):
-	key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name", \
-	             "restaurant_address", "delivery_fee", "base_deliver_price", "time_span", \
+	key_words = ("restaurant_id", "owner_nickname", "owner_password", "restaurant_name",
+	             "restaurant_address", "delivery_fee", "base_deliver_price", "time_span",
 	             "open_time", "total_month_sale", "restaurant_description")
 	return dict(zip(key_words, restaurant))
 
 def jsonify_customer(customer):
-	key_words = ("customer_id", "customer_nickname", "customer_password", "customer_mobile_number", \
+	key_words = ("customer_id", "customer_nickname", "customer_password", "customer_mobile_number",
 				 "customer_address", "customer_description", "customer_appellation", "customer_avatar")
 	return dict(zip(key_words, customer))
 
@@ -127,7 +153,7 @@ def jsonify_dish(dish):
 	return dict(zip(key_words, dish))
 
 def jsonify_dish_with_restaurant_name(dish_with_restaurant):
-	key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale", \
+	key_words = ("dish_id", "dish_name", "restaurant_id", "dish_price", "dish_month_sale",
 	             "restaurant_name")
 	return dict(zip(key_words, dish_with_restaurant))
 
@@ -135,6 +161,13 @@ def jsonify_dish_with_restaurant_name(dish_with_restaurant):
 
 @app.route('/user_signup_submit', methods = ['GET', 'POST'])
 def user_signup_submit():
+	"""
+	create a new user in database
+	mobile_number must be unique， password and nickname is required
+	:return: json
+	{"customer_id": customer_id, "customer_nickname": customer_nickname,
+	 "customer_mobile_number": customer_mobile_number}
+	"""
 	customer_mobile_number = request.args.get("customer_mobile_number")
 	customer_nickname = request.args.get("customer_nickname")
 	customer_password = request.args.get("customer_password")
@@ -157,6 +190,16 @@ def user_signup_submit():
 
 @app.route('/user_signin_submit', methods = ['GET', 'POST'])
 def user_signin_submit():
+	"""
+	comapre password provided by customer and password stored in database
+	if equal: return user's profile
+	else return ERROR
+	:return: json
+	{"customer_id", customer_id, "customer_nickname", customer_nickname,
+	 "customer_password", customer_password, "customer_mobile_number": customer_mobile_number,
+	 "customer_address": customer_address, "customer_description": customer_description, 
+	 "customer_appellation": customer_appellation, "customer_avatar": customer_avatar }
+	"""
 	customer_mobile_number = request.args.get("customer_mobile_number")
 	customer_password = request.args.get("customer_password")
 	customer_password = md5_encrypt(customer_password)
@@ -179,6 +222,14 @@ def user_signin_submit():
 
 @app.route('/initialize_homepage', methods = ['GET','POST'])
 def initialize_homepage():
+	"""
+	initialize customer's homepage, including user profile
+	:return: json
+	{"customer_id", customer_id, "customer_nickname", customer_nickname,
+	 "customer_password", customer_password, "customer_mobile_number": customer_mobile_number,
+	 "customer_address": customer_address, "customer_description": customer_description, 
+	 "customer_appellation": customer_appellation, "customer_avatar": customer_avatar }
+	"""
 	customer_id = request.args.get("customer_id")
 	try:
 		res = g.cursor.execute("SELECT * FROM customer WHERE customer_id = '%s'" % (customer_id)).fetchall()
@@ -190,6 +241,10 @@ def initialize_homepage():
 
 @app.route('/upload_your_profile', methods = ['GET','POST'])
 def upload_your_profile():
+	"""
+	change customer profile including nickname, address, description, appellation 
+	:return: succeed or ERROR
+	"""
 	customer_id = request.args.get("customer_id")
 	customer_nickname = request.args.get("customer_nickname")
 	customer_address = request.args.get("customer_address")
@@ -211,6 +266,10 @@ def upload_your_profile():
 
 @app.route('/change_password', methods = ['GET','POST'])
 def change_password():
+	"""
+	change password for customer, updated password is encrypted in database
+	:return: succeed or ERROR
+	"""
 	customer_id = request.args.get("customer_id")
 	customer_password = request.args.get("customer_password")
 	customer_password = md5_encrypt(customer_password)
@@ -226,6 +285,11 @@ def change_password():
 
 @app.route('/customer_change_avatar', methods=['GET', 'POST'])
 def customer_change_avatar():
+	"""
+	change avatar for customer, there are 9 available avatars in all
+	marked from '1' to '9' in database
+	:return: succeed or ERROR
+	"""
 	customer_id = request.args.get("customer_id")
 	customer_avatar = request.args.get("customer_avatar")
 	try:
@@ -238,11 +302,26 @@ def customer_change_avatar():
 		print traceback.format_exc(e)
 		return jsonify({"ERROR": "Change avatar failed, please try again later.."})
 
-
 ### Customers: search restaurant/dish ###
 
 @app.route('/search_restaurant_results', methods = ['GET', 'POST'])
 def search_restaurant_results():
+	"""
+	customer_id: login required
+	return restaurants whose name including search_key and the dishes
+	if results more than PAGINATION_PER_PAGE, will return the related page
+	:return: json
+	{"customer_id": customer_id, 
+	"result_list":[{"restaurant_id": restaurant_id, "owner_nickname": owner_nickname, 
+					"owner_password": owner_password, "restaurant_name": restaurant_name,
+	 				"restaurant_address": restaurant_address, "delivery_fee": delivery_fee, 
+	 				"base_deliver_price": base_deliver_price, "time_span": time_span,
+	 				"open_time": open_time, "total_month_sale": total_month_sale, 
+	 				"restaurant_description": restaurant_description},
+	 				{}, {}...]
+	 "total_result": total_result, 
+	 "total_page": total_page}
+	"""
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
@@ -264,6 +343,19 @@ def search_restaurant_results():
 
 @app.route('/search_dish_results', methods = ['GET', 'POST'])
 def search_dish_results():
+	"""
+	customer_id: login required
+	return dishes whose name including search_key and the corresponding restaurant
+	if results more than PAGINATION_PER_PAGE, will return the related page
+	:return: json
+	{"customer_id": customer_id, 
+	"result_list":[{"dish_id": dish_id, "dish_name": dish_name, "restaurant_id": restaurant_id, 
+					"dish_price": dish_price, "dish_month_sale": dish_month_sale,
+					"restaurant_name": restaurant_name},
+					{}, {}...]
+	 "total_result": total_result, 
+	 "total_page": total_page}
+	"""
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
@@ -287,13 +379,26 @@ def search_dish_results():
 
 @app.route('/search_restaurant_results_by_price', methods = ['GET','POST'])
 def search_restaurant_results_by_price():
-	# search_key in ["delivery_price", "base_deliver_price", "total_month_sale"]
+	"""
+	customer_id: login required
+	return restaurants whose name including search_key and the dishes ASCEND BY base_deliver_price
+	if results more than PAGINATION_PER_PAGE, will return the related page
+	:return: json
+	{"customer_id": customer_id, 
+	"result_list":[{"restaurant_id": restaurant_id, "owner_nickname": owner_nickname, 
+					"owner_password": owner_password, "restaurant_name": restaurant_name,
+					"restaurant_address": restaurant_address, "delivery_fee": delivery_fee, 
+					"base_deliver_price": base_deliver_price, "time_span": time_span,
+					"open_time": open_time, "total_month_sale": total_month_sale, 
+					"restaurant_description": restaurant_description},
+					{}, {}...]
+	 "total_result": total_result, 
+	 "total_page": total_page}
+	"""
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
 	search_value = urllib.unquote(str(search_value))
-	search_key = request.args.get("search_key")
-	search_key = urllib.unquote(str(search_key))
 	try:
 		result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
 		                          "ORDER BY base_deliver_price" % (search_value)).fetchall()
@@ -311,13 +416,26 @@ def search_restaurant_results_by_price():
 
 @app.route('/search_restaurant_results_by_sale', methods = ['GET','POST'])
 def search_restaurant_results_by_sale():
-	# search_key in ["delivery_price", "base_deliver_price", "total_month_sale"]
+	"""
+	customer_id: login required
+	return restaurants whose name including search_key and the dishes DESCEND BY total_month_sale
+	if results more than PAGINATION_PER_PAGE, will return the related page
+	:return: json
+	{"customer_id": customer_id, 
+	"result_list":[{"restaurant_id": restaurant_id, "owner_nickname": owner_nickname, 
+					"owner_password": owner_password, "restaurant_name": restaurant_name,
+					"restaurant_address": restaurant_address, "delivery_fee": delivery_fee, 
+					"base_deliver_price": base_deliver_price, "time_span": time_span,
+					"open_time": open_time, "total_month_sale": total_month_sale, 
+					"restaurant_description": restaurant_description},
+					{}, {}...]
+	 "total_result": total_result, 
+	 "total_page": total_page}
+	"""
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
 	search_value = urllib.unquote(str(search_value))
-	search_key = request.args.get("search_key")
-	search_key = urllib.unquote(str(search_key))
 	try:
 		result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
 		                          "ORDER BY total_month_sale DESC" % (search_value)).fetchall()
@@ -335,6 +453,19 @@ def search_restaurant_results_by_sale():
 
 @app.route('/search_dish_results_by_price', methods = ['GET', 'POST'])
 def search_dish_results_by_price():
+	"""
+	customer_id: login required
+	return dishes whose name including search_key and the corresponding restaurant ASCEND BY dish_price
+	if results more than PAGINATION_PER_PAGE, will return the related page
+	:return: json
+	{"customer_id": customer_id, 
+	"result_list":[{"dish_id": dish_id, "dish_name": dish_name, "restaurant_id": restaurant_id, 
+					"dish_price": dish_price, "dish_month_sale": dish_month_sale,
+					"restaurant_name": restaurant_name},
+					{}, {}...]
+	 "total_result": total_result, 
+	 "total_page": total_page}
+	"""
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
@@ -358,6 +489,19 @@ def search_dish_results_by_price():
 
 @app.route('/search_dish_results_by_sale', methods = ['GET', 'POST'])
 def search_dish_results_by_sale():
+	"""
+	customer_id: login required
+	return dishes whose name including search_key and the corresponding restaurant DESCEND BY dish_month_sale
+	if results more than PAGINATION_PER_PAGE, will return the related page
+	:return: json
+	{"customer_id": customer_id, 
+	"result_list":[{"dish_id": dish_id, "dish_name": dish_name, "restaurant_id": restaurant_id, 
+					"dish_price": dish_price, "dish_month_sale": dish_month_sale,
+					"restaurant_name": restaurant_name},
+					{}, {}...]
+	 "total_result": total_result, 
+	 "total_page": total_page}
+	"""
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
@@ -381,6 +525,18 @@ def search_dish_results_by_sale():
 
 @app.route('/get_restaurant_detail', methods = ['GET', 'POST'])
 def get_restaurant_detail():
+	"""
+	:return: json
+	{"restaurant": {"restaurant_id": restaurant_id, "owner_nickname": owner_nickname, 
+					"owner_password": owner_password, "restaurant_name": restaurant_name,
+	 				"restaurant_address": restaurant_address, "delivery_fee": delivery_fee, 
+	 				"base_deliver_price": base_deliver_price, "time_span": time_span,
+	 				"open_time": open_time, "total_month_sale": total_month_sale, 
+	 				"restaurant_description": restaurant_description}
+	 "dishes": [{"dish_id": dish_id, "dish_name": dish_name, "restaurant_id": restaurant_id, 
+	 			 "dish_price": dish_price, "dish_month_sale": dish_month_sale}, 
+	 			 {}, {}...] }
+	"""
 	restaurant_id = request.args.get("restaurant_id")
 	try:
 		restaurant = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_id = '%s'"
@@ -405,6 +561,10 @@ def get_restaurant_detail():
 
 @app.route('/submit_order', methods=['GET', 'POST'])
 def submit_order():
+	"""
+	insert into customer_order and dish_order at the same time
+	:return: succeed or ERROR
+	"""
 	dish_counts = request.args.get("dish_counts")
 	dish_counts = dict(eval(dish_counts))
 	dish_counts = {dish: count for dish, count in dish_counts.items() if count}
@@ -428,6 +588,10 @@ def submit_order():
 
 @app.route('/receive_order', methods=['GET', 'POST'])
 def receive_order():
+	"""
+	insert receive_time into database
+	:return: succeed or ERROR
+	"""
 	order_id = request.args.get("order_id")
 	order_id = '0' * (3 - len(order_id)) + order_id
 	try:
@@ -442,6 +606,10 @@ def receive_order():
 
 @app.route('/comment_order', methods=['GET', 'POST'])
 def comment_order():
+	"""
+	insert comment into database
+	:return: succeed or ERROR
+	"""
 	order_id = request.args.get("order_id")
 	order_id = '0' * (3 - len(order_id)) + order_id
 	comment = request.args.get("comment")
@@ -457,6 +625,11 @@ def comment_order():
 
 @app.route('/delete_order', methods=['GET', 'POST'])
 def delete_order():
+	"""
+	delete order from database
+	will delete customer_order and dish_order at the same time in `cascade` mode
+	:return: succeed or ERROR
+	"""
 	order_id = request.args.get("order_id")
 	try:
 		# in sqlite3, PRAGMA foreign_keys = OFF is default
@@ -473,8 +646,16 @@ def delete_order():
 
 @app.route('/get_user_history', methods= ['GET', 'POST'])
 def get_user_history():
+	"""
+	:return: json
+	[{"restaurant_id":restaurant_id, "order_id": order_id, "create_time": create_time, 
+	  "receive_time":receive_time, "restaurant_name":restaurant_name,
+	  "order_total_price":order_total_price, 
+	  "dishes":[{"dish_price": dish_price, "dish_amount": dish_amount, "dish_name":dish_name}, {}, {}..]
+	 },
+	 {}, {}, ...]
+	"""
 	customer_id = request.args.get("customer_id")
-	print customer_id
 	try:
 		customer_order = g.cursor.execute("SELECT customer_order.restaurant_id, customer_order.order_id, "
 		                                  "customer_order.create_time, customer_order.receive_time "
@@ -511,6 +692,13 @@ def get_user_history():
 
 @app.route('/restaurant_signup_submit', methods = ['GET', 'POST'])
 def restaurant_signup_submit():
+	"""
+	create a new restaurant in database
+	owner_nickname must be unique， password and restaurant_name is required
+	:return: json
+	{"restaurant_id": restaurant_id, "owner_nickname": owner_nickname,
+	 "restaurant_name": restaurant_name}
+	"""
 	owner_nickname = request.args.get("owner_nickname")
 	restaurant_name = request.args.get("restaurant_name")
 	owner_password = request.args.get("owner_password")
@@ -534,6 +722,18 @@ def restaurant_signup_submit():
 
 @app.route('/restaurant_signin_submit', methods = ['GET', 'POST'])
 def restaurant_signin_submit():
+	"""
+	comapre password provided by restaurant owner and password stored in database
+	if equal: return restaurant's detail
+	else return ERROR
+	:return: json
+	{"restaurant_id": restaurant_id, "owner_nickname": owner_nickname, 
+	 "owner_password": owner_password, "restaurant_name": restaurant_name,
+	 "restaurant_address": restaurant_address, "delivery_fee": delivery_fee, 
+	 "base_deliver_price": base_deliver_price, "time_span": time_span,
+	 "open_time": open_time, "total_month_sale": total_month_sale, 
+	 "restaurant_description": restaurant_description }
+	"""
 	owner_nickname = request.args.get("owner_nickname")
 	owner_password = request.args.get("owner_password")
 	owner_password = md5_encrypt(owner_password)
@@ -555,6 +755,11 @@ def restaurant_signin_submit():
 
 @app.route('/upload_restaurant_profile', methods=['GET', 'POST'])
 def upload_restaurant_profile():
+	"""
+	change restaurant details including name, address, delivery_price, base_deliver_price, 
+	open_time and description
+	:return: succeed or ERROR
+	"""
 	restaurant_id = request.args.get("restaurant_id")
 	restaurant_name = request.args.get("restaurant_name")
 	restaurant_address = request.args.get("restaurant_address")
@@ -579,6 +784,10 @@ def upload_restaurant_profile():
 
 @app.route('/change_restaurant_password', methods=['GET', 'POST'])
 def change_restaurant_password():
+	"""
+	change password for restaurant owner, updated password is encrypted in database
+    :return: succeed or ERROR
+    """
 	restaurant_id = request.args.get("restaurant_id")
 	owner_password = request.args.get("owner_password")
 	owner_password = md5_encrypt(owner_password)
@@ -596,6 +805,10 @@ def change_restaurant_password():
 
 @app.route('/add_dish', methods = ['GET', 'POST'])
 def add_dish():
+	"""
+	add a dish to database: dish_name, dish_price is required
+	:return: succeed or ERROR
+	"""
 	dish_name = request.args.get("dish_name")
 	restaurant_id = request.args.get("restaurant_id")
 	dish_price = request.args.get("dish_price")
@@ -612,6 +825,10 @@ def add_dish():
 
 @app.route('/change_dish', methods=['GET', 'POST'])
 def change_dish():
+	"""
+	change dish price or name
+	:return: succeed or ERROR
+	"""
 	dish_id = request.args.get("dish_id")
 	dish_price = request.args.get("dish_price")
 	dish_name = request.args.get("dish_name")
@@ -628,6 +845,12 @@ def change_dish():
 
 @app.route('/delete_dish', methods=['GET', 'POST'])
 def delete_dish():
+	"""
+	"delete" a dish from database: set the deleted BOOL to True
+	deleted dishes will neither show up in restaurant homepage nor be searched,
+	but orders including the deleted dish will not be deleted
+	:return: succeed or ERROR
+	"""
 	dish_id = request.args.get("dish_id")
 	try:
 		g.cursor.execute("UPDATE dish SET deleted = 1 WHERE dish_id = '%s'" % (dish_id))

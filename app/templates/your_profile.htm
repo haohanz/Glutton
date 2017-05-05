@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0035)https://github.com/settings/profile -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
 
   <meta http-equiv="pragma" content="no-cache"/>
 
-  <link crossorigin="anonymous" href="../static/Your_Profile_files/frameworks-181ab2bfd39f84244ec09224501ce17957dee40c02a8c0d3e503b9dfb63c2f8e.css" integrity="sha256-GBqyv9OfhCROwJIkUBzheVfe5AwCqMDT5QO537Y8L44=" media="all" rel="stylesheet">
-  <link crossorigin="anonymous" href="../static/Your_Profile_files/github-b52c57c07c4915b411746bf84ae6a5d3677b7f35d74105281d365c2ff17ca512.css" integrity="sha256-tSxXwHxJFbQRdGv4Sual02d7fzXXQQUoHTZcL/F8pRI=" media="all" rel="stylesheet">
-  
-  
-  
+  <link crossorigin="anonymous" href="../static/css/main_1.css" media="all" rel="stylesheet">
+  <link crossorigin="anonymous" href="../static/css/main_2.css" media="all" rel="stylesheet">
+  <link crossorigin="anonymous" href="../static/css/main_3.css" media="all" rel="stylesheet">
   
 
   <meta name="viewport" content="width=device-width">
@@ -21,6 +18,7 @@
 
  
     
+
 
 <!-- start of header -->
   <body class="logged-out env-production emoji-size-boost page-responsive min-width-0 f4 site-header-dark">
@@ -34,7 +32,7 @@
 <div class="header" role="banner" style="background-color: #3498db">
   <div class="container clearfix">
     <a class="header-logo-invertocat" href="#" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
-          <img src="../static/img/Glutton.png" aria-hidden="true" class="octicon octicon-mark-github" height="35" version="1.1" viewBox="-10 -10 26 26" width="35" position-relative="-50px -100px"/>
+          <img src="../static/img/Glutton.png" aria-hidden="true" class="octicon" height="35" version="1.1" viewBox="0 0 16 16" width="35" position-relative="-50px -100px"/>
 </a>
 
 
@@ -77,15 +75,7 @@
 </a>        </li>
 </ul>
 
-
-
-
-
-    <!-- '"` --><!-- </textarea></xmp> --><form accept-charset="UTF-8" action="https://github.com/logout" class="sr-only right-0" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="m4w41p/fLCKxapdLxY+adhRWzqVnnFOQY7PnRTD3aL9GALLyxofytE4DfMgivkXIzx0w25VQ2QPMGuK5mf63aA=="></div>
-      <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
-        Sign out
-      </button>
-</form>  </div>
+</div>
 </div>
 
 
@@ -137,17 +127,6 @@
   </nav> 
   </dd>
 </dl>
-<!--  <nav class="menu" data-pjax="">
-      <h3 class="menu-heading">
-        Developer settings
-      </h3>
-
-      <a href="https://github.com/settings/developers" class="js-selected-navigation-item menu-item" data-selected-links="settings_user_developer_applications /settings/developers">OAuth applications</a>
-      <a href="https://github.com/settings/integrations" class="js-selected-navigation-item menu-item" data-selected-links="integrations /settings/integrations">Integrations</a>
-      <a href="https://github.com/settings/tokens" class="js-selected-navigation-item menu-item" data-selected-links="oauth_tokens /settings/tokens">Personal access tokens</a>
-    </nav> -->
-
-
 
 
 <!-- BLOCK 1 : PROFILE START-->
@@ -236,56 +215,7 @@
 </div>
 </div>
 <!-- BLOCK 2 : CHANGE PASSWORD END-->
-<!-- BLOCK 3 : CHANGE MOBILE END-->
-<div id="ChangeMobileNumber" style="display: none;">
-    <div class="Subhead Subhead--spacious">
-      <h2 class="Subhead-heading">Change Mobile Number</h2>
-    </div>
-      <div style="margin:0;padding:0;display:inline">
-        <dl class="form-group password-confirmation-form">
-          <dt><label for="user_old_password">Old mobile number</label></dt>
-          <dd><input class="form-control form-control" id="old_mobile_number" name="user[old_password]" required="required" tabindex="2" type="password"></dd>
-        </dl>
-        <dl class="form-group password-confirmation-form">
-          <dt><label for="user_new_password">Your password here</label></dt>
-          <dd><input class="form-control form-control" id="user_password" name="user[password]" required="required" tabindex="2" type="password"></dd>
-        </dl>
-        <dl class="form-group password-confirmation-form">
-          <dt><label for="user_confirm_new_password">New mobile number</label></dt>
-          <dd><input class="form-control form-control" id="new_mobile_number" name="user[password_confirmation]" required="required" tabindex="2" type="password"></dd>
-        </dl>
-      </div>
-        <p>Changing your username can have <a href="https://help.github.com/articles/what-happens-when-i-change-my-username/">unintended side effects</a>.</p>
-        <p><a class="btn" id="change_mobile_number" tabindex="3">Change mobile number</a></p>
-        <div id="rename-user-confirm" style="display:none;">
-          <div class="rename-warning js-user-rename-warning">
-            <h2 class="facebox-header" data-facebox-id="facebox-header">Really change your username?</h2>
-            <div class="facebox-alert" data-facebox-id="facebox-description">
-              Unexpected bad things will happen if you don’t read this!
-            </div>
-            <ul>
-              <li>We <strong>will not</strong> set up redirects for your old profile page.</li>
-              <li>We <strong>will not</strong> set up redirects for Pages sites.</li>
-              <li>We <strong>will</strong> create redirects for your repositories (web and git access).</li>
-              <li>Renaming may take a few minutes to complete.</li>
-            </ul>
-            <button type="button" class="btn btn-block btn-danger js-user-rename-warning-continue">
-              I understand, let’s change my username
-            </button>
-          </div>
 
-          <div class="rename-form js-user-rename-form d-none">
-            <h2 class="facebox-header" data-facebox-id="facebox-header">Enter a new username</h2>
-
-            <!-- '"` --><!-- </textarea></xmp> --><form accept-charset="UTF-8" action="https://github.com/users/hh1680651/rename" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="fMnjKS8U4JBrT9HyqaHhGItoQOt1vOqtV7p75p0T8Q8ApyMo/Ppe+ua19Rvj54ciyPzWb+9gCnvCgJr4mPNbuw=="></div>
-              <p>
-                <input type="text" name="login" value="hh1680651" class="form-control input-block" aria-label="Enter a new username" autofocus="">
-              </p>
-              <button type="submit" class="btn btn-block btn-primary">Change my username</button>
-</form>          </div>
-        </div>
-</div>
-<!-- BLOCK 3 : CHANGE MOBILE END-->
 <!-- BLOCK 4 : DELETE ACCOUNT START-->
 <div id="SignOut" style="display:none;">
     <div class="Subhead Subhead--spacious">
@@ -295,47 +225,6 @@
 
       <p><a href="front_page" class="btn btn-danger" tabindex="4">Sign out</a></p>
 
-    <div id="delete_account_confirmation" style="display:none">
-      <h2 class="facebox-header" data-facebox-id="facebox-header">Are you sure you want to do this?</h2>
-      <div class="facebox-danger" data-facebox-id="facebox-description">
-        <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"></path></svg>
-        This is extremely important.
-      </div>
-
-      <p>We will <strong>immediately delete all of your repositories (11)</strong>, along with all of your forks, wikis, issues, pull requests, and GitHub Pages sites.</p>
-          <p>You will no longer be billed, and your username will be available to anyone on GitHub.</p>
-          <p>For more help, read our article "<a href="https://help.github.com/articles/deleting-your-user-account">Deleting your user account</a>".</p>
-
-      <hr class="facebox-separator">
-
-      <!-- '"` --><!-- </textarea></xmp> -->
-
-      <form accept-charset="UTF-8" action="https://github.com/users/hh1680651">
-
-      <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓">
-      </div>
-        <p>
-          <label for="sudo_login">Your username or email:</label>
-          <input type="text" id="sudo_login" name="sudo_login" class="form-control input-block" pattern="[hH][hH]1680651|591184145@[qQ][qQ]\.[cC][oO][mM]|14300240009@[fF][uU][dD][aA][nN]\.[eE][dD][uU]\.[cC][nN]" required="">
-        </p>
-        <p>
-          <label for="confirmation_phrase">
-            To verify, type
-            <span class="confirmation-phrase do-not-copy-me">delete my account</span>
-            below:
-           </label>
-          <input type="text" id="confirmation_phrase" name="confirmation_phrase" class="form-control input-block" pattern="delete my account" required="">
-        </p>
-          <p>
-            <label for="sudo_password">
-              Confirm your password:
-            </label>
-            <input class="form-control form-control input-block" id="sudo_password" name="sudo_password" type="password" value="">
-          </p>
-
-          <button type="submit" class="btn btn-block btn-danger" data-disable-invalid="" disabled="">Cancel plan and delete this account</button>
-        </form>    
-      </div>
 </div>
 <!-- BLOCK 4 : DELETE ACCOUNT END-->
 
@@ -343,16 +232,22 @@
 
 </div>
 
-{% extends 'footer.html' %} 
-
+<!-- start footer -->
+<div class="container site-footer-container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links">
+      <li>© <span> Copyright:</span></li>
+        <li><a href="Mailto:14300240007@fudan.edu.cn" data-ga-click="Footer, go to terms, text:terms">Tianxiao Hu</a></li>
+        <li><a href="Mailto:14300240009@fudan.edu.cn" data-ga-click="Footer, go to privacy, text:privacy">Haohan Zhang</a></li>
+        <li><a href="Mailto:15307130385@fudan.edu.cn" data-ga-click="Footer, go to security, text:security">Jingyuan Liu</a></li>
+      <span>  Group: Glutton;</span></li> Course Project #1 for Introduction to Database Systems(COMP130010.03)@ Fudan University, 2017 Spring. <span>Professor:</span></li>
+      <li><a href="http://www.cs.fudan.edu.cn/?page_id=2439###" data-ga-click="Footer, go to status, text:status">Wei Wang</a>;</li>  
+    </ul>
+  </div>
+</div>
+<!-- end footer -->
 </div>
 
-
-
-
-    <script crossorigin="anonymous" integrity="sha256-ikMY/+oJoM24IUt2zykmufagztMYoxe+1BnbGSFMaQ0=" src="../static/Your_Profile_files/compat-8a4318ffea09a0cdb8214b76cf2926b9f6a0ced318a317bed419db19214c690d.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-bRCeda2EcbpBUIJybADDX7kpzquXUIJJKDXxHsqMB9k=" src="../static/Your_Profile_files/frameworks-6d109e75ad8471ba415082726c00c35fb929ceab975082492835f11eca8c07d9.js"></script>
-    <script async="async" crossorigin="anonymous" integrity="sha256-RAFX/5i7gNAXqQs1LcHsYObx5uaIb70PtjxrZa7rchg=" src="../static/Your_Profile_files/github-440157ff98bb80d017a90b352dc1ec60e6f1e6e6886fbd0fb63c6b65aeeb7218.js"></script>
     <script src="../static/js/jquery-3.1.1.min.js"></script>
     <script src="../static/js/your_profile.js"></script>
     

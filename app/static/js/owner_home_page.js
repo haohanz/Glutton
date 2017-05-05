@@ -14,7 +14,6 @@ $(document).ready(function(){
         
         console.log($("span#picture_nickname").html());
         $("span#picture_nickname").html(url_vars["owner_nickname"]);
-        $("span#USER_ID").html(url_vars["customer_id"]);
         console.log($("span#picture_nickname").html());
         console.log(JSON.stringify(url_vars));
         var customer_id = url_vars["customer_id"];
@@ -64,11 +63,15 @@ $(document).ready(function(){
             var time_span = restaurant_info.time_span;
             var total_month_sale = restaurant_info.total_month_sale;
             var restaurant_address = restaurant_info.restaurant_address;
+            if (restaurant_address == null) {
+                restaurant_address = '暂无';
+            }
             var dishes = data.dish;
             var dish_num = dishes.length;
 
             $("span#picture_nickname").html(restaurant_name);
-
+            $("span#USER_ID").html(restaurant_address);
+            
             $.each(dishes, function(i,item){
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;

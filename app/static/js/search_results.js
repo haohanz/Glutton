@@ -68,7 +68,7 @@ var search = function(page,current_div,search_content, key){
 		$("input#search_block_in_search_results").attr("value",decodeURIComponent(search_value));
 		$("div#tofill").text('');
 		if(current_div == restaurant){
-			$("#search_by_price").html("By base delivery fee");
+			$("#search_by_price_content").html("By base delivery fee");
 			$("#results_overview").html('');
 			$.each(data.result_list, function(i,eachData){
 				eval(eachData);

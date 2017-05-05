@@ -142,7 +142,7 @@ var submit_comment = function() {
             return;
         } else {
             alert("Succeed!");
-            // here is a refresh, don't know how
+            window.location.href = location.search;
         }
     });
 }

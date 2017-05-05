@@ -17,7 +17,7 @@ $(document).ready(function(){
         var customer_id = url_vars["customer_id"];
 
         $("a#home_page_link").bind("click",function(){
-            window.location.href="restaurant_home_page?who=customer&restaurant_name="+$(this).html()+"customer_id="+customer_id+"&restaurant_id="+$(this).prop("name");
+            window.location.href="restaurant_home_page?who=customer&restaurant_name="+$(this).html()+"&customer_id="+customer_id+"&restaurant_id="+$(this).prop("name");
         });
 
         $("a#navi_home_page").bind("click",function(){

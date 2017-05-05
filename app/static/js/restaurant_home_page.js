@@ -146,10 +146,20 @@ $(document).ready(function(){
                 if ($(this).hasClass("disabled")){
                     return;
                 }
+                var flag = 0;
+                $.each(dish_counts, function(key,value){
+                    if (parseInt(value) != 0) {
+                        flag = 1;
+                    }
+                });
 
+                if (flag == 0) {
+                    alert("Your order is empty!");
+                    return;
+                }
+                alert("customer_id:"+customer_id);
+                $.getJSON("/initialize_homepage",{"customer_id":customer_id},function(customer_data){
 
-
-                $.getJSON("initialize_homepage",{"customer_id":customer_id},function(customer_data){
                     if (customer_data.ERROR){
                         alert(customer_data.ERROR);
                     } else {
@@ -157,17 +167,7 @@ $(document).ready(function(){
                         if (customer_address == null || customer_address == '') {
                             alert("Please input your address first!");
                             window.location.href="your_profile?customer_id="+customer_id;
-                        } else {
-                            var flag = 0;
-                            $.each(dish_counts, function(key,value){
-                                if (parseInt(value) != 0) {
-                                    flag = 1;
-                                }
-                            });
-                            if (flag == 0) {
-                                alert("Your order is empty!");
-                                return;
-                            }
+                        } else { 
 
                             return_dish_counts = JSON.stringify(dish_counts);
                             $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

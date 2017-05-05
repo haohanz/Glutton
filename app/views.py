@@ -33,10 +33,6 @@ def index():
 def signup():
 	return render_template('signup.htm')
 
-@app.route('/footer')
-def footer():
-	return render_template('footer.html')
-
 @app.route('/home_page')
 def home_page():
 	return render_template('home_page.htm')

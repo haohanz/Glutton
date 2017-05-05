@@ -56,7 +56,6 @@ $(document).ready(function(){
                     dish_amount = dish_item.dish_amount;
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
-        			order_total_price += dish_price;
 					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">'+dish_price+'¥ &nbsp'+dish_amount+'份</span></li>';
         		});
         		dish_list += '</ul>';
@@ -64,7 +63,6 @@ $(document).ready(function(){
         			if (i != 0) {
         				str += '</tr><tr>';
         			}
-					// str += '<div class="plans-cards pt-3 my-3">';
 				}
                 console.log("order_id in str:"+order_id);
         		str += '\

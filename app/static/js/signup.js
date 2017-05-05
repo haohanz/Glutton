@@ -1,11 +1,22 @@
 // signup.js
 var customer_id = "";
 var who = "";
+
 var signup = function() {
     if(who==''){
     	customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
+        if(customer_nickname == '' || customer_password == '' || customer_mobile_number == '') {
+            alert("Incomplete input!");
+            window.location.href = location.search;
+            return;
+        } else if (customer_mobile_number.length != 11) {
+            alert("Please input valid mobile number!");
+            window.location.href = location.search;
+            return;
+        } 
+
         $.getJSON("/user_signup_submit",{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
             console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
             if (data.ERROR) {
@@ -19,6 +30,16 @@ var signup = function() {
         customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
+        if(customer_nickname == '' || customer_password == '' || customer_mobile_number == '') {
+            alert("Incomplete input!");
+            window.location.href = location.search;
+            return;
+        } else if (customer_mobile_number.length != 11) {
+            alert("Please input valid mobile number!");
+            window.location.href = location.search;
+            return;
+        }
+
         $.getJSON('/restaurant_signup_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname,"restaurant_name":customer_mobile_number},function(data){
             console.log('sent:'+customer_password+customer_nickname);
             if (data.ERROR) {
@@ -29,7 +50,6 @@ var signup = function() {
             }
         });
     }
-
 }
 
 $(document).ready(function(){

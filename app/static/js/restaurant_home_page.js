@@ -168,7 +168,6 @@ $(document).ready(function(){
                             alert("Please input your address first!");
                             window.location.href="your_profile?customer_id="+customer_id;
                         } else { 
-
                             return_dish_counts = JSON.stringify(dish_counts);
                             $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
                                 if (data.ERROR) {

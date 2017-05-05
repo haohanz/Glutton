@@ -283,13 +283,10 @@ def search_dish_results():
 
 @app.route('/search_restaurant_results_by_price', methods = ['GET','POST'])
 def search_restaurant_results_by_price():
-	# search_key in ["delivery_price", "base_deliver_price", "total_month_sale"]
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
 	search_value = urllib.unquote(str(search_value))
-	search_key = request.args.get("search_key")
-	search_key = urllib.unquote(str(search_key))
 	try:
 		result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
 		                          "ORDER BY base_deliver_price" % (search_value)).fetchall()
@@ -307,13 +304,10 @@ def search_restaurant_results_by_price():
 
 @app.route('/search_restaurant_results_by_sale', methods = ['GET','POST'])
 def search_restaurant_results_by_sale():
-	# search_key in ["delivery_price", "base_deliver_price", "total_month_sale"]
 	customer_id = request.args.get("customer_id")
 	page = int(request.args.get("page")) - 1
 	search_value = request.args.get("search_value")
 	search_value = urllib.unquote(str(search_value))
-	search_key = request.args.get("search_key")
-	search_key = urllib.unquote(str(search_key))
 	try:
 		result = g.cursor.execute("SELECT * FROM restaurant WHERE restaurant_name LIKE '%%%s%%' "
 		                          "ORDER BY total_month_sale DESC" % (search_value)).fetchall()

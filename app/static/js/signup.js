@@ -34,10 +34,6 @@ var signup = function() {
             alert("Incomplete input!");
             window.location.href = location.search;
             return;
-        } else if (customer_mobile_number.length != 11) {
-            alert("Please input valid mobile number!");
-            window.location.href = location.search;
-            return;
         }
 
         $.getJSON('/restaurant_signup_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname,"restaurant_name":customer_mobile_number},function(data){

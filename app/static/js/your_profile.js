@@ -89,6 +89,7 @@ $(document).ready(function(){
 							alert(data.ERROR);
 						} else {
 							alert("succeed!");
+							window.location.href = location.search;
 						}
 					});
 				}
@@ -99,7 +100,6 @@ $(document).ready(function(){
 
 		$("button#upload_your_profile").bind("click",function(){
 			var customer_nickname = $("input#user_profile_name").val();
-			// var gender = $("#user_profile_gender").find("option:selected");
 			var customer_address = $("input#user_profile_birthday").val();
 			var customer_appellation = $("input#customer_appellation").val();
 			var customer_description = $("textarea#user_profile_add").val();

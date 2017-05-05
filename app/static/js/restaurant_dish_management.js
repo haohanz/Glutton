@@ -58,6 +58,12 @@ $(document).ready(function(){
             $("span#open_time_restaurant").html(open_time);
             var restaurant_address = restaurant_info.restaurant_address;
             var restaurant_description = restaurant_info.restaurant_description;
+            if (restaurant_address == null) {
+                restaurant_address = '暂无';
+            }
+            if (restaurant_description == null) {
+                restaurant_description = '暂无';
+            }
             $("span#restaurant_id").html("地址："+restaurant_address+"; 描述："+restaurant_description);
             var dishes = data.dish;
             var dish_num = dishes.length;

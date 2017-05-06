@@ -77,6 +77,7 @@ $(document).ready(function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();
 			var user_confirm_new_password = $("input#user_confirm_new_password").val();
+
 			if (user_new_password && user_old_password && user_confirm_new_password && user_old_password.length != 0 && user_new_password.length != 0) {
 				if (user_confirm_new_password != user_new_password) {
 					swal("Incorrect new passwords.");

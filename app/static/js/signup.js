@@ -9,11 +9,11 @@ var signup = function() {
         customer_mobile_number = $("input[name='user[email]']").val();
         if(customer_nickname == '' || customer_password == '' || customer_mobile_number == '') {
             swal("Incomplete input!");
-            window.location.href = location.search;
+            // window.location.href = location.search;
             return;
         } else if (customer_mobile_number.length != 11) {
             swal("Please input valid mobile number!");
-            window.location.href = location.search;
+            // window.location.href = location.search;
             return;
         } 
 
@@ -32,7 +32,6 @@ var signup = function() {
         customer_mobile_number = $("input[name='user[email]']").val();
         if(customer_nickname == '' || customer_password == '' || customer_mobile_number == '') {
             swal("Incomplete input!");
-            window.location.href = location.search;
             return;
         }
 

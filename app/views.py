@@ -271,13 +271,20 @@ def change_password():
 	:return: succeed or ERROR
 	"""
 	customer_id = request.args.get("customer_id")
-	customer_password = request.args.get("customer_password")
-	customer_password = md5_encrypt(customer_password)
+	old_password = request.args.get("old_password")
+	old_password = md5_encrypt(old_password)
+	new_password = request.args.get("new_password")
+	new_password = md5_encrypt(new_password)
 	try:
-		g.cursor.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'"
-		                 % (customer_password, customer_id))
-		g.conn.commit()
-		return jsonify({"Succeed!": "Change password Succeed!"})
+		old_password_db = g.cursor.execute("SELECT customer_password FROM customer WHERE customer_id = '%s'"
+						 					% (customer_id)).fetchall()[0]
+		if old_password == old_password_db:
+			g.cursor.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'"
+		                 	% (new_password, customer_id))
+			g.conn.commit()
+			return jsonify({"Succeed!": "Change password Succeed!"})
+		else:
+			return jsonify({"ERROR": "Please input correct old password!"})
 	except Exception as e:
 		g.conn.rollback()
 		print traceback.format_exc(e)
@@ -790,13 +797,20 @@ def change_restaurant_password():
     :return: succeed or ERROR
     """
 	restaurant_id = request.args.get("restaurant_id")
-	owner_password = request.args.get("owner_password")
-	owner_password = md5_encrypt(owner_password)
+	old_password = request.args.get("old_password")
+	old_password = md5_encrypt(old_password)
+	new_password = request.args.get("new_password")
+	new_password = md5_encrypt(new_password)
 	try:
-		g.cursor.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'"
-		                 % (owner_password, restaurant_id))
-		g.conn.commit()
-		return jsonify({"succeed!": "succeed!"})
+		old_password_db = g.cursor.execute("SELECT owner_password FROM restaurant WHERE restaurant_id = '%s'"
+										   % (restaurant_id)).fetchall()[0]
+		if old_password == old_password_db:
+			g.cursor.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'"
+							 % (new_password, restaurant_id))
+			g.conn.commit()
+			return jsonify({"Succeed!": "Change password Succeed!"})
+		else:
+			return jsonify({"ERROR": "Please input correct old password!"})
 	except Exception as e:
 		g.conn.rollback()
 		print traceback.format_exc(e)

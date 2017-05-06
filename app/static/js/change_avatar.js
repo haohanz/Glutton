@@ -29,21 +29,27 @@ $(document).ready(function(){
             window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
+        
         console.log("customer_id:"+customer_id);
         $("a#avatar").bind("click",function(){
         	var name = $(this).prop("name");
         	console.log("name:"+name);
         	$.getJSON("customer_change_avatar",{"customer_id":customer_id,"customer_avatar":name},function(data){
         		if(data.ERROR){
-        			alert(data.ERROR);
+        			swal(data.ERROR);
         		} else {
-        			alert("change avatar succeed!");
+        			swal("change avatar succeed!");
                     window.location.href="your_profile?customer_id="+customer_id;
         		}
         	});
         });
     } else {
-    	alert("log in first!");
+    	swal("log in first!");
     }
     $("a").css("cursor","pointer");
 });

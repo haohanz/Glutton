@@ -1,7 +1,7 @@
 // restaurant_home_page.js
 
 var viewing_dish_id=0;
-
+var restaurant_id="";
 $(document).ready(function(){
     var dish_counts = {};
     var url = location.search;
@@ -13,7 +13,8 @@ $(document).ready(function(){
         for (var i = 0; i < splits.length; i++){
             route[splits[i].split("=")[0]] = splits[i].split("=")[1];
         }
-        var restaurant_id = route['restaurant_id'];
+        
+        restaurant_id = route['restaurant_id'];
 
         $("a#navi_home_page").bind("click",function(){
             window.location.href="owner_home_page?customer_id="+restaurant_id;
@@ -36,12 +37,12 @@ $(document).ready(function(){
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
         });
 
-        $("a#add_dish").attr("href","restaurant_profile?restaurant_id="+restaurant_id);
-
-        var who = route['who'];
-        if (who == 'business') {
-            $("a#submit_order").addClass("disabled");
-        }
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
+        
         $.getJSON("/get_restaurant_detail",{"customer_id":"-","restaurant_id":restaurant_id},function(data){
             console.log("get data!!!~~~~~"+JSON.stringify(data));
             $("ul#dish_info").html('');
@@ -49,12 +50,21 @@ $(document).ready(function(){
             var restaurant_info = eval(data.restaurant);
             console.log(JSON.stringify(restaurant_info));
             var delivery_price = restaurant_info.delivery_fee;
+            if (delivery_price == null) {
+                delivery_price = '暂无';
+            }
             $("span#month_total_sale").html(delivery_price);
             var base_deliver_price = restaurant_info.base_deliver_price;
+            if (base_deliver_price == null) {
+                base_deliver_price = '暂无';
+            }
             $("span#delivery_span").html(base_deliver_price);
             var restaurant_name = restaurant_info.restaurant_name;
             $("span#restaurant_name").html(restaurant_name);
             var open_time = restaurant_info.open_time;
+            if (open_time == null) {
+                open_time = '暂无';
+            }
             $("span#open_time_restaurant").html(open_time);
             var restaurant_address = restaurant_info.restaurant_address;
             var restaurant_description = restaurant_info.restaurant_description;
@@ -113,12 +123,12 @@ $(document).ready(function(){
 
             $("a#delete_dish").bind("click",function(){
             	var delete_dish_id = $(this).prev("span#dish_id:first").html();
-            	alert('are you sure to delete dish:'+delete_dish_id+"?");
+            	swal('are you sure to delete dish:'+delete_dish_id+"?");
             	$.getJSON("/delete_dish",{"dish_id":delete_dish_id},function(data){
             		if (data.ERROR){
-            			alert(data.ERROR);
+            			swal(data.ERROR);
             		} else {
-            			alert("delete dish succeed!");
+            			swal("delete dish succeed!");
                         window.location.href = location.search;
             		}
             	});
@@ -150,17 +160,48 @@ var submit_change_dish = function() {
 	$.getJSON("/change_dish",{"dish_id":viewing_dish_id,"dish_name":dish_name,"dish_price":dish_price},function(data){
 		console.log("get response"+data);
 		if (data.ERROR){
-			alert(data.ERROR);
+			swal(data.ERROR);
 		} else {
-			alert("Succeed!");
 			window.location.href = location.search;
 		}
 	});
 }
 
-var submit_order = function() {
-    $.getJSON("submit_order",{"dish_counts": dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){
-        alert("get data!!!"+data);
-    });
+var new_dish_name = $("input#add_dish_name").val();
+var new_dish_price = $("input#add_dish_price").val();
 
+var create_dish_name = function(obj) {
+    new_dish_name = obj.value;
 }
+
+var create_dish_price = function(obj) {
+    new_dish_price = obj.value;
+}
+
+var add_dish_submit = function() {
+    console.log("new_dish_price:"+new_dish_price);
+    console.log("new_dish_name:"+new_dish_name);
+    console.log("restaurant_id:"+restaurant_id);
+    $.getJSON("/add_dish",
+        {"dish_name":new_dish_name,
+        "restaurant_id":restaurant_id,
+        "dish_price":new_dish_price},function(data){
+        if (data.ERROR){
+            swal(data.ERROR);
+        } else {
+            window.location.href = location.search;
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+

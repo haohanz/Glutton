@@ -33,6 +33,12 @@ $(document).ready(function(){
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+         });
+
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
@@ -42,7 +48,7 @@ $(document).ready(function(){
         $.getJSON("/get_restaurant_history",{"restaurant_id":restaurant_id}, function(data){
         	console.log("get data:"+JSON.stringify(data));
             if (data.ERROR) {
-                alert(data.ERROR);
+                swal(data.ERROR);
                 return;
             }
         	result = data.result;
@@ -54,6 +60,10 @@ $(document).ready(function(){
         		var restaurant_name = item.customer_nickname;
         		var comment = item.comment;
         		var create_time = item.create_time;
+                var receive_time = item.receive_time;
+                if (receive_time == null) {
+                    receive_time = '尚未收货';
+                }
                 console.log("restaurant_name:"+restaurant_name);
         		var order_id = item.order_id;
                 console.log("order_id"+item.order_id);
@@ -65,7 +75,7 @@ $(document).ready(function(){
                     dish_amount = dish_item.dish_amount;
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
-					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">'+dish_price+'¥ &nbsp'+dish_amount+'份</span></li>';
+					dish_list += '<li class="mb-1">'+ dish_name+'：<span class="default-currency">'+dish_price+'¥ &nbsp'+dish_amount+'份</span></li>';
         		});
         		dish_list += '</ul>';
         		if (i%3 == 0) {
@@ -82,10 +92,10 @@ $(document).ready(function(){
 					    </a>\
 					  <div class="plans-card-text p-3">\
 					    <h3 class="alt-h2 text-normal mb-0 lh-condensed">\
-					      <span class="default-currency">Total:'+order_total_price+'¥</span>\
+					      <span class="default-currency">Total:¥'+order_total_price+'</span>\
 					    </h3>\
 					    <p class="mb-4 alt-text-small text-gray>\
-					      order id: <span id="order_id">'+create_time+'</span>\
+					      order id: <span id="order_id">下单：'+create_time+'</span><br/><span id="order_id">收货：'+receive_time+'</span>\
 					    </p>\
 					    <h4 class="alt-h4 lh-condensed mb-1">Includes:</h4>\
 					    <ul class="list-style-none lh-condensed">\
@@ -116,12 +126,12 @@ var comment_order_id = '0';
 
 var view_comment = function(obj){
     if ($(obj).hasClass("disabled")) {
-        alert("customer haven't commented yet!");
+        swal("customer haven't commented yet!");
         return;
         // how to stop the facebox?
     } else {
         var com = $(obj).prev("span:first").html();
-    	alert("comment:"+com);
+    	swal("comment:"+com);
     }
 };
 

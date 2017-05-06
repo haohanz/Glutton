@@ -37,12 +37,18 @@ $(document).ready(function(){
             window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
+
         var customer_nickname;
         var customer_avatar = "5";
         var customer_mobile_number = '';
         $.getJSON("initialize_homepage",{"customer_id":customer_id},function(data){
             if(data.ERROR){
-                alert(data.ERROR);
+                swal(data.ERROR);
             } else {
                 customer_nickname = data.customer_nickname;
                 customer_avatar = data.customer_avatar;
@@ -54,6 +60,11 @@ $(document).ready(function(){
             }
         });
 
+        $("#main_search_input").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#search_home_page').click();
+             }
+        });
 
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
@@ -75,7 +86,7 @@ $(document).ready(function(){
         });
 
     } else {
-        alert("Sign in first!");
+        swal("Sign in first!");
     }
     $("a").css("cursor","pointer");
 });

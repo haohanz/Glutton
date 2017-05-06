@@ -153,7 +153,7 @@
 
 
         <div style="margin: 0 auto" align="center">
-            <a id="add_dish" style="text-align: center; width: 80%;margin: 0 auto;" class="float-left btn btn-primary mr-3" rel="nofollow" id="submit_order">Add Dish</a>
+            <a id="add_dish" href="#AddDish" rel="facebox" style="text-align: center; width: 80%;margin: 0 auto;" class="float-left btn btn-primary mr-3" rel="nofollow">Add Dish</a>
         </div>
       </div>
 
@@ -183,7 +183,7 @@
   
 
   <div id="ajax-error-message" class="ajax-error-message flash flash-error">
-    <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"></path></svg>
+    <svg aria-hidden="true" class="octicon octicon-swal" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"></path></svg>
     <button type="button" class="flash-close js-flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
       <svg aria-hidden="true" class="octicon octicon-x" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"></path></svg>
     </button>
@@ -212,6 +212,32 @@
 
 <!-- EDIT BLOCK : END-->
 
+<!-- BLOCK 5 : PROFILE START-->
+<div id="AddDish" name="display" style="display:none;">
+
+  <div class="float-left" style="width: 100%">    
+  <div class="Subhead mt-0 mb-0">
+    <h2 class="Subhead-heading">Add a dish</h2>
+  </div>
+
+      <div class="column" style="width: 100%">
+          <dl class="form-group">
+            <dt><label>Name of dish</label></dt>
+            <dd><input onblur="create_dish_name(this)" class="form-control" id="add_dish_name" size="30" placeholder="Input a new dish name" type="text" value=""></dd>
+          </dl>
+        <dl class="form-group">
+          <dt><label>Input the price of this dish(¥)</label></dt>
+            <dd><input onblur="create_dish_price(this)" placeholder="Input the price of this dish" class="form-control" id="add_dish_price" size="30" type="text" value=""></dd>
+          </dl>
+        <dl class="form-group">
+        </dl>
+        <p><button class="btn" onclick="add_dish_submit()">Add a dish</button></p>
+      </div>
+
+</div>
+</div>
+<!-- BLOCK 5 : PROFILE END-->
+
     <script crossorigin="anonymous" src="../static/js/main_1.js"></script>
     <script crossorigin="anonymous" src="../static/js/main_2.js"></script>
     <script crossorigin="anonymous" src="../static/js/main_3.js"></script>
@@ -228,6 +254,9 @@
 </div>
 
 </body></html>
+<link crossorigin="anonymous" href="../static/css/sweetalert.css" media="all" rel="stylesheet">
+<script src="../static/js/sweetalert.min.js"></script> 
+
 <script src="../static/js/jquery-3.1.1.min.js"></script>
 <script src="../static/js/restaurant_dish_management.js"></script>
 

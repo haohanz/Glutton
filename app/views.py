@@ -833,6 +833,7 @@ def add_dish():
 			return jsonify({"ERROR": "Please input valid price!"})
 		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
 									  % (restaurant_id)).fetchall()
+		dish_names = [x[0] for x in dish_names]
 		if dish_name in dish_names:
 			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
 		dish_id = get_dish_no(restaurant_id)
@@ -860,9 +861,9 @@ def change_dish():
 		restaurant_id = dish_id[:3]
 		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
 									  % (restaurant_id)).fetchall()
+		dish_names = [x[0] for x in dish_names]
 		if dish_name in dish_names:
 			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
-		dish_id = get_dish_no(restaurant_id)
 		g.cursor.execute("UPDATE dish SET dish_price = '%f', dish_name = '%s'  WHERE dish_id = '%s'"
 		                 % (float(dish_price), dish_name, dish_id))
 		g.conn.commit()

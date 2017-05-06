@@ -18,12 +18,12 @@ from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
 
 @app.before_request
 def before_request():
-	g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)
+	g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)#???
 	g.cursor = g.conn.cursor()
 
 @app.teardown_request
 def teardown_request(exception):
-	if hasattr(g, 'cursor'):
+	if hasattr(g, 'cursor'):#???
 		g.cursor.close()
 	if hasattr(g, 'conn'):
 		g.conn.close()

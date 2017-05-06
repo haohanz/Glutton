@@ -103,15 +103,16 @@ $(document).ready(function(){
                     str += '<a class="btn btn-block btn-outline f4 plans-card-btn disabled">Received the Dishes</a>\
                          </div>\
                      </td>';
-                } else if (receive_time != '暂未收获' && comment == '暂无评论') {    //received but not comment
+
+                } else if (receive_time != '暂未收货' && comment == '暂无评论') {    //received but not comment
+                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="change_id(this)" class="btn btn-block btn-outline f4 plans-card-btn">Comment</a>\
+                         </div>\
+                     </td>';
+                } else {    // have not received
                     str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="received_order(this)" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
                          </div>\
                      </td>';
 
-                } else {    // have not received
-                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="comment_after(this)" class="btn btn-block btn-outline f4 plans-card-btn">Comment</a>\
-                         </div>\
-                     </td>';
                 }
 
         	});
@@ -162,18 +163,10 @@ var submit_comment = function() {
     });
 }
 
-var comment_after = function (obj) {
-    var received_order_id = $(obj).prop("name");
-    $.getJSON("/comment_order",{"comment":dish_comment,"order_id":comment_order_id},function(data){
-        console.log("get response"+data);
-        if (data.ERROR){
-            swal(data.ERROR);
-            return;
-        } else {
-            console.log("comment_order_id:"+comment_order_id+";dish_comment:"+dish_comment+";submitted");
-            window.location.href = location.search;
-        }
-    });
+
+var change_id = function(obj) {
+    comment_order_id = $(obj).prop("name");
 }
+
 
 

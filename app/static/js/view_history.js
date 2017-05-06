@@ -70,7 +70,7 @@ $(document).ready(function(){
                     dish_amount = dish_item.dish_amount;
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
-					dish_list += '<li class="mb-1">'+ dish_name+'：<span class="default-currency">'+dish_price+'¥ &nbsp'+dish_amount+'份</span></li>';
+					dish_list += '<li class="mb-1">'+ dish_name+'：<span class="default-currency">¥'+dish_price+' &nbsp'+dish_amount+'份</span></li>';
         		});
         		dish_list += '</ul>';
         		if (i%3 == 0) {

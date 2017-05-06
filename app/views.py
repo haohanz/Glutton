@@ -277,7 +277,7 @@ def change_password():
 	new_password = md5_encrypt(new_password)
 	try:
 		old_password_db = g.cursor.execute("SELECT customer_password FROM customer WHERE customer_id = '%s'"
-						 					% (customer_id)).fetchall()[0]
+						 					% (customer_id)).fetchall()[0][0]
 		if old_password == old_password_db:
 			g.cursor.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'"
 		                 	% (new_password, customer_id))
@@ -803,7 +803,7 @@ def change_restaurant_password():
 	new_password = md5_encrypt(new_password)
 	try:
 		old_password_db = g.cursor.execute("SELECT owner_password FROM restaurant WHERE restaurant_id = '%s'"
-										   % (restaurant_id)).fetchall()[0]
+										   % (restaurant_id)).fetchall()[0][0]
 		if old_password == old_password_db:
 			g.cursor.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'"
 							 % (new_password, restaurant_id))

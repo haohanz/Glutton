@@ -18,12 +18,12 @@ from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
 
 @app.before_request
 def before_request():
-	g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)#???
+	g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)
 	g.cursor = g.conn.cursor()
 
 @app.teardown_request
 def teardown_request(exception):
-	if hasattr(g, 'cursor'):#???
+	if hasattr(g, 'cursor'):
 		g.cursor.close()
 	if hasattr(g, 'conn'):
 		g.conn.close()
@@ -651,6 +651,7 @@ def get_user_history():
 	[{"restaurant_id":restaurant_id, "order_id": order_id, "create_time": create_time, 
 	  "receive_time":receive_time, "restaurant_name":restaurant_name,
 	  "order_total_price":order_total_price, 
+	  "comment": comment,
 	  "dishes":[{"dish_price": dish_price, "dish_amount": dish_amount, "dish_name":dish_name}, {}, {}..]
 	 },
 	 {}, {}, ...]
@@ -658,12 +659,12 @@ def get_user_history():
 	customer_id = request.args.get("customer_id")
 	try:
 		customer_order = g.cursor.execute("SELECT customer_order.restaurant_id, customer_order.order_id, "
-		                                  "customer_order.create_time, customer_order.receive_time "
+		                                  "customer_order.create_time, customer_order.receive_time, customer_order.comment "
 		                                  "FROM customer_order WHERE customer_id = '%s'" % (customer_id)).fetchall()
 		if customer_order:
 			order_list = []
 			for order in customer_order:
-				keywords = ["restaurant_id", "order_id", "create_time", "receive_time"]
+				keywords = ["restaurant_id", "order_id", "create_time", "receive_time", "comment"]
 				order_dict = dict(zip(keywords, order))
 				restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant "
 				                                   "WHERE restaurant_id = '%s'" % (order[0])).fetchall()

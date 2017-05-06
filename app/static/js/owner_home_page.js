@@ -40,6 +40,18 @@ $(document).ready(function(){
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
+
+        $("#main_search_input").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#search_home_page').click();
+             }
+        });
+
         $("#search_home_page").click(function(){
             search_value = $("input[name='q']").val();
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+url_vars["customer_id"];
@@ -94,7 +106,7 @@ $(document).ready(function(){
             }
         });
     } else {
-        alert("Sign in first!");
+        swal("Sign in first!");
     }
     $("a").css("cursor","pointer");
 });

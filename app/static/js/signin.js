@@ -26,7 +26,7 @@ var signin = function() {
     }
     $.getJSON(route,input_dict,function(data){
         if (data.ERROR) {
-            alert(data.ERROR);
+            swal(data.ERROR);
         } else {
             if (who == 'business') {
                 window.location.href="owner_home_page?customer_id="+data.restaurant_id+

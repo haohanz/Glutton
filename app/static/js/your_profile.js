@@ -24,10 +24,10 @@ var change_mobile_number = function(customer_id) {
 	var new_mobile_number = $("input#new_mobile_number").val();
 	if (old_mobile_number && user_password && new_mobile_number) {
 		$.getJSON("/change_mobile_number",{"old_mobile_number":old_mobile_number,"user_password":user_password,"new_mobile_number":new_mobile_number,"customer_id":customer_id},function(){
-			alert("Update mobile number succeed.");
+			swal("Update mobile number succeed.");
 		});
 	} else {
-		alert("Incomplete Inputs.");
+		swal("Incomplete Inputs.");
 	} 
 }
 
@@ -60,9 +60,15 @@ $(document).ready(function(){
             window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
+        
         $.getJSON("initialize_homepage",{"customer_id":customer_id},function(data){
         	if(data.ERROR){
-        		alert(data.ERROR);
+        		swal(data.ERROR);
         	} else {
         		var customer_avatar = data.customer_avatar;
         		console.log("customer_avatar:"+customer_avatar);
@@ -80,21 +86,21 @@ $(document).ready(function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();
 			var user_confirm_new_password = $("input#user_confirm_new_password").val();
-			if (user_new_password && user_old_password && user_confirm_new_password) {
+			if (user_new_password && user_old_password && user_confirm_new_password && user_old_password.length != 0 && user_new_password.length != 0) {
 				if (user_confirm_new_password != user_new_password) {
-					alert("Incorrect new passwords.");
+					swal("Incorrect new passwords.");
 				} else {
-					$.getJSON("/change_password",{"customer_password":user_new_password,"customer_id":customer_id},function(data){
+					$.getJSON("/change_password",{"old_password":user_old_password,"new_password":user_new_password,"customer_id":customer_id},function(data){
 						if (data.ERROR) {
-							alert(data.ERROR);
+							swal(data.ERROR);
 						} else {
-							alert("succeed!");
+							swal("succeed!");
 							window.location.href = location.search;
 						}
 					});
 				}
 			} else {
-				alert("Incomplete Inputs.");
+				swal("Incomplete Inputs.");
 			} 
 		}); 
 
@@ -105,9 +111,9 @@ $(document).ready(function(){
 			var customer_description = $("textarea#user_profile_add").val();
 			$.getJSON("/upload_your_profile",{"customer_nickname":customer_nickname,"customer_description":customer_description,"customer_appellation":customer_appellation,"customer_address":customer_address,"customer_id":customer_id},function(data){
 				if (data.ERROR){
-					alert(data.ERROR);
+					swal(data.ERROR);
 				} else {
-					alert("upload succeed!");
+					swal("upload succeed!");
 				}
 			})
 		});

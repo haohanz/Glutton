@@ -8,11 +8,11 @@ var signup = function() {
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
         if(customer_nickname == '' || customer_password == '' || customer_mobile_number == '') {
-            alert("Incomplete input!");
+            swal("Incomplete input!");
             window.location.href = location.search;
             return;
         } else if (customer_mobile_number.length != 11) {
-            alert("Please input valid mobile number!");
+            swal("Please input valid mobile number!");
             window.location.href = location.search;
             return;
         } 
@@ -20,7 +20,7 @@ var signup = function() {
         $.getJSON("/user_signup_submit",{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
             console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
             if (data.ERROR) {
-                alert(data.ERROR);
+                swal(data.ERROR);
             } else {
                 customer_id = data.customer_id;
                 window.location.href = 'home_page?customer_id='+customer_id+'&customer_nickname='+customer_nickname+"&who="+who;
@@ -31,7 +31,7 @@ var signup = function() {
         customer_password = $("input[name='user[password]']").val();
         customer_mobile_number = $("input[name='user[email]']").val();
         if(customer_nickname == '' || customer_password == '' || customer_mobile_number == '') {
-            alert("Incomplete input!");
+            swal("Incomplete input!");
             window.location.href = location.search;
             return;
         }
@@ -39,7 +39,7 @@ var signup = function() {
         $.getJSON('/restaurant_signup_submit',{"owner_password":customer_password,"owner_nickname":customer_nickname,"restaurant_name":customer_mobile_number},function(data){
             console.log('sent:'+customer_password+customer_nickname);
             if (data.ERROR) {
-                alert(data.ERROR);
+                swal(data.ERROR);
             } else {
                 restaurant_id = data.restaurant_id;
                 window.location.href = 'owner_home_page?who=business&owner_nickname='+customer_nickname+"&customer_id="+restaurant_id;
@@ -73,6 +73,6 @@ $("a#navi").bind("click",function(){
         window.location.href = 'front_page';
     }
     if ($(this).html() == 'My Order' || $(this).html() == 'Home Page') {
-        alert("sign in first!");
+        swal("sign in first!");
     }
 })

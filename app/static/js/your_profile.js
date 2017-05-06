@@ -22,6 +22,7 @@ var change_mobile_number = function(customer_id) {
 	var old_mobile_number = $("input#old_mobile_number").val();
 	var user_password = $("input#user_password").val();
 	var new_mobile_number = $("input#new_mobile_number").val();
+	console.log("old_mobile_number:"+old_mobile_number+";user_password:"+user_password+";new_mobile_number:"+new_mobile_number);
 	if (old_mobile_number && user_password && new_mobile_number) {
 		$.getJSON("/change_mobile_number",{"old_mobile_number":old_mobile_number,"user_password":user_password,"new_mobile_number":new_mobile_number,"customer_id":customer_id},function(){
 			swal("Update mobile number succeed.");
@@ -86,6 +87,7 @@ $(document).ready(function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();
 			var user_confirm_new_password = $("input#user_confirm_new_password").val();
+			console.log("old_mobile_number:"+user_old_password+";user_password:"+user_new_password+";new_mobile_number:"+user_confirm_new_password);
 			if (user_new_password && user_old_password && user_confirm_new_password && user_old_password.length != 0 && user_new_password.length != 0) {
 				if (user_confirm_new_password != user_new_password) {
 					swal("Incorrect new passwords.");

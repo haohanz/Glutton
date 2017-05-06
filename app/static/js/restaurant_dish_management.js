@@ -123,14 +123,26 @@ $(document).ready(function(){
 
             $("a#delete_dish").bind("click",function(){
             	var delete_dish_id = $(this).prev("span#dish_id:first").html();
-            	swal('are you sure to delete dish:'+delete_dish_id+"?");
-            	$.getJSON("/delete_dish",{"dish_id":delete_dish_id},function(data){
-            		if (data.ERROR){
-            			swal(data.ERROR);
-            		} else {
-                        window.location.href=location.search;
-            		}
-            	});
+            	// swal('are you sure to delete dish:'+delete_dish_id+"?");
+
+                swal({
+                      title: 'Are you sure?',
+                      text: 'are you sure to delete dish:'+delete_dish_id+"?",
+                      type: 'warning',
+                      showCancelButton: true,
+                      confirmButtonText: 'Yes, delete it!',
+                      cancelButtonText: 'No, keep it',
+                },function(isConfirm) {
+                    if (isConfirm === true) {
+                    	$.getJSON("/delete_dish",{"dish_id":delete_dish_id},function(data){
+                    		if (data.ERROR){
+                    			swal(data.ERROR);
+                    		} else {
+                                window.location.href=location.search;
+                    		}
+                    	});
+                    } else {}
+                });
             });
 
         });

@@ -182,8 +182,18 @@ $(document).ready(function(){
                     } else {
                         var customer_address = customer_data.customer_address;
                         if (customer_address == null || customer_address == '') {
-                            swal("Please input your address first!");
-                            window.location.href="your_profile?customer_id="+customer_id;
+                            swal({
+                                  title: 'We need your address!',
+                                  text: "Please input your address first!",
+                                  type: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonText: 'OK',
+                                  cancelButtonText: 'Cancel',
+                            },function(isConfirm) {
+                                if (isConfirm === true) {
+                                        window.location.href="your_profile?customer_id="+customer_id;
+                                }
+                            });
                         } else { 
                             return_dish_counts = JSON.stringify(dish_counts);
                             $.getJSON("/submit_order",{"dish_counts": return_dish_counts,"customer_id":customer_id,"restaurant_id":restaurant_id},function(data){

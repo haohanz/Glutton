@@ -822,15 +822,22 @@ def change_restaurant_password():
 def add_dish():
 	"""
 	add a dish to database: dish_name, dish_price is required
+	dish name can't be repeated in a restaurant
 	:return: succeed or ERROR
 	"""
 	dish_name = request.args.get("dish_name")
 	restaurant_id = request.args.get("restaurant_id")
 	dish_price = request.args.get("dish_price")
 	try:
+		if not dish_price.replace('.', '').isdigit():
+			return jsonify({"ERROR": "Please input valid price!"})
+		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
+									  % (restaurant_id)).fetchall()
+		if dish_name in dish_names:
+			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
 		dish_id = get_dish_no(restaurant_id)
 		g.cursor.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d', '%d');"
-		                 % (dish_id, dish_name, dish_id[:3], float(dish_price), 0, 0))
+		                 % (dish_id, dish_name, restaurant_id, float(dish_price), 0, 0))
 		g.conn.commit()
 		return jsonify({"succeed!": "succeed!"})
 	except Exception as e:
@@ -848,6 +855,14 @@ def change_dish():
 	dish_price = request.args.get("dish_price")
 	dish_name = request.args.get("dish_name")
 	try:
+		if not dish_price.replace('.', '').isdigit():
+			return jsonify({"ERROR": "Please input valid price!"})
+		restaurant_id = dish_id[:3]
+		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
+									  % (restaurant_id)).fetchall()
+		if dish_name in dish_names:
+			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
+		dish_id = get_dish_no(restaurant_id)
 		g.cursor.execute("UPDATE dish SET dish_price = '%f', dish_name = '%s'  WHERE dish_id = '%s'"
 		                 % (float(dish_price), dish_name, dish_id))
 		g.conn.commit()

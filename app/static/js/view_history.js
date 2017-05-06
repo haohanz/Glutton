@@ -103,6 +103,7 @@ $(document).ready(function(){
                     str += '<a class="btn btn-block btn-outline f4 plans-card-btn disabled">Received the Dishes</a>\
                          </div>\
                      </td>';
+
                 } else if (receive_time != '暂未收货' && comment == '暂无评论') {    //received but not comment
                     str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="change_id(this)" class="btn btn-block btn-outline f4 plans-card-btn">Comment</a>\
                          </div>\
@@ -161,6 +162,7 @@ var submit_comment = function() {
         }
     });
 }
+
 
 var change_id = function(obj) {
     comment_order_id = $(obj).prop("name");

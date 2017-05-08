@@ -582,10 +582,14 @@ def submit_order():
 		g.cursor.execute("INSERT INTO customer_order VALUES('%s', '%s', '%s', '%s', NULL, NULL);"
 		                 % (restaurant_id, customer_id, customer_order_id,
 		                    datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+		g.cursor.execute("UPDATE restaurant SET total_month_sale = total_month_sale + '%d' "
+						 "WHERE restaurant_id = '%s'" % (sum(dish_counts.values()), restaurant_id))
 		for order, count in dish_counts.items():
 			dish_order_id = get_dish_order_no()
 			g.cursor.execute("INSERT INTO dish_order VALUES('%s', '%s', '%s', '%d');"
 			                 % (dish_order_id, customer_order_id, order, int(count)))
+			g.cursor.execute("UPDATE dish SET dish_month_sale = dish_month_sale + '%d' "
+							 "WHERE dish_id = '%s'" % (count, order))
 		g.conn.commit()
 		return jsonify({"succeed!": "succeed!"})
 	except Exception as e:
@@ -718,7 +722,7 @@ def restaurant_signup_submit():
 		if user_exist:
 			return jsonify({"ERROR": "This nickname has been registered, you can sign in now."})
 		g.cursor.execute("INSERT INTO restaurant VALUES ('%s', '%s', '%s', '%s', NULL, NULL, "
-		                 "NULL, NULL, NULL, NULL, NULL)"
+		                 "NULL, NULL, NULL, 0, NULL)"
 						 % (restaurant_id, owner_nickname, owner_password, restaurant_name))
 		g.conn.commit()
 		return jsonify({"restaurant_id": restaurant_id, "owner_nickname": owner_nickname,

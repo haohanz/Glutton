@@ -82,11 +82,11 @@ Glutton是为复旦大学（张江校区）的吃货们设计的外卖网页应�
 张昊晗 & 14300240009 & 主要负责前端开发（利用html5，css与boostrap框架）、动态交互及\\
 & & 前后端对接（利用jquery实现，并使用sweetalert与facebox插件）。 \\
 \hline
-刘婧源 & 15307130385 & 数据库设计，建表；商家、菜品原始数据的收集及插入；\\
- & & 涉及增删改查的部分SQL语句；项目报告主体部分。\\
+刘婧源 & 15307130385 & 主要负责数据库设计，建表；商家、菜品原始数据的收集及插入；\\
+ & & 涉及增删改查的部分SQL语句；项目报告主体部分的撰写。\\
 \hline
 \end{tabular}
-\end{table} 
+\end{table}
 \subsection{项目文件列表}
 项目文件结构如下：\\
 /Glutton \\
@@ -111,7 +111,7 @@ Glutton是为复旦大学（张江校区）的吃货们设计的外卖网页应�
 \subsection{运行方法}
 \begin{lstlisting}
    //安装flask及数据库依赖
-   $ pip install flask   
+   $ pip install flask
    $ pip install sqlite3
    //创建数据库
    $ python create_db.py
@@ -162,7 +162,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
   左侧图片点击可以更改个人口味偏好，下方显示用户名和手机号，以及编辑个人信息按钮。中间同样有搜索栏，下方按食物分类配备了多种类型，如果汁奶茶、炸鸡汉堡等的食物分区，代表性商家可以直接通过鼠标点击进入。\\
     点击Edit profile可以进入修改个人信息页面，左侧可以选择更改的类型：个人口味偏好，基本信息，更改密码，退出登录。\\
   基本信息可以修改用户名、地址、称呼和个人描述；密码修改，如果修改成功，系统会提示“Succeed”
- 
+
   \begin{figure}[H]
    \begin{minipage}[t]{0.5\linewidth}
     \centering
@@ -175,7 +175,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
       \caption{\small{用户更改密码}}
    \end{minipage}
    \end{figure}
-   
+
   \begin{figure}[H]
    \centering
      \includegraphics[width=6.00in]{cu-home.png}
@@ -202,6 +202,11 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
    \centering
      \includegraphics[width=6.00in]{cu-re.png}
      \caption{\small{用户查看商家列表}}
+  \end{figure}
+  \begin{figure}[H]
+   \centering
+     \includegraphics[width=6.00in]{cu-re-po.png}
+     \caption{\small{用户按照月销量查看商家列表}}
   \end{figure}
   \item 下单\\
   跳转到商家页面，显示所有菜品，对每个菜品可以选择添加或删除，最后点击Submit Order提交订单。若用户已填写收货地址，则系统提示订单提交成功；若未填充，则选择继续并跳转到用户信息界面。
@@ -230,7 +235,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
      \caption{\small{用户填写评价}}
   \end{figure}
   \end{itemize}
-  
+
  \subsection{针对商家的功能}
  商家主界面与用户类似，右侧和中部为登录商家和注册商家按钮。
  \begin{figure}[H]
@@ -241,7 +246,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
   \begin{itemize}
   \item 注册/登录\\
   点击sign up to business按钮我们进入商家注册页面，输入用户名，店铺名，密码来注册。\\
-  点击sign in to business按钮我们进入商家登录页面，用用户名和密码登录。如果密码输入错误，系统会提示密码或用户名错误。
+  点击sign in to business按钮我们进入商家登录页面，用用户名和密码登录。如果用户名输入错误，系统会提示商家不存在；如果密码输入错误，系统会提示密码错误。
   \begin{figure}[H]
    \begin{minipage}[t]{0.5\linewidth}
     \centering
@@ -338,7 +343,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
      \includegraphics[width=3.2in]{re-order-comment.jpg}
       \caption{\small{商家查看订单评价}}
    \end{minipage}
-   \end{figure} 
+   \end{figure}
   \end{itemize}
 
 \section{数据库简介}
@@ -479,13 +484,13 @@ Glutton数据库共包含5张表：商家表、用户表、菜品表、用户订
      可以查看自己店铺的菜品和订单，并可以选择以一定的顺序（如菜品月销量，订单创建时间等）列表显示。
     \begin{lstlisting}
     //选择用户订单
-	SELECT customer_order.customer_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time, customer_order.comment 
+	SELECT customer_order.customer_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time, customer_order.comment
 	FROM customer_order WHERE restaurant_id = '%s'
 	//选择与用户订单对应的菜品订单
 	SELECT dish.dish_name, dish.dish_price, dish_order.count
 	FROM dish, dish_order, customer_order
 	WHERE customer_order.order_id = dish_order.order_id
-	AND dish_order.dish_id = dish.dish_id 
+	AND dish_order.dish_id = dish.dish_id
 	AND customer_order.order_id = '%s'
     \end{lstlisting}
    \item 用户
@@ -520,7 +525,7 @@ Glutton数据库共包含5张表：商家表、用户表、菜品表、用户订
    WHERE dish_name LIKE '%%s%' AND dish.restaurant_id = restaurant.restaurant_id AND NOT deleted
    ORDER BY dish_month_sale DESC
    //用户进入商家后返回商家的全部菜品信息
-   SELECT  dish_id, dish_name, dish.restaurant_id,dish_price, dish_month_sale    
+   SELECT  dish_id, dish_name, dish.restaurant_id,dish_price, dish_month_sale
    FROM dish, restaurant
    WHERE dish.restaurant_id = restaurant.restaurant_id
    AND restaurant.restaurant_id = '%s' AND NOT deleted

@@ -44,6 +44,13 @@ var signin = function() {
     });
 }
 
+$("input[name='password']").keydown(function() {
+    if (event.keyCode == "13") {
+        signin();
+    }
+});
+
+
 $(document).ready(function(){
     var url = location.search;
     if (url.indexOf("?") != -1) {

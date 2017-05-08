@@ -79,7 +79,7 @@ Glutton是为复旦大学（张江校区）的吃货们设计的外卖网页应�
 胡天晓 & 14300240007 & 主要负责项目的后端开发（利用Flask框架连接SQLite数据库进行\\
  & & 数据库的增、删、查、改等操作）；项目报告的润色。 \\
 \hline
-张昊晗 & 14300240009 & \# TODO \\
+张昊晗 & 14300240009 & 负责前端开发（利用html5，css与boostrap框架）、动态交互及前后端对接（利用jquery实现，并使用sweetalert与facebox插件）。 \\
 \hline
 刘婧源 & 15307130385 & 商家及菜品原始数据的收集；部分SQL语句；项目报告主体部分。\\
 \hline
@@ -127,7 +127,7 @@ SQLite是一款轻型数据库，包含在一个相对小的C库中。它占用�
 SQLite的轻量特性十分适合我们的项目，因此我们使用其最新版本SQLite 3作为应用的后端数据库，在python代码中嵌入SQL语句来操作数据库。
 Flask十分适合于小型项目的快速开发，因此我们选择用Flask框架来搭建应用的后台部分。
 \subsection{前端简介}
-\# todo
+Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一个优秀的JavaScript代码库。Html5是万维网的核心语言、标准通用标记语言下的一个应用超文本标记语言（HTML）的第五次重大修改。Bootstrap是Twitter推出的一个用于前端开发的开源工具包，是一个CSS/HTML框架，优雅美观。因此我们使用Html5作为前端文本标记语言，css与bootstrap作为样式设计语言，Jquery实现动态效果及前后端对接，并使用了sweetalert，facebox等插件优化动态交互。
 
 
 \section{项目细节}
@@ -198,11 +198,16 @@ Flask十分适合于小型项目的快速开发，因此我们选择用Flask框�
      \caption{\small{用户查看商家列表}}
   \end{figure}
   \item 下单\\
-  跳转到商家页面，显示所有菜品，对每个菜品可以选择添加或删除，最后点击Submit Order提交订单。系统提示订单提交成功。
+  跳转到商家页面，显示所有菜品，对每个菜品可以选择添加或删除，最后点击Submit Order提交订单。若用户已填写收货地址，则系统提示订单提交成功；若未填充，则选择继续并跳转到用户信息界面。
   \begin{figure}[H]
    \centering
      \includegraphics[width=6.00in]{cu-dish.png}
      \caption{\small{用户下单}}
+  \end{figure}
+  \begin{figure}[H]
+   \centering
+     \includegraphics[width=6.00in]{cu-address.png}
+     \caption{\small{用户未填充地址选择是否继续}}
   \end{figure}
   \item 收货\\
   点击order按钮，跳转到订单页面，可以查看所有订单信息。点击Received the Dishes确认收货。
@@ -240,7 +245,7 @@ Flask十分适合于小型项目的快速开发，因此我们选择用Flask框�
    \begin{minipage}[t]{0.5\linewidth}
     \centering
      \includegraphics[width=3.2in]{re-signin.jpg}
-      \caption{\small{商家登录}}
+      \caption{\small{商家登录并显示该商家不存在}}
    \end{minipage}
    \end{figure}
   \item 更改信息\\

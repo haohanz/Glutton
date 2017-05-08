@@ -115,16 +115,20 @@ def get_customer_order_no():
 	create a unique id for a new customer_order
 	:return: string
 	"""
-	total_customer_order_num = len(g.cursor.execute("SELECT * FROM customer_order").fetchall()) + 1
-	return '0' * (3 - len(str(total_customer_order_num))) + str(total_customer_order_num)
+	max_customer_order_num = g.cursor.execute('SELECT MAX(order_id) FROM customer_order').fetchall()[0][0]
+	customer_order_id = int(max_customer_order_num) + 1
+	return '0' * (3 - len(str(customer_order_id))) + str(customer_order_id)
 
 def get_dish_order_no():
 	"""
 	create a unique id for a new dish_order
 	:return: string
 	"""
-	total_dish_order_num = len(g.cursor.execute("SELECT * FROM dish_order").fetchall()) + 1
-	return '0' * (4 - len(str(total_dish_order_num))) + str(total_dish_order_num)
+	# total_dish_order_num = len(g.cursor.execute("SELECT * FROM dish_order").fetchall()) + 1
+	# return '0' * (4 - len(str(total_dish_order_num))) + str(total_dish_order_num)
+	max_dish_order_num = g.cursor.execute('SELECT MAX(dish_id) FROM dish_order').fetchall()[0][0]
+	dish_order_id = int(max_dish_order_num) + 1
+	return '0' * (4 - len(str(dish_order_id))) + str(dish_order_id)
 
 def get_dish_no(restaurant_id):
 	"""

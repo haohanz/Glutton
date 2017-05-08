@@ -646,6 +646,8 @@ def delete_order():
 	:return: succeed or ERROR
 	"""
 	order_id = request.args.get("order_id")
+	
+	print order_id
 	try:
 		# in sqlite3, PRAGMA foreign_keys = OFF is default
 		g.cursor.execute("PRAGMA foreign_keys = ON")

@@ -43,7 +43,7 @@ $(document).ready(function(){
         		if(data.ERROR){
         			swal(data.ERROR);
         		} else {
-        			swal("change avatar succeed!");
+        			// swal("change avatar succeed!");
                     window.location.href="your_profile?customer_id="+customer_id;
         		}
         	});

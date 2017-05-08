@@ -47,7 +47,7 @@
 \textsc{\LARGE 复旦大学}\\[1.5cm]
 \textsc{\Large 数据库引论}\\[0.5cm]
 % Title
-\HRule \\[0.4cm]
+\HRule \\[1.0cm]
 { \huge \bfseries Project 1: Glutton}\\[0.4cm]
 \HRule \\[1.5cm]
 \includegraphics[width=2in]{logo.jpg}\\[1cm]
@@ -77,7 +77,7 @@ Glutton是为复旦大学（张江校区）的吃货们设计的外卖网页应�
 \begin{tabular}{|c|c|l|}
 \hline
 胡天晓 & 14300240007 & 主要负责项目的后端开发（利用Flask框架连接SQLite数据库进行\\
- & & 数据库的增、删、查、改等操作）；项目报告的润色。 \\
+ & & 数据库的增、删、查、改等操作）；项目报告的润色及格式调整。 \\
 \hline
 张昊晗 & 14300240009 & 主要负责前端开发（利用html5，css与boostrap框架）、动态交互及\\
 & & 前后端对接（利用jquery实现，并使用sweetalert与facebox插件）。 \\
@@ -212,7 +212,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
   \end{figure}
   \begin{figure}[H]
    \centering
-     \includegraphics[width=6.00in]{cu-address.png}
+     \includegraphics[width=6.00in]{cu-address.jpg}
      \caption{\small{用户未填充地址选择是否继续}}
   \end{figure}
   \item 收货\\
@@ -226,7 +226,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
   点击确认收货按钮后，会弹出评价窗口，用户可以写评价，系统提示提交评价成功，跳转到订单界面。
   \begin{figure}[H]
    \centering
-     \includegraphics[width=6.00in]{cu-comment.jpg}
+     \includegraphics[width=5.50in]{cu-comment.jpg}
      \caption{\small{用户填写评价}}
   \end{figure}
   \end{itemize}
@@ -235,7 +235,7 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
  商家主界面与用户类似，右侧和中部为登录商家和注册商家按钮。
  \begin{figure}[H]
    \centering
-     \includegraphics[width=6.00in]{re-front.png}
+     \includegraphics[width=5.80in]{re-front.png}
      \caption{\small{主页面}}
   \end{figure}
   \begin{itemize}
@@ -342,15 +342,12 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
   \end{itemize}
 
 \section{数据库简介}
-\subsection{数据源}
-Glutton所用数据来源于外卖平台”饿了么“网站，以复旦大学（张江校区）为中心，选取真实的商家信息作为数据源，保证了数据的真实性和有效性。\\
-数据选取以蔡伦路、科苑路、华佗路的商铺为主，涵盖50个商家。每个商家菜品若干，最多为17道菜，最少为4道菜，共393道菜，平均每个商家8道菜。整个数据库包含443条商家及菜品记录。
 \subsection{数据库设计}
 \begin{itemize}
  \item ER图
   \begin{figure}[H]
    \centering
-     \includegraphics[width=7.00in]{ER.png}
+     \includegraphics[width=6.50in]{ER.png}
      \caption{\small{数据库ER图}}
   \end{figure}
 
@@ -361,7 +358,9 @@ Glutton所用数据来源于外卖平台”饿了么“网站，以复旦大学�
      \caption{\small{数据库表格关系图}}
   \end{figure}
 \end{itemize}
-
+\subsection{数据源}
+Glutton所用数据来源于外卖平台”饿了么“网站，以复旦大学（张江校区）为中心，选取真实的商家信息作为数据源，保证了数据的真实性和有效性。\\
+数据选取以蔡伦路、科苑路、华佗路的商铺为主，涵盖50个商家。每个商家菜品若干，最多为17道菜，最少为4道菜，共393道菜，平均每个商家8道菜。整个数据库包含443条商家及菜品记录。
 \subsection{数据库操作：增、删、改、查}
 \subsubsection{建表语句}
 Glutton数据库共包含5张表：商家表、用户表、菜品表、用户订单表、菜品订单表。
@@ -479,7 +478,15 @@ Glutton数据库共包含5张表：商家表、用户表、菜品表、用户订
    \item 商家
      可以查看自己店铺的菜品和订单，并可以选择以一定的顺序（如菜品月销量，订单创建时间等）列表显示。
     \begin{lstlisting}
-
+    //选择用户订单
+	SELECT customer_order.customer_id, customer_order.order_id, customer_order.create_time, customer_order.receive_time, customer_order.comment 
+	FROM customer_order WHERE restaurant_id = '%s'
+	//选择与用户订单对应的菜品订单
+	SELECT dish.dish_name, dish.dish_price, dish_order.count
+	FROM dish, dish_order, customer_order
+	WHERE customer_order.order_id = dish_order.order_id
+	AND dish_order.dish_id = dish.dish_id 
+	AND customer_order.order_id = '%s'
     \end{lstlisting}
    \item 用户
      用户可以查询某一店铺、菜品，按照某一顺序查看所有商家、菜品，查询自己的订单历史记录等，部分代码如下：

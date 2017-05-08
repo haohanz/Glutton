@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 Author: Tianxiao Hu
-Last Modified: 2017.5.5
+Last Modified: 2017.5.8
 Email: hutianxiao_fdu@126.com
 Project for Introduction to Database Systems(COMP130010.03)@Fudan University
 """
@@ -250,8 +250,6 @@ def upload_your_profile():
 	customer_address = request.args.get("customer_address")
 	customer_description = request.args.get("customer_description")
 	customer_appellation = request.args.get("customer_appellation")
-
-
 	try:
 		g.cursor.execute("UPDATE customer SET customer_nickname = '%s', customer_address = '%s', "
 		                 "customer_description = '%s', customer_appellation = '%s'"

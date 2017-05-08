@@ -6,4 +6,4 @@ Email: hutianxiao_fdu@126.com
 Project for Introduction to Database Systems(COMP130010.03)@Fudan University
 """
 from app import app
-app.run(debug=False)
+app.run(debug=True)

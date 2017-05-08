@@ -100,21 +100,15 @@ $(document).ready(function(){
 
                 if (receive_time != '暂未收货' && comment != '暂无评论') {      //received and commented
                     console.log("receive_time is null");
-                    str += '<a class="btn btn-block btn-outline f4 plans-card-btn disabled">Received the Dishes</a>\
-                         </div>\
-                     </td>';
+                    str += '<a class="btn btn-block btn-outline f4 plans-card-btn disabled">Received the Dishes</a>';
 
                 } else if (receive_time != '暂未收货' && comment == '暂无评论') {    //received but not comment
-                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="change_id(this)" class="btn btn-block btn-outline f4 plans-card-btn">Comment</a>\
-                         </div>\
-                     </td>';
+                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="change_id(this)" class="btn btn-block btn-outline f4 plans-card-btn">Comment</a>';
                 } else {    // have not received
-                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="received_order(this)" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
+                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="received_order(this)" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>';
+                } str += '<a name="'+order_id+'" onclick="delete_order(this)" class="btn btn-danger btn-sm f4">Delete Order</a>\
                          </div>\
                      </td>';
-
-                }
-
         	});
             str += '</tr></tbody></table>';
             $("#main_body").html(str);
@@ -124,6 +118,28 @@ $(document).ready(function(){
 });
 
 var comment_order_id = '0';
+
+var delete_order = function(obj) {
+    swal({
+          title: 'Are you sure?',
+          text: 'are you sure to delete this order?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, keep it',
+    },function(isConfirm) {
+        if (isConfirm === true) {
+            var orderid = $(obj).prop("name");
+            $.getJSON("delete_order",{"order_id":orderid},function(data){
+                if(data.ERROR) {
+                    swal(data.ERROR);
+                } else {
+                    window.location.href = location.search;
+                }
+            })
+        } else {}
+    });    
+}
 
 var received_order = function(obj){
     if ($(obj).hasClass("disabled")) {

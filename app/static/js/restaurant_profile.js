@@ -115,7 +115,6 @@ $(document).ready(function(){
 					swal(data.ERROR);
 				} else {
 					swal("upload succeed!");
-					window.location.href = location.search;
 				}
 			})
 		});
@@ -130,7 +129,6 @@ $(document).ready(function(){
 					swal(data.ERROR);
 				} else {
 					swal("upload succeed!");
-					window.location.href = location.search;
 				}
 			})
 		});

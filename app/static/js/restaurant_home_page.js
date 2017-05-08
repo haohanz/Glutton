@@ -62,6 +62,12 @@ $(document).ready(function(){
                 search_value = $("input[name='q_navi']").val();
                 window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+customer_id;
             });
+
+            $("#search_block_in_search_results").keydown(function() {
+                if (event.keyCode == "13") {
+                    $('#navi_search_home_page').click();
+                }
+            });
         }
 
         $("span#restaurant_name").html(restaurant_name);
@@ -105,6 +111,7 @@ $(document).ready(function(){
                 var dish_id = item.dish_id;
                 var dish_name = item.dish_name;
                 var month_sale = item.dish_month_sale;
+                console.log("month_sale:"+month_sale);
                 var dish_price = item.dish_price;
                 dish_counts[dish_id] = 0;
                 str += '\

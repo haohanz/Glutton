@@ -13,19 +13,17 @@ var signup = function() {
             return;
         } else if (customer_mobile_number.length != 11) {
             swal("Please input valid mobile number!");
-            // window.location.href = location.search;
-            return;
-        } 
-
-        $.getJSON("/user_signup_submit",{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
-            console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
-            if (data.ERROR) {
-                swal(data.ERROR);
-            } else {
-                customer_id = data.customer_id;
-                window.location.href = 'home_page?customer_id='+customer_id+'&customer_nickname='+customer_nickname+"&who="+who;
-            }
-    });
+        } else {
+            $.getJSON("/user_signup_submit",{"customer_password":customer_password,"customer_mobile_number":customer_mobile_number,"customer_nickname":customer_nickname,"who":who},function(data){
+                console.log('sent:'+customer_password+customer_mobile_number+customer_nickname);
+                if (data.ERROR) {
+                    swal(data.ERROR);
+                } else {
+                    customer_id = data.customer_id;
+                    window.location.href = 'home_page?customer_id='+customer_id+'&customer_nickname='+customer_nickname+"&who="+who;
+                }
+            });
+        }
     } else {
         customer_nickname = $("input[name='user[login]']").val();
         customer_password = $("input[name='user[password]']").val();
@@ -46,6 +44,8 @@ var signup = function() {
         });
     }
 }
+
+
 
 $(document).ready(function(){
     var url = location.search;

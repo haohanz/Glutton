@@ -97,7 +97,6 @@ $(document).ready(function(){
 							swal(data.ERROR);
 						} else {
 							swal("succeed!");
-							window.location.href = location.search;
 						}
 					});
 				}
@@ -115,7 +114,7 @@ $(document).ready(function(){
 				if (data.ERROR){
 					swal(data.ERROR);
 				} else {
-					swal("upload succeed!");
+					swal("Upload profile succeed!");
 				}
 			})
 		});

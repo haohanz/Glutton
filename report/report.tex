@@ -79,9 +79,11 @@ Glutton是为复旦大学（张江校区）的吃货们设计的外卖网页应�
 胡天晓 & 14300240007 & 主要负责项目的后端开发（利用Flask框架连接SQLite数据库进行\\
  & & 数据库的增、删、查、改等操作）；项目报告的润色。 \\
 \hline
-张昊晗 & 14300240009 & 负责前端开发（利用html5，css与boostrap框架）、动态交互及前后端对接（利用jquery实现，并使用sweetalert与facebox插件）。 \\
+张昊晗 & 14300240009 & 主要负责前端开发（利用html5，css与boostrap框架）、动态交互及\\
+& & 前后端对接（利用jquery实现，并使用sweetalert与facebox插件）。 \\
 \hline
-刘婧源 & 15307130385 & 商家及菜品原始数据的收集；部分SQL语句；项目报告主体部分。\\
+刘婧源 & 15307130385 & 数据库设计，建表；商家、菜品原始数据的收集及插入；\\
+ & & 涉及增删改查的部分SQL语句；项目报告主体部分。\\
 \hline
 \end{tabular}
 \end{table} 
@@ -146,37 +148,41 @@ Jquery是一个快速、简洁的JavaScript框架，是继Prototype之后又一�
   \begin{figure}[H]
    \begin{minipage}[t]{0.5\linewidth}
     \centering
-     \includegraphics[width=3.2in]{cu-signup.jpg}
+     \includegraphics[width=3in]{cu-signup.jpg}
      \caption{\small{用户注册}}
    \end{minipage}
    \begin{minipage}[t]{0.5\linewidth}
     \centering
-     \includegraphics[width=3.2in]{cu-signin.jpg}
+     \includegraphics[width=3in]{cu-signin.jpg}
       \caption{\small{用户登录}}
    \end{minipage}
    \end{figure}
   \item 更改信息/头像\\
   登录成功后，我们进入到用户的主页。主页的最上方是导航栏，左侧三个按钮可以选择主页，个人信息，订单。右侧有搜索栏和退出登录按钮。\\
-  左侧图片点击可以更改个人口味偏好，下方显示用户名和手机号，以及编辑个人信息按钮。中间同样有搜索栏，下方按食物分类配备了多种类型，如果汁奶茶、炸鸡汉堡等的食物分区，代表性商家可以直接通过鼠标点击进入。
+  左侧图片点击可以更改个人口味偏好，下方显示用户名和手机号，以及编辑个人信息按钮。中间同样有搜索栏，下方按食物分类配备了多种类型，如果汁奶茶、炸鸡汉堡等的食物分区，代表性商家可以直接通过鼠标点击进入。\\
+    点击Edit profile可以进入修改个人信息页面，左侧可以选择更改的类型：个人口味偏好，基本信息，更改密码，退出登录。\\
+  基本信息可以修改用户名、地址、称呼和个人描述；密码修改，如果修改成功，系统会提示“Succeed”
+ 
+  \begin{figure}[H]
+   \begin{minipage}[t]{0.5\linewidth}
+    \centering
+     \includegraphics[width=3in]{cu-profile.jpg}
+     \caption{\small{用户更改信息}}
+   \end{minipage}
+   \begin{minipage}[t]{0.5\linewidth}
+    \centering
+     \includegraphics[width=3in]{cu-password.jpg}
+      \caption{\small{用户更改密码}}
+   \end{minipage}
+   \end{figure}
+   
   \begin{figure}[H]
    \centering
      \includegraphics[width=6.00in]{cu-home.png}
      \caption{\small{用户主页}}
   \end{figure}
-  点击Edit profile可以进入修改个人信息页面，左侧可以选择更改的类型：个人口味偏好，基本信息，更改密码，退出登录。\\
-  基本信息可以修改用户名、地址、称呼和个人描述；密码修改，如果修改成功，系统会提示“Succeed”
-  \begin{figure}[H]
-   \begin{minipage}[t]{0.5\linewidth}
-    \centering
-     \includegraphics[width=3.2in]{cu-profile.jpg}
-     \caption{\small{用户更改信息}}
-   \end{minipage}
-   \begin{minipage}[t]{0.5\linewidth}
-    \centering
-     \includegraphics[width=3.2in]{cu-password.jpg}
-      \caption{\small{用户更改密码}}
-   \end{minipage}
-   \end{figure}
+
+
    用户可以点击图片，修改个人头像。共有九种头像可供选择，随意点击一个用户头像，系统会提示转换成功，页面跳转至个人主页，可以看到用户头像已有变化。
    \begin{figure}[H]
    \centering

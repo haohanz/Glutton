@@ -835,8 +835,8 @@ def add_dish():
 	try:
 		if not dish_price.replace('.', '').isdigit():
 			return jsonify({"ERROR": "Please input valid price!"})
-		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
-									  % (restaurant_id)).fetchall()
+		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s' "
+									  "AND NOT deleted" % (restaurant_id)).fetchall()
 		dish_names = [x[0] for x in dish_names]
 		if dish_name in dish_names:
 			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
@@ -866,8 +866,8 @@ def change_dish():
 		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
 									  % (restaurant_id)).fetchall()
 		dish_names = [x[0] for x in dish_names]
-		old_dish_name = g.cursor.execute("SELECT dish_name FROM dish WHERE dish_id = '%s'"
-									  % (dish_id)).fetchall()[0][0]
+		old_dish_name = g.cursor.execute("SELECT dish_name FROM dish WHERE dish_id = '%s' "
+										 "AND NOT deleted" % (dish_id)).fetchall()[0][0]
 		if dish_name != old_dish_name and dish_name in dish_names:
 			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
 		g.cursor.execute("UPDATE dish SET dish_price = '%f', dish_name = '%s'  WHERE dish_id = '%s'"

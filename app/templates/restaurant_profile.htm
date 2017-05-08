@@ -134,7 +134,7 @@
     <a id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">ChangePassword</a>
     <a id="restaurant_order_history" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">ViewMyOrders</a>
     <a id="restaurant_dish_management" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">DishManagent</a>
-    <a id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">AddDish</a>
+    <a style="display: none" id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/admin">AddDish</a>
     <a id="menu-list" class="js-selected-navigation-item menu-item" data-selected-links=" /settings/emails">SignOut</a>
   </nav> 
   </dd>
@@ -162,7 +162,7 @@
         <dl class="form-group">
           
         <dl class="form-group">
-            <dt><label>Chage your address</label></dt>
+            <dt><label>Change your address</label></dt>
             <dd><input placeholder="Input your address" class="form-control" id="user_profile_birthday" size="30" type="text" value=""></dd>
           </dl>
           </dl>
@@ -254,7 +254,6 @@
     <h2 class="Subhead-heading">Add a dish</h2>
   </div>
 
-  <!-- <form accept-charset="UTF-8" class="columns js-uploadable-container js-upload-avatar-image is-default" data-alambic-owner-id="23527044" data-alambic-owner-type="User" novalidate="novalidate"> -->
 
   <div style="margin:0;padding:0;display:inline">
   </div>
@@ -271,7 +270,6 @@
         </dl>
         <p><button class="btn" id="add_dish">Add a dish</button></p>
       </div>
-  <!-- </form>   -->
 
 </div>
 </div>
@@ -296,6 +294,8 @@
   </div>
 </div>
 <!-- end footer -->
+<link crossorigin="anonymous" href="../static/css/sweetalert.css" media="all" rel="stylesheet">
+<script src="../static/js/sweetalert.min.js"></script> 
 
     <script src="../static/js/jquery-3.1.1.min.js"></script>
     <script src="../static/js/restaurant_profile.js"></script>

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 Author: Tianxiao Hu
-Last Modified: 2017.5.5
+Last Modified: 2017.5.8
 Email: hutianxiao_fdu@126.com
 Project for Introduction to Database Systems(COMP130010.03)@Fudan University
 """
@@ -18,12 +18,12 @@ from config import SQLALCHEMY_DATABASE_LOC, PAGINATION_PER_PAGE
 
 @app.before_request
 def before_request():
-	g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)#???
+	g.conn = sqlite3.connect(SQLALCHEMY_DATABASE_LOC)
 	g.cursor = g.conn.cursor()
 
 @app.teardown_request
 def teardown_request(exception):
-	if hasattr(g, 'cursor'):#???
+	if hasattr(g, 'cursor'):
 		g.cursor.close()
 	if hasattr(g, 'conn'):
 		g.conn.close()
@@ -271,13 +271,20 @@ def change_password():
 	:return: succeed or ERROR
 	"""
 	customer_id = request.args.get("customer_id")
-	customer_password = request.args.get("customer_password")
-	customer_password = md5_encrypt(customer_password)
+	old_password = request.args.get("old_password")
+	old_password = md5_encrypt(old_password)
+	new_password = request.args.get("new_password")
+	new_password = md5_encrypt(new_password)
 	try:
-		g.cursor.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'"
-		                 % (customer_password, customer_id))
-		g.conn.commit()
-		return jsonify({"Succeed!": "Change password Succeed!"})
+		old_password_db = g.cursor.execute("SELECT customer_password FROM customer WHERE customer_id = '%s'"
+						 					% (customer_id)).fetchall()[0][0]
+		if old_password == old_password_db:
+			g.cursor.execute("UPDATE customer SET customer_password = '%s' WHERE customer_id = '%s'"
+		                 	% (new_password, customer_id))
+			g.conn.commit()
+			return jsonify({"Succeed!": "Change password Succeed!"})
+		else:
+			return jsonify({"ERROR": "Please input correct old password!"})
 	except Exception as e:
 		g.conn.rollback()
 		print traceback.format_exc(e)
@@ -651,6 +658,7 @@ def get_user_history():
 	[{"restaurant_id":restaurant_id, "order_id": order_id, "create_time": create_time, 
 	  "receive_time":receive_time, "restaurant_name":restaurant_name,
 	  "order_total_price":order_total_price, 
+	  "comment": comment,
 	  "dishes":[{"dish_price": dish_price, "dish_amount": dish_amount, "dish_name":dish_name}, {}, {}..]
 	 },
 	 {}, {}, ...]
@@ -658,12 +666,12 @@ def get_user_history():
 	customer_id = request.args.get("customer_id")
 	try:
 		customer_order = g.cursor.execute("SELECT customer_order.restaurant_id, customer_order.order_id, "
-		                                  "customer_order.create_time, customer_order.receive_time "
+		                                  "customer_order.create_time, customer_order.receive_time, customer_order.comment "
 		                                  "FROM customer_order WHERE customer_id = '%s'" % (customer_id)).fetchall()
 		if customer_order:
 			order_list = []
 			for order in customer_order:
-				keywords = ["restaurant_id", "order_id", "create_time", "receive_time"]
+				keywords = ["restaurant_id", "order_id", "create_time", "receive_time", "comment"]
 				order_dict = dict(zip(keywords, order))
 				restaurant_name = g.cursor.execute("SELECT restaurant_name FROM restaurant "
 				                                   "WHERE restaurant_id = '%s'" % (order[0])).fetchall()
@@ -789,13 +797,20 @@ def change_restaurant_password():
     :return: succeed or ERROR
     """
 	restaurant_id = request.args.get("restaurant_id")
-	owner_password = request.args.get("owner_password")
-	owner_password = md5_encrypt(owner_password)
+	old_password = request.args.get("old_password")
+	old_password = md5_encrypt(old_password)
+	new_password = request.args.get("new_password")
+	new_password = md5_encrypt(new_password)
 	try:
-		g.cursor.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'"
-		                 % (owner_password, restaurant_id))
-		g.conn.commit()
-		return jsonify({"succeed!": "succeed!"})
+		old_password_db = g.cursor.execute("SELECT owner_password FROM restaurant WHERE restaurant_id = '%s'"
+										   % (restaurant_id)).fetchall()[0][0]
+		if old_password == old_password_db:
+			g.cursor.execute("UPDATE restaurant SET owner_password = '%s' WHERE restaurant_id = '%s'"
+							 % (new_password, restaurant_id))
+			g.conn.commit()
+			return jsonify({"Succeed!": "Change password Succeed!"})
+		else:
+			return jsonify({"ERROR": "Please input correct old password!"})
 	except Exception as e:
 		g.conn.rollback()
 		print traceback.format_exc(e)
@@ -807,15 +822,23 @@ def change_restaurant_password():
 def add_dish():
 	"""
 	add a dish to database: dish_name, dish_price is required
+	dish name can't be repeated in a restaurant
 	:return: succeed or ERROR
 	"""
 	dish_name = request.args.get("dish_name")
 	restaurant_id = request.args.get("restaurant_id")
 	dish_price = request.args.get("dish_price")
 	try:
+		if not dish_price.replace('.', '').isdigit():
+			return jsonify({"ERROR": "Please input valid price!"})
+		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
+									  % (restaurant_id)).fetchall()
+		dish_names = [x[0] for x in dish_names]
+		if dish_name in dish_names:
+			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
 		dish_id = get_dish_no(restaurant_id)
 		g.cursor.execute("INSERT INTO dish VALUES('%s','%s', '%s', '%f', '%d', '%d');"
-		                 % (dish_id, dish_name, dish_id[:3], float(dish_price), 0, 0))
+		                 % (dish_id, dish_name, restaurant_id, float(dish_price), 0, 0))
 		g.conn.commit()
 		return jsonify({"succeed!": "succeed!"})
 	except Exception as e:
@@ -833,6 +856,14 @@ def change_dish():
 	dish_price = request.args.get("dish_price")
 	dish_name = request.args.get("dish_name")
 	try:
+		if not dish_price.replace('.', '').isdigit():
+			return jsonify({"ERROR": "Please input valid price!"})
+		restaurant_id = dish_id[:3]
+		dish_names = g.cursor.execute("SELECT dish_name FROM dish WHERE restaurant_id = '%s'"
+									  % (restaurant_id)).fetchall()
+		dish_names = [x[0] for x in dish_names]
+		if dish_name in dish_names:
+			return jsonify({"ERROR": "Dish name duplicated, select a new one!"})
 		g.cursor.execute("UPDATE dish SET dish_price = '%f', dish_name = '%s'  WHERE dish_id = '%s'"
 		                 % (float(dish_price), dish_name, dish_id))
 		g.conn.commit()

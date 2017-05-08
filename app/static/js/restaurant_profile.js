@@ -67,25 +67,31 @@ $(document).ready(function(){
             window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
 
         $("button#change_password").bind("click",function(){
 			var user_old_password = $("input#user_old_password").val();
 			var user_new_password = $("input#user_new_password").val();
 			var user_confirm_new_password = $("input#user_confirm_new_password").val();
-			if (user_new_password && user_old_password && user_confirm_new_password) {
+
+			if (user_new_password && user_old_password && user_confirm_new_password && user_old_password.length != 0 && user_new_password.length != 0) {
 				if (user_confirm_new_password != user_new_password) {
-					alert("Incorrect new passwords.");
+					swal("Incorrect new passwords.");
 				} else {
-					$.getJSON("/change_restaurant_password",{"owner_password":user_new_password,"restaurant_id":restaurant_id},function(data){
+					$.getJSON("/change_restaurant_password",{"old_password":user_old_password,"new_password":user_new_password,"restaurant_id":restaurant_id},function(data){
 						if (data.ERROR) {
-							alert(data.ERROR);
+							swal(data.ERROR);
 						} else {
-							alert("succeed!");
+							swal("succeed!");
 						}
 					});
 				}
 			} else {
-				alert("Incomplete Inputs.");
+				swal("Incomplete Inputs.");
 			} 
 		}); 
 
@@ -106,9 +112,9 @@ $(document).ready(function(){
 				"restaurant_address":restaurant_address,
 				"restaurant_id":restaurant_id},function(data){
 				if (data.ERROR){
-					alert(data.ERROR);
+					swal(data.ERROR);
 				} else {
-					alert("upload succeed!");
+					swal("upload succeed!");
 					window.location.href = location.search;
 				}
 			})
@@ -121,9 +127,9 @@ $(document).ready(function(){
 				"restaurant_id":restaurant_id,
 				"dish_price":dish_price},function(data){
 				if (data.ERROR){
-					alert(data.ERROR);
+					swal(data.ERROR);
 				} else {
-					alert("upload succeed!");
+					swal("upload succeed!");
 					window.location.href = location.search;
 				}
 			})

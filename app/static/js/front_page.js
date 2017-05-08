@@ -26,6 +26,6 @@ $("a#navi").bind("click",function(){
         window.location.href = 'front_page';
     }
     if ($(this).html() == 'My Order' || $(this).html() == 'Home Page') {
-        alert("sign in first!");
+        swal("sign in first!");
     }
 })

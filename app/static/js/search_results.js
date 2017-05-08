@@ -33,7 +33,7 @@ var search = function(page,current_div,search_content, key){
 	$.getJSON(route_to_search,input_dict,function(data){
 
 		if (data.ERROR) {
-			alert("data.ERROR");
+			swal(data.ERROR);
 		}
 
 		$("span#total_result_len").text(data.total_result);
@@ -84,7 +84,7 @@ var search = function(page,current_div,search_content, key){
 				}
 				var base_delivery_price = eachData.base_deliver_price;
 				if (base_delivery_price == null) {
-					base_delivery_price == '暂无';
+					base_delivery_price = '暂无';
 				}
 				var str = '\
 						<div class="repo-list-item d-flex flex-justify-start py-4 public source">\
@@ -92,9 +92,9 @@ var search = function(page,current_div,search_content, key){
 						<h3>\
 						<a href="restaurant_home_page?who='+who+'&restaurant_name='+name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+name+'</a>\
 						</h3>\
-						<p class="d-inline-block text-gray mb-2 pr-4">'+description+'（起送费：'+base_delivery_price+'¥）\
+						<p class="d-inline-block text-gray mb-2 pr-4">描述：'+description+'；（起送费：'+base_delivery_price+'¥）\
 						</p>\
-						<p class="f6 text-gray mb-0 mt-2">'+address+'</p>\
+						<p class="f6 text-gray mb-0 mt-2">地址：'+address+'</p>\
 						</div>\
 						<div class="d-table-cell col-2 text-gray pt-2">\
 						<span class="repo-language-color ml-0" style="background-color:#f1e05a;"></span>\
@@ -141,9 +141,6 @@ var search = function(page,current_div,search_content, key){
 					<a class="v-align-middle" href="restaurant_home_page?who='+who+'&restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'">'+restaurant_name+'</a>/\
 					<a href="restaurant_home_page?who='+who+'&restaurant_name='+restaurant_name+'&restaurant_id='+restaurant_id+'&customer_id='+customer_id+'" class="v-align-middle">'+dish_name+'</a>\
 					</h3>\
-					<p class="col-9 d-inline-block text-gray mb-2 pr-4">Dish id: \
-					'+dish_id+'\
-					</p>\
 					</div>\
 					<div class="d-table-cell col-2 text-gray pt-2">\
 					<span class="repo-language-color ml-0" style="background-color:#f1e05a;"></span>价格: '+dish_price+'¥\
@@ -332,6 +329,12 @@ $(document).ready(function(){
 	            search_value = $("input[name='q_navi']").val();
 	            window.location.href="search_results?who=business&search_value="+search_value+'&customer_id='+restaurant_id;
 	        });
+
+	        $("#search_block_in_search_results").keydown(function() {
+             	if (event.keyCode == "13") {
+                 	$('#navi_search_home_page').click();
+             	}
+        	});
         }
     	search(1,"Restaurants", search_value, 0);
         

@@ -32,10 +32,16 @@ $(document).ready(function(){
             window.location.href="search_results?who=customer&search_value="+search_value+'&customer_id='+customer_id;
         });
 
+        $("#search_block_in_search_results").keydown(function() {
+             if (event.keyCode == "13") {
+                 $('#navi_search_home_page').click();
+             }
+        });
+        
         console.log("customer_id"+customer_id);
         $.getJSON("/get_user_history",{"customer_id":customer_id}, function(data){
             if (data.ERROR) {
-                alert(data.ERROR);
+                swal(data.ERROR);
                 return;
             }
         	result = data.result;
@@ -49,14 +55,22 @@ $(document).ready(function(){
         		var order_id = item.order_id;
         		var order_total_price = item.order_total_price;
         		var dishes = item.dishes;
+                var create_time = item.create_time;
+                var comment = item.comment;
+                if (comment == null) {
+                    comment = '暂无评论';
+                }
                 var receive_time = item.receive_time;
+                if (receive_time == null) {
+                    receive_time = '暂未收货';
+                }
                 console.log("receive_time:"+receive_time);
         		var dish_list = '<ul class="list-style-none lh-condensed">';
         		$.each(dishes, function(j, dish_item){
                     dish_amount = dish_item.dish_amount;
         			var dish_name = dish_item.dish_name;
         			var dish_price = dish_item.dish_price;
-					dish_list += '<li class="mb-1">'+ dish_name+'<span class="default-currency">'+dish_price+'¥ &nbsp'+dish_amount+'份</span></li>';
+					dish_list += '<li class="mb-1">'+ dish_name+'：<span class="default-currency">¥'+dish_price+' &nbsp'+dish_amount+'份</span></li>';
         		});
         		dish_list += '</ul>';
         		if (i%3 == 0) {
@@ -73,29 +87,34 @@ $(document).ready(function(){
 					    </a>\
 					  <div class="plans-card-text p-3">\
 					    <h3 class="alt-h2 text-normal mb-0 lh-condensed">\
-					      <span class="default-currency">Total:'+order_total_price+'¥</span>\
+					      <span class="default-currency">Total:¥'+order_total_price+'</span>\
 					    </h3>\
-					    <p class="mb-4 alt-text-small text-gray>\
-					      order id: <span id="order_id">'+order_id+'</span>\
+                        <p class="mb-4 alt-text-small text-gray>\
+                           <span id="order_id">下单:'+create_time+'</span><br/>\
+					       <span id="order_id">收货:'+receive_time+'</span>\
 					    </p>\
 					    <h4 class="alt-h4 lh-condensed mb-1">Includes:</h4>\
 					    <ul class="list-style-none lh-condensed">\
-					    '+dish_list+'\
+					    '+dish_list+'<br/><h4 class="alt-h4 lh-condensed mb-1">Comment:</h4>'+comment+'\
 					  </div>';
-                // here is to determin if receive_time is None
 
-                if (receive_time != null) {
+                if (receive_time != '暂未收货' && comment != '暂无评论') {      //received and commented
                     console.log("receive_time is null");
                     str += '<a class="btn btn-block btn-outline f4 plans-card-btn disabled">Received the Dishes</a>\
                          </div>\
                      </td>';
-                } else { 
-                    str +=  '<a id="commit_receive" href="#faceboxdiv" rel="facebox" onclick="received_order(this,' + order_id +')" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
+
+                } else if (receive_time != '暂未收货' && comment == '暂无评论') {    //received but not comment
+                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="change_id(this)" class="btn btn-block btn-outline f4 plans-card-btn">Comment</a>\
                          </div>\
                      </td>';
+                } else {    // have not received
+                    str +=  '<a id="commit_receive" href="#faceboxdiv" name="'+order_id+'" rel="facebox" onclick="received_order(this)" class="btn btn-block btn-outline f4 plans-card-btn">Received the Dishes</a>\
+                         </div>\
+                     </td>';
+
                 }
 
-                // console.log("final str is: "+str);
         	});
             str += '</tr></tbody></table>';
             $("#main_body").html(str);
@@ -106,19 +125,19 @@ $(document).ready(function(){
 
 var comment_order_id = '0';
 
-var received_order = function(obj,order_id){
+var received_order = function(obj){
     if ($(obj).hasClass("disabled")) {
         return;
-        // how to stop the facebox?
     } else {
-        // var order_id = $(this).prev("span#order_id").html();
-        console.log("order_id"+order_id);
-        $.getJSON("/receive_order",{"order_id":order_id,"received":true},function(data){
+        var received_order_id = $(obj).prop("name");
+        console.log("order_id"+received_order_id);
+        $.getJSON("/receive_order",{"order_id":received_order_id,"received":true},function(data){
             if (data.ERROR){
-                alert(data.ERROR);
+                swal(data.ERROR);
             }else {
+                console.log("order_id:"+received_order_id+";received");
                 $(obj).addClass("disabled");
-                comment_order_id = order_id;
+                comment_order_id = received_order_id;
             }
         })
     }
@@ -131,18 +150,22 @@ var set_comment = function(obj) {
 }
 
 var submit_comment = function() {
-     // href="cssrain.jpg" rel="facebox"
     console.log("comment"+dish_comment+"order_id"+comment_order_id);
     $.getJSON("/comment_order",{"comment":dish_comment,"order_id":comment_order_id},function(data){
         console.log("get response"+data);
         if (data.ERROR){
-            alert(data.ERROR);
+            swal(data.ERROR);
             return;
         } else {
-            alert("Succeed!");
+            console.log("comment_order_id:"+comment_order_id+";dish_comment:"+dish_comment+";submitted");
             window.location.href = location.search;
         }
     });
+}
+
+
+var change_id = function(obj) {
+    comment_order_id = $(obj).prop("name");
 }
 
 
